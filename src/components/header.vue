@@ -1,12 +1,12 @@
 <template>
     <div class="page-header">
         <div class="Header_right" style="position:absolute;right:0.5rem">
-            <a href="#" @click="changeLanguage('ch')" :class="{'active':locale2=='ch'}">中文</a>
+            <a href="#" @click="changeLanguage('ch')" :class="{'active':locale3=='ch'}">中文</a>
             <a href="" style="margin:0 0.1rem">/</a>
-            <a href="#" @click="changeLanguage('en')" :class="{'active':locale2=='en'}">ENG</a>
+            <a href="#" @click="changeLanguage('en')" :class="{'active':locale3=='en'}">ENG</a>
         </div>
         <div class="Header">
-            <a href="./index.html?animate=false" v-if="locale2=='ch'">
+            <a href="./index.html?animate=false" v-if="locale3=='ch'">
                 <img src="https://img.vrviu.com/images/LOGO.png" alt="">
             </a>
             <a href="./index.html?animate=false" v-else>
@@ -53,7 +53,7 @@ export default {
                     "url": "#"
                 }
             ],
-            locale2: this.locale,
+            locale3: this.locale,
             index3: this.index
         }
     },
@@ -65,11 +65,11 @@ export default {
         if (language.indexOf('zh') > -1) initLanguage = "ch"; //中文页面
         if (language.indexOf('en') > -1) initLanguage = "en"; //英文页面
         this.$i18n.locale = localStorage.locale || initLanguage;
-        this.locale2 = localStorage.locale || initLanguage;
+        this.locale3 = localStorage.locale || initLanguage;
         // this.$i18n.locale = "ch";
     },
     watch: {
-        locale2: function (val) {
+        locale3: function (val) {
             this.$i18n.locale = val;
             　　　　if (val == 'en') {
                 this.loops[0].title = "Features";
@@ -89,7 +89,7 @@ export default {
     methods: {
         changeLanguage: function (val) {
             localStorage.locale = val;
-            this.locale2 = val;
+            this.locale3 = val;
         }
     }
 }
