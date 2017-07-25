@@ -2,7 +2,7 @@
     <div id="content3">
         <div class="content3_head">Content3</div>
         <!-- <div class="content3_content" v-if="locale=='ch'">chinese</div>
-                <div class="content3_content" v-else>english</div> -->
+                    <div class="content3_content" v-else>english</div> -->
         <div class="content3_content">{{ $t('messages.msg') }}</div>
     </div>
 </template>
@@ -36,7 +36,9 @@ export default {
         }
     },
     mounted: function () {
-
+        this.$i18n.locale = localStorage.locale;
+        this.locale = localStorage.locale;
+        sessionStorage.index = '13';
     },
     props: ['locale'],
     i18n: i18n,

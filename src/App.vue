@@ -13,7 +13,7 @@
                 <span class="plus" v-else>+</span>
               </a>
             </li>
-            <ul class="level1-ul-1 down" v-if="this.navActive.menu1">
+            <ul class="level1-ul-1" v-if="this.navActive.menu1">
               <li :class="{level2:true, li_active:liIndex==this.liActive['menu1-1']}" @click="liIndex=liActive['menu1-1']">
                 <router-link :to="{ path: '/' }">{{ $t('messages.menu1-1') }}</router-link>
               </li>
@@ -31,7 +31,7 @@
                 <span class="plus" v-else>+</span>
               </a>
             </li>
-            <ul class="level1-ul-2 down" v-if="this.navActive.menu2">
+            <ul class="level1-ul-2" v-if="this.navActive.menu2">
               <li class="level2">
                 <a href="#">{{ $t('messages.menu2-1') }}</a>
               </li>
@@ -43,7 +43,7 @@
                 <span class="plus" v-else>+</span>
               </a>
             </li>
-            <ul class="level1-ul-3 down" v-if="this.navActive.menu3">
+            <ul class="level1-ul-3" v-if="this.navActive.menu3">
               <li class="level2">
                 <a href="#">{{ $t('messages.menu3-1') }}</a>
               </li>
@@ -55,7 +55,7 @@
                 <span class="plus" v-else>+</span>
               </a>
             </li>
-            <ul class="level1-ul-4 down" v-if="this.navActive.menu4">
+            <ul class="level1-ul-4" v-if="this.navActive.menu4">
               <li class="level2">
                 <a href="#">{{ $t('messages.menu4-1') }}</a>
               </li>
@@ -67,7 +67,7 @@
                 <span class="plus" v-else>+</span>
               </a>
             </li>
-            <ul class="level1-ul-5 down" v-if="this.navActive.menu5">
+            <ul class="level1-ul-5" v-if="this.navActive.menu5">
               <li class="level2">
                 <a href="#">{{ $t('messages.menu5-1') }}</a>
               </li>
@@ -265,6 +265,8 @@ export default {
         oTop.style.display = 'none';
       }
     }
+
+    this.liIndex = sessionStorage.index;
   },
 
   components: {
@@ -289,6 +291,9 @@ export default {
         ul.style.display = 'none';
       }
       */
+    },
+    activeIndex: function (val) {
+      console.log(val);
     }
   }
 }

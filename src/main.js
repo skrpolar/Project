@@ -17,8 +17,7 @@ Vue.use(VueResource);
 const RouterConfig = {
   mode: 'history',
   base: __dirname,
-  routes: [
-    {
+  routes: [{
       path: '/',
       // redirect: '/index'
     },
@@ -37,11 +36,17 @@ const RouterConfig = {
 
 const router = new VueRouter(RouterConfig);
 
+router.afterEach(route => { //全局路由钩子
+  sessionStorage.index = 11; //跳转至一级菜单首栏
+})
+
 /* eslint-disable no-new */
 var vm = new Vue({
   el: '#app',
   template: '<App/>',
-  components: { App },
+  components: {
+    App
+  },
   router: router
 })
 

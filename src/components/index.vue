@@ -14,6 +14,9 @@ export default {
             msg: 'Welcome to Documentation!',
             indexLocale: this.locale
         }
+    },
+    mounted() {
+        sessionStorage.index = '12';
     }
 }
 </script>
