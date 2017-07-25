@@ -14,14 +14,14 @@
               </a>
             </li>
             <ul class="level1-ul-1 down" v-if="this.navActive.menu1">
-              <li class="level2 li_active">
+              <li :class="{level2:true, li_active:liIndex==this.liActive['menu1-1']}" @click="liIndex=liActive['menu1-1']">
                 <router-link :to="{ path: '/' }">{{ $t('messages.menu1-1') }}</router-link>
               </li>
-              <li class="level2">
-                <router-link :to="{ path: 'index' }">{{ $t('messages.menu1-2') }}</router-link>
+              <li :class="{level2:true, li_active:liIndex==this.liActive['menu1-2']}" @click="liIndex=liActive['menu1-2']">
+                <router-link :to="{ path: '/index' }">{{ $t('messages.menu1-2') }}</router-link>
               </li>
-              <li class="level2">
-                <router-link :to="{ name: 'content3', params: { locale } }">{{ $t('messages.menu1-3') }}</router-link>
+              <li :class="{level2:true, li_active:liIndex==this.liActive['menu1-3']}" @click="liIndex=liActive['menu1-3']">
+                <router-link :to="{ path: `/content3` }">{{ $t('messages.menu1-3') }}</router-link>
               </li>
             </ul>
             <li class="level1" @click="openUl(2)">
@@ -76,14 +76,14 @@
         </div>
         <div class="right_rev">
           <!-- <div class="search">
-            <input type="text">
-          </div> -->
+              <input type="text">
+            </div> -->
           <!-- <p class="head">Header</p>
-          <div class="main_content">
-             <p> 
-               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum cursus leo vehicula sapien elementum, ac tristique ligula pharetra. Nunc iaculis ipsum diam, quis fringilla orci tristique et. Ut ultricies enim ut tellus pellentesque, ac lacinia mi fringilla. Maecenas blandit viverra dui, quis pharetra enim luctus a. Vivamus nisl elit, aliquam eget velit et, ullamcorper blandit quam. Vivamus eget finibus tortor. Nullam vestibulum nibh at purus gravida pulvinar. Maecenas sed sem in eros lobortis malesuada vitae et turpis. Mauris eu purus in erat congue laoreet. Nam ac facilisis mauris. Duis porttitor eget nisi in volutpat. Quisque imperdiet, purus vitae ornare vehicula, sapien odio elementum arcu, nec ultrices orci dolor sit amet ante. Aenean at dignissim velit, vel sagittis urna. Nullam sit amet tempus magna, et porta quam. Nunc semper mi et felis efficitur suscipit. In luctus nulla nec posuere egestas. Ut at facilisis nisl. Fusce facilisis eget dolor a finibus. Nulla cursus eros nec ipsum mollis rhoncus. Proin sed urna vestibulum, ultricies libero quis, rhoncus ante. Vivamus et vulputate libero. Fusce dapibus vestibulum nibh at auctor. Aliquam eget turpis id nunc auctor tempus. Ut posuere, sem quis mattis mollis, enim purus bibendum odio, sed consectetur tellus nunc at ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris eu est nec ex sollicitudin mattis nec vel quam. Vestibulum fringilla justo sed purus vestibulum dignissim. Quisque lobortis risus felis, pharetra convallis neque porttitor ut. Sed sed pellentesque eros. Vestibulum vel tempus arcu. Phasellus viverra magna laoreet sem rutrum facilisis. Vestibulum lacinia aliquet leo sit amet ultrices. Phasellus congue vehicula nisl a pellentesque. Maecenas nec semper dui. Morbi rhoncus ipsum sit amet sapien egestas, nec lacinia enim egestas. Phasellus felis augue, fringilla ut lorem et, congue posuere nisi. Integer pellentesque nulla a leo ultrices efficitur. Aliquam ac cursus elit. Etiam ullamcorper, dui ut sollicitudin iaculis, nibh ligula mattis tortor, eu venenatis leo enim vel nisl. Donec ac convallis nulla. Fusce consectetur ligula ac neque euismod vulputate. Nulla eget enim interdum, aliquet purus a, imperdiet purus. Duis eleifend at velit a interdum. Etiam vulputate vehicula ipsum, vitae lobortis nulla auctor vitae. Curabitur non sem a nibh imperdiet mollis. Ut erat sapien, gravida sit amet nisl id, eleifend consequat augue. Nulla ut lobortis nulla. Praesent placerat nulla vel fermentum sagittis. Donec bibendum ut sapien nec condimentum. Nam fermentum lobortis elementum. Aenean laoreet sit amet nisl at interdum. Nulla vitae hendrerit purus, sed consequat elit. Fusce non tristique sapien, quis dictum lorem. Suspendisse diam diam, vestibulum at ipsum nec, facilisis sagittis augue. Maecenas velit erat, consequat vel finibus vel, pretium ut dolor. Morbi vitae tempor mauris. Integer sit amet pharetra orci, nec dignissim quam. Curabitur mattis nunc nec mauris lobortis, eu volutpat felis sodales. Vivamus eros justo, fermentum ut convallis porttitor, porta ut est. Sed venenatis ut lorem non molestie. Quisque iaculis erat at risus euismod ultricies. Integer porta sit amet elit in hendrerit. Duis in molestie lectus, sed tristique purus. Maecenas ullamcorper est quam, mollis facilisis elit venenatis et. Curabitur elementum orci non porttitor molestie. Aenean ac ex eu ipsum euismod ullamcorper et sed arcu. Aliquam erat volutpat. Vivamus porta orci vel ipsum euismod maximus. Sed quis eros finibus, aliquam tellus nec, pretium massa. Sed nec neque non nulla blandit lacinia. Morbi ullamcorper pellentesque orci, ac rhoncus leo fermentum sed. Quisque venenatis justo at ante lacinia, id rutrum sem dignissim. Integer turpis sem, volutpat vitae tellus sit amet, volutpat luctus arcu. Nulla facilisi. Nunc ante augue, tristique in magna eget, sodales tempor arcu. Vivamus lorem mauris, eleifend vitae malesuada sit amet, semper pulvinar erat. Phasellus mollis non elit eget maximus. Proin vel est vehicula, suscipit ipsum ac, placerat lacus. Aliquam ultricies volutpat porta. Suspendisse interdum urna in pretium gravida. Duis in luctus eros. Fusce eu aliquam mauris, id tempor ligula. In nec auctor nulla. Etiam commodo ligula eu mi tristique, id ultrices lectus tincidunt. Aenean consequat accumsan augue vel feugiat. Nam vitae metus sit amet lorem blandit condimentum ac a nulla. Morbi luctus, erat in dapibus imperdiet, nunc nisl facilisis lorem, vitae maximus lectus lorem in nunc. Suspendisse eu neque pretium mi malesuada dignissim. Curabitur ex est, tempus id egestas dapibus, gravida sed ex. Sed vitae est molestie, volutpat eros laoreet, sagittis dui. Ut vitae sapien bibendum, varius lectus sed, mollis odio. Etiam a suscipit sem, vitae porta ex. Maecenas vestibulum, lorem sed ultrices hendrerit, velit ante egestas magna, efficitur eleifend erat felis in tellus. Cras ligula dui, scelerisque sed metus id, egestas molestie risus. Sed lorem velit, rhoncus fermentum egestas at, condimentum et lacus. Curabitur hendrerit eu sapien sit amet semper. Curabitur et efficitur libero. Nulla facilisi. Proin massa mauris, fermentum et gravida et, maximus eu lectus. Suspendisse aliquet non orci eget gravida. Donec auctor lacus quis massa fermentum, sed placerat turpis ornare.</p> 
-          </div> -->
-          <router-view></router-view>
+            <div class="main_content">
+               <p> 
+                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum cursus leo vehicula sapien elementum, ac tristique ligula pharetra. Nunc iaculis ipsum diam, quis fringilla orci tristique et. Ut ultricies enim ut tellus pellentesque, ac lacinia mi fringilla. Maecenas blandit viverra dui, quis pharetra enim luctus a. Vivamus nisl elit, aliquam eget velit et, ullamcorper blandit quam. Vivamus eget finibus tortor. Nullam vestibulum nibh at purus gravida pulvinar. Maecenas sed sem in eros lobortis malesuada vitae et turpis. Mauris eu purus in erat congue laoreet. Nam ac facilisis mauris. Duis porttitor eget nisi in volutpat. Quisque imperdiet, purus vitae ornare vehicula, sapien odio elementum arcu, nec ultrices orci dolor sit amet ante. Aenean at dignissim velit, vel sagittis urna. Nullam sit amet tempus magna, et porta quam. Nunc semper mi et felis efficitur suscipit. In luctus nulla nec posuere egestas. Ut at facilisis nisl. Fusce facilisis eget dolor a finibus. Nulla cursus eros nec ipsum mollis rhoncus. Proin sed urna vestibulum, ultricies libero quis, rhoncus ante. Vivamus et vulputate libero. Fusce dapibus vestibulum nibh at auctor. Aliquam eget turpis id nunc auctor tempus. Ut posuere, sem quis mattis mollis, enim purus bibendum odio, sed consectetur tellus nunc at ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris eu est nec ex sollicitudin mattis nec vel quam. Vestibulum fringilla justo sed purus vestibulum dignissim. Quisque lobortis risus felis, pharetra convallis neque porttitor ut. Sed sed pellentesque eros. Vestibulum vel tempus arcu. Phasellus viverra magna laoreet sem rutrum facilisis. Vestibulum lacinia aliquet leo sit amet ultrices. Phasellus congue vehicula nisl a pellentesque. Maecenas nec semper dui. Morbi rhoncus ipsum sit amet sapien egestas, nec lacinia enim egestas. Phasellus felis augue, fringilla ut lorem et, congue posuere nisi. Integer pellentesque nulla a leo ultrices efficitur. Aliquam ac cursus elit. Etiam ullamcorper, dui ut sollicitudin iaculis, nibh ligula mattis tortor, eu venenatis leo enim vel nisl. Donec ac convallis nulla. Fusce consectetur ligula ac neque euismod vulputate. Nulla eget enim interdum, aliquet purus a, imperdiet purus. Duis eleifend at velit a interdum. Etiam vulputate vehicula ipsum, vitae lobortis nulla auctor vitae. Curabitur non sem a nibh imperdiet mollis. Ut erat sapien, gravida sit amet nisl id, eleifend consequat augue. Nulla ut lobortis nulla. Praesent placerat nulla vel fermentum sagittis. Donec bibendum ut sapien nec condimentum. Nam fermentum lobortis elementum. Aenean laoreet sit amet nisl at interdum. Nulla vitae hendrerit purus, sed consequat elit. Fusce non tristique sapien, quis dictum lorem. Suspendisse diam diam, vestibulum at ipsum nec, facilisis sagittis augue. Maecenas velit erat, consequat vel finibus vel, pretium ut dolor. Morbi vitae tempor mauris. Integer sit amet pharetra orci, nec dignissim quam. Curabitur mattis nunc nec mauris lobortis, eu volutpat felis sodales. Vivamus eros justo, fermentum ut convallis porttitor, porta ut est. Sed venenatis ut lorem non molestie. Quisque iaculis erat at risus euismod ultricies. Integer porta sit amet elit in hendrerit. Duis in molestie lectus, sed tristique purus. Maecenas ullamcorper est quam, mollis facilisis elit venenatis et. Curabitur elementum orci non porttitor molestie. Aenean ac ex eu ipsum euismod ullamcorper et sed arcu. Aliquam erat volutpat. Vivamus porta orci vel ipsum euismod maximus. Sed quis eros finibus, aliquam tellus nec, pretium massa. Sed nec neque non nulla blandit lacinia. Morbi ullamcorper pellentesque orci, ac rhoncus leo fermentum sed. Quisque venenatis justo at ante lacinia, id rutrum sem dignissim. Integer turpis sem, volutpat vitae tellus sit amet, volutpat luctus arcu. Nulla facilisi. Nunc ante augue, tristique in magna eget, sodales tempor arcu. Vivamus lorem mauris, eleifend vitae malesuada sit amet, semper pulvinar erat. Phasellus mollis non elit eget maximus. Proin vel est vehicula, suscipit ipsum ac, placerat lacus. Aliquam ultricies volutpat porta. Suspendisse interdum urna in pretium gravida. Duis in luctus eros. Fusce eu aliquam mauris, id tempor ligula. In nec auctor nulla. Etiam commodo ligula eu mi tristique, id ultrices lectus tincidunt. Aenean consequat accumsan augue vel feugiat. Nam vitae metus sit amet lorem blandit condimentum ac a nulla. Morbi luctus, erat in dapibus imperdiet, nunc nisl facilisis lorem, vitae maximus lectus lorem in nunc. Suspendisse eu neque pretium mi malesuada dignissim. Curabitur ex est, tempus id egestas dapibus, gravida sed ex. Sed vitae est molestie, volutpat eros laoreet, sagittis dui. Ut vitae sapien bibendum, varius lectus sed, mollis odio. Etiam a suscipit sem, vitae porta ex. Maecenas vestibulum, lorem sed ultrices hendrerit, velit ante egestas magna, efficitur eleifend erat felis in tellus. Cras ligula dui, scelerisque sed metus id, egestas molestie risus. Sed lorem velit, rhoncus fermentum egestas at, condimentum et lacus. Curabitur hendrerit eu sapien sit amet semper. Curabitur et efficitur libero. Nulla facilisi. Proin massa mauris, fermentum et gravida et, maximus eu lectus. Suspendisse aliquet non orci eget gravida. Donec auctor lacus quis massa fermentum, sed placerat turpis ornare.</p> 
+            </div> -->
+          <router-view :locale="locale"></router-view>
         </div>
         <div class="oTop">
           <div>^</div>
@@ -95,14 +95,14 @@
   </div>
   
   <!-- <div id="app">
-                        <p>{{ msg }}</p>
-                        <firstcomponent ref="p"></firstcomponent>
-                        <a href="/first">1.First Page </a>
-                        <a href="/second">2.Second Page</a>
-                        <transition name="fade" mode="out-in">
-                          <router-view></router-view>
-                        </transition>
-                      </div> -->
+  <p>{{ msg }}</p>
+  <firstcomponent ref="p"></firstcomponent>
+  <a href="/first">1.First Page </a>
+  <a href="/second">2.Second Page</a>
+  <transition name="fade" mode="out-in">
+  <router-view></router-view>
+  </transition>
+  </div> -->
 </template>
 
 <script>
@@ -113,6 +113,7 @@ import FooterLine2 from './components/footer2.vue';
 import VueI18n from 'vue-i18n';
 
 var i18n = new VueI18n({
+  locale: 'ch',
   messages: {
     ch: {
       messages: {
@@ -127,7 +128,7 @@ var i18n = new VueI18n({
         menu4: '页脚一',
         'menu4-1': '内容六',
         menu5: '页脚二',
-        'menue5-1': '内容七'
+        'menu5-1': '内容七'
       }
     },
     en: {
@@ -156,6 +157,16 @@ export default {
       url: "",
       isEmputy: false,
       locale: "ch",
+      liIndex: 11,
+      liActive: {
+        'menu1-1': 11,
+        'menu1-2': 12,
+        'menu1-3': 13,
+        'menu2-1': 21,
+        'menu3-1': 31,
+        'menu4-1': 41,
+        'menu5-1': 51,
+      },
       navActive: {
         menu1: true,
         menu2: false,
@@ -228,19 +239,19 @@ export default {
     }
 
     window.moveScroll = function () {
-        var t = document.documentElement.scrollTop || document.body.scrollTop;
-        var clientWidth = docEl.clientWidth;
-        if( (t / clientWidth) > 0.05 ) {
-          document.documentElement.scrollTop = document.documentElement.scrollTop - 30;
-          document.body.scrollTop = document.body.scrollTop - 30;
-        }else {
-          document.documentElement.scrollTop = document.documentElement.scrollTop - 5;
-          document.body.scrollTop = document.body.scrollTop - 5;
-        }
-        
-        if( (document.documentElement.scrollTop > 0) || (document.body.scrollTop > 0) ) {
-          setTimeout(moveScroll, 10);
-        }
+      var t = document.documentElement.scrollTop || document.body.scrollTop;
+      var clientWidth = docEl.clientWidth;
+      if ((t / clientWidth) > 0.05) {
+        document.documentElement.scrollTop -= 30;
+        document.body.scrollTop -= 30;
+      } else {
+        document.documentElement.scrollTop -= 5;
+        document.body.scrollTop -= 5;
+      }
+
+      if ((document.documentElement.scrollTop > 0) || (document.body.scrollTop > 0)) {
+        setTimeout(moveScroll, 10);
+      }
     }
 
     /* 滚动栏 */
@@ -248,9 +259,9 @@ export default {
       var t = document.documentElement.scrollTop || document.body.scrollTop;
       var clientWidth = docEl.clientWidth;
       // var left_nav = document.getElementsByClassName('left_nav')[0];
-      if( (t / clientWidth) > 0.20876 ) {
+      if ((t / clientWidth) > 0.20876) {
         oTop.style.display = 'block';
-      }else {
+      } else {
         oTop.style.display = 'none';
       }
     }
@@ -269,7 +280,7 @@ export default {
     openUl: function (val) {
       this.navActive['menu' + val] = !this.navActive['menu' + val];
       var ul = document.getElementsByClassName('level1-ul-' + val)[0];
-      console.log(this.navActive['menu' + val]);
+      // console.log(this.navActive['menu' + val]);
 
       /* 菜单显示功能由v-if代替
       if (this.navActive['menu' + val]) {
@@ -312,6 +323,7 @@ export default {
   margin-top: 0.5rem;
 }
 
+
 /* -----左侧导航栏------*/
 
 .plus {
@@ -327,19 +339,13 @@ export default {
 }
 
 .left_nav {
-  width: 18%;
-  margin: 0;
-  background: white;
-  border-top: 0.01rem solid #f5f5f5;
-  border-left: 0.01rem solid #f5f5f5;
-  border-bottom: 0.01rem solid #f5f5f5;
-  float: left;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  width: 17%;   
+  border-right: 0.01rem solid #e9e9e9;
 }
 
 .left_nav ul {
   margin: 0;
+  width: 100%;
 }
 
 .left_nav ul:first-child {
@@ -383,11 +389,6 @@ export default {
   color: #369fe8;
 }
 
-.down {
-  /* border-top: 1px solid #c9c9c9; */
-  /* border-bottom: 1px solid #c9c9c9; */
-}
-
 @keyframes fade-in {
   0% {
     background: #fff;
@@ -411,10 +412,6 @@ export default {
     background: #efefef;
   }
 }
-
-
-
-
 
 
 /*---------------------*/
@@ -458,20 +455,11 @@ export default {
 
 
 
+
 /* -----右侧显示栏------*/
 
 .right_rev {
-  width: 82%;
-  margin: 0;
-  background: white;
-  border-top: 0.01rem solid #f5f5f5;
-  border-left: 0.01rem solid #f5f5f5;
-  border-right: 0.01rem solid #f5f5f5;
-  border-left: 0.01rem solid #e9e9e9;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  margin-left: 2.895rem; /* 2.895rem border:1px */
+  width: 83%;
 }
 
 .right_rev .head {
@@ -496,11 +484,6 @@ export default {
   font-size: 0.2rem;
 }
 
-
-
-
-
-
 /*--------------------*/
 
 .english32 {
@@ -524,9 +507,16 @@ export default {
   width: 16rem;
   margin: 0 auto;
   text-align: center;
-  /* background-color: rgba(255, 255, 255, 0.9); */
+  /* border: 0.01rem solid #f5f5f5; */
+  background: rgba(255, 255, 255, 1);  
+  /* background: white; */
   margin-top: 0.46rem;
   padding-bottom: 0.8rem;
+  display: flex;
+}
+
+.content > div {
+  /* box-sizing: border-box; */
 }
 
 .title {
@@ -593,6 +583,7 @@ export default {
 .content_mask {
   margin: 0 2rem;
 }
+
 
 
 
