@@ -7,6 +7,8 @@ import './common/css/animate.css'
 // import './common/css/lyicon.css'
 
 // components
+import index from './components/index.vue'
+import error404 from './components/error404.vue'
 import content2 from './components/content2.vue'
 import content3 from './components/content3.vue'
 import content4 from './components/content4.vue'
@@ -27,7 +29,12 @@ const RouterConfig = {
   routes: [
     {
       path: '/',
+      component: index
       // redirect: '/index'
+    },
+    {
+      path: '*',
+      component: error404
     },
     {
       path: '/content2',

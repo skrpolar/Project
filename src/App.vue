@@ -76,6 +76,9 @@
           </ul>
         </div>
         <div class="right_rev">
+          <div class="search">
+            <img src="./assets/search.png">
+          </div>
           <router-view :locale="locale"></router-view>
         </div>
         <div class="oTop">
@@ -103,6 +106,7 @@ import Vue from 'vue';
 import HeaderLine from './components/header.vue';
 import FooterLine from './components/footer.vue';
 import FooterLine2 from './components/footer2.vue';
+import content3 from './components/content3.vue'
 import VueI18n from 'vue-i18n';
 
 var i18n = new VueI18n({
@@ -112,15 +116,15 @@ var i18n = new VueI18n({
       messages: {
         menu1: '开始前必读',
         menu1_1: '介绍',
-        menu1_2: '内容二',
-        menu1_3: '内容三',
-        menu2: '标题二',
-        menu2_1: '内容四',
-        menu3: '主内容',
+        menu1_2: '公众号接口权限说明',
+        menu1_3: '入门指引',
+        menu2: '开始开发',
+        menu2_1: '接入指南',
+        menu3: '自定义菜单',
         menu3_1: '内容五',
-        menu4: '页脚一',
+        menu4: '素材管理',
         menu4_1: '内容六',
-        menu5: '页脚二',
+        menu5: '用户管理',
         menu5_1: '内容七'
       }
     },
@@ -150,7 +154,7 @@ export default {
       url: "",
       isEmputy: false,
       locale: "ch",
-      /* 模板结构化
+      /* 模板结构化，v-for有问题。
       navInit: {
         menu1: {
           hasNext: true,
@@ -295,6 +299,7 @@ export default {
       var t = document.documentElement.scrollTop || document.body.scrollTop;
       var clientWidth = docEl.clientWidth;
       // var left_nav = document.getElementsByClassName('left_nav')[0];
+      console.log((t / clientWidth));
       if ((t / clientWidth) > 0.20876) {
         oTop.style.display = 'block';
       } else {
@@ -308,6 +313,10 @@ export default {
         this.navActive[i] = true;
       }
     }
+
+    // 通过导入来搜索内容
+    // var s = content3.data();
+    // console.log(s.msg);
   },
 
   components: {
@@ -326,7 +335,7 @@ export default {
       var ul = document.getElementsByClassName('level1-ul-' + val)[0];
       // console.log(this.navActive['menu' + val]);
 
-      // 菜单显示功能由v-if代替
+      // 菜单显示功能已被v-if代替
       if (this.navActive['menu' + val]) {
         // ul.style.display = 'block'; 
       } else {
@@ -335,9 +344,10 @@ export default {
   
     },
     */  
-    activeIndex: function (val) {
-      console.log(val);
-    }
+    // 该功能已被:class代替
+    // activeIndex: function (val) {
+    //   console.log(val);
+    // }
   }
 }
 
@@ -520,28 +530,17 @@ export default {
   width: 83%;
 }
 
-.right_rev .head {
-  font-size: 0.4rem;
-  color: #333F5C;
-  margin-top: 1rem;
+.right_rev .search {
+  width: 5rem;
+  height: 0.5rem;
 }
 
-.right_rev .main_content {
-  margin: 0 1rem;
-  font-size: 0.20rem;
-  color: #333F5C;
-  line-height: 0.36rem;
-  text-align: left;
+.right_rev img {
+  margin-bottom: 0.2rem;
+  margin-left: 12.5rem;
+  width: 0.4rem;
+  cursor: pointer;
 }
-
-.right_rev .search {}
-
-.right_rev .search input {
-  border: 0.01rem solid #b9b9b9;
-  border-radius: 0.05rem;
-  font-size: 0.2rem;
-}
-
 
 /*--------------------*/
 
@@ -572,10 +571,6 @@ export default {
   margin-top: 0.46rem;
   padding-bottom: 0.8rem;
   display: flex;
-}
-
-.content>div {
-  /* box-sizing: border-box; */
 }
 
 .title {
@@ -642,8 +637,6 @@ export default {
 .content_mask {
   margin: 0 2rem;
 }
-
-
 
 
 

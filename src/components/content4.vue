@@ -17,6 +17,7 @@ export default {
     mounted() {
         sessionStorage.index = '21';
         sessionStorage.navIndex = 'menu2';
+        // console.log(this.$el.innerHTML);
     }
 }
 </script>
@@ -25,7 +26,7 @@ export default {
 .index_head {
     font-size: 0.4rem;
     color: #333F5C;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
 

@@ -1,8 +1,84 @@
 <template>
     <div id="content2">
-        <div class="content2_head">Header</div>
-        <div class="content2_content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum cursus leo vehicula sapien elementum, ac tristique ligula pharetra. Nunc iaculis ipsum diam, quis fringilla orci tristique et. Ut ultricies enim ut tellus pellentesque, ac lacinia mi fringilla. Maecenas blandit viverra dui, quis pharetra enim luctus a. Vivamus nisl elit, aliquam eget velit et, ullamcorper blandit quam. Vivamus eget finibus tortor. Nullam vestibulum nibh at purus gravida pulvinar. Maecenas sed sem in eros lobortis malesuada vitae et turpis. Mauris eu purus in erat congue laoreet. Nam ac facilisis mauris. Duis porttitor eget nisi in volutpat. Quisque imperdiet, purus vitae ornare vehicula, sapien odio elementum arcu, nec ultrices orci dolor sit amet ante. Aenean at dignissim velit, vel sagittis urna. Nullam sit amet tempus magna, et porta quam. Nunc semper mi et felis efficitur suscipit. In luctus nulla nec posuere egestas. Ut at facilisis nisl. Fusce facilisis eget dolor a finibus. Nulla cursus eros nec ipsum mollis rhoncus. Proin sed urna vestibulum, ultricies libero quis, rhoncus ante. Vivamus et vulputate libero. Fusce dapibus vestibulum nibh at auctor. Aliquam eget turpis id nunc auctor tempus. Ut posuere, sem quis mattis mollis, enim purus bibendum odio, sed consectetur tellus nunc at ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris eu est nec ex sollicitudin mattis nec vel quam. Vestibulum fringilla justo sed purus vestibulum dignissim. Quisque lobortis risus felis, pharetra convallis neque porttitor ut. Sed sed pellentesque eros. Vestibulum vel tempus arcu. Phasellus viverra magna laoreet sem rutrum facilisis. Vestibulum lacinia aliquet leo sit amet ultrices. Phasellus congue vehicula nisl a pellentesque. Maecenas nec semper dui. Morbi rhoncus ipsum sit amet sapien egestas, nec lacinia enim egestas. Phasellus felis augue, fringilla ut lorem et, congue posuere nisi. Integer pellentesque nulla a leo ultrices efficitur. Aliquam ac cursus elit. Etiam ullamcorper, dui ut sollicitudin iaculis, nibh ligula mattis tortor, eu venenatis leo enim vel nisl. Donec ac convallis nulla. Fusce consectetur ligula ac neque euismod vulputate. Nulla eget enim interdum, aliquet purus a, imperdiet purus. Duis eleifend at velit a interdum. Etiam vulputate vehicula ipsum, vitae lobortis nulla auctor vitae. Curabitur non sem a nibh imperdiet mollis. Ut erat sapien, gravida sit amet nisl id, eleifend consequat augue. Nulla ut lobortis nulla. Praesent placerat nulla vel fermentum sagittis. Donec bibendum ut sapien nec condimentum. Nam fermentum lobortis elementum. Aenean laoreet sit amet nisl at interdum. Nulla vitae hendrerit purus, sed consequat elit. Fusce non tristique sapien, quis dictum lorem. Suspendisse diam diam, vestibulum at ipsum nec, facilisis sagittis augue. Maecenas velit erat, consequat vel finibus vel, pretium ut dolor. Morbi vitae tempor mauris. Integer sit amet pharetra orci, nec dignissim quam. Curabitur mattis nunc nec mauris lobortis, eu volutpat felis sodales. Vivamus eros justo, fermentum ut convallis porttitor, porta ut est. Sed venenatis ut lorem non molestie. Quisque iaculis erat at risus euismod ultricies. Integer porta sit amet elit in hendrerit. Duis in molestie lectus, sed tristique purus. Maecenas ullamcorper est quam, mollis facilisis elit venenatis et. Curabitur elementum orci non porttitor molestie. Aenean ac ex eu ipsum euismod ullamcorper et sed arcu. Aliquam erat volutpat. Vivamus porta orci vel ipsum euismod maximus. Sed quis eros finibus, aliquam tellus nec, pretium massa. Sed nec neque non nulla blandit lacinia. Morbi ullamcorper pellentesque orci, ac rhoncus leo fermentum sed. Quisque venenatis justo at ante lacinia, id rutrum sem dignissim. Integer turpis sem, volutpat vitae tellus sit amet, volutpat luctus arcu. Nulla facilisi. Nunc ante augue, tristique in magna eget, sodales tempor arcu. Vivamus lorem mauris, eleifend vitae malesuada sit amet, semper pulvinar erat. Phasellus mollis non elit eget maximus. Proin vel est vehicula, suscipit ipsum ac, placerat lacus. Aliquam ultricies volutpat porta. Suspendisse interdum urna in pretium gravida. Duis in luctus eros. Fusce eu aliquam mauris, id tempor ligula. In nec auctor nulla. Etiam commodo ligula eu mi tristique, id ultrices lectus tincidunt. Aenean consequat accumsan augue vel feugiat. Nam vitae metus sit amet lorem blandit condimentum ac a nulla. Morbi luctus, erat in dapibus imperdiet, nunc nisl facilisis lorem, vitae maximus lectus lorem in nunc. Suspendisse eu neque pretium mi malesuada dignissim. Curabitur ex est, tempus id egestas dapibus, gravida sed ex. Sed vitae est molestie, volutpat eros laoreet, sagittis dui. Ut vitae sapien bibendum, varius lectus sed, mollis odio. Etiam a suscipit sem, vitae porta ex. Maecenas vestibulum, lorem sed ultrices hendrerit, velit ante egestas magna, efficitur eleifend erat felis in tellus. Cras ligula dui, scelerisque sed metus id, egestas molestie risus. Sed lorem velit, rhoncus fermentum egestas at, condimentum et lacus. Curabitur hendrerit eu sapien sit amet semper. Curabitur et efficitur libero. Nulla facilisi. Proin massa mauris, fermentum et gravida et, maximus eu lectus. Suspendisse aliquet non orci eget gravida. Donec auctor lacus quis massa fermentum, sed placerat turpis ornare.</p>
+        <div class="r_main_content">
+            <div class="r_head">公众号接口权限说明</div>
+            <p>不同的公众号类型具备不同的接口权限，具体如下表： 请注意：</p>
+            <p>1、微博认证视作未认证,因此微博认证的公众号不会拥有微信认证公众号特有的接口。</p>
+            <p>2、微信认证分为资质认证和名称认证两部分，只需要资质认证通过，就可获得接口。</p>
+            <table class="r_table">
+                <tbody>
+                    <tr>
+                        <th>接口名称</th>
+                        <th>未认证订阅号</th>
+                        <th>微信认证订阅号</th>
+                        <th>未认证服务号</th>
+                        <th>微信认证服务号</th>
+                    </tr>
+                    <tr>
+                        <td>基础支持-获取access_token</td>
+                        <td>有</td>
+                        <td>有</td>
+                        <td>有</td>
+                        <td>有</td>
+                    </tr>
+                    <tr>
+                        <td>基础支持-获取微信服务器IP地址	</td>
+                        <td>有</td>
+                        <td>有</td>
+                        <td>有</td>
+                        <td>有</td>
+                    </tr>
+                    <tr>
+                        <td>接收消息-验证消息真实性</td>
+                        <td>有</td>
+                        <td>有</td>
+                        <td>有</td>
+                        <td>有</td>
+                    </tr>
+                    <tr>
+                        <td>发送消息-被动回复消息</td>
+                        <td>有</td>
+                        <td>有</td>
+                        <td>有</td>
+                        <td>有</td>
+                    </tr>
+                    <tr>
+                        <td>发送消息-客服接口</td>
+                        <td>无</td>
+                        <td>有</td>
+                        <td>无</td>
+                        <td>有</td>
+                    </tr>
+                    <tr>
+                        <td>发送消息-群发接口</td>
+                        <td>无</td>
+                        <td>有</td>
+                        <td>无</td>
+                        <td>有</td>
+                    </tr>
+                    <tr>
+                        <td>用户管理-用户分组管理</td>
+                        <td>无</td>
+                        <td>有</td>
+                        <td>无</td>
+                        <td>有</td>
+                    </tr>
+                    <tr>
+                        <td>用户管理-设置用户备注名</td>
+                        <td>无</td>
+                        <td>有</td>
+                        <td>无</td>
+                        <td>有</td>
+                    </tr>
+                    <tr>
+                        <td>用户管理-获取用户地理位置</td>
+                        <td>无</td>
+                        <td>有</td>
+                        <td>无</td>
+                        <td>有</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template>
@@ -22,19 +98,59 @@ export default {
 </script>
 
 <style>
-.content2_head {
-    font-size: 0.4rem;
+.r_main_content {
+    width: 80%;
+    margin: 0 auto;
     color: #333F5C;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
+    font-size: 0.2rem; /* 默认字体 */
 }
 
-.content2_content {
-    margin: 0 1rem;
-    font-size: 0.20rem;
-    color: #333F5C;
-    line-height: 0.36rem;
+.r_head {
+    font-size: 0.3rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 0.01rem solid #e9e9e9;
+    padding-bottom: 0.4rem; 
+    text-align: left; 
+}
+
+.r_main_content p {
+    font-size: 0.2rem;
     text-align: left;
+    line-height: 0.35rem;
+}
+
+.info {
+    padding: 0.2rem 0.5rem; 
+    background: #f5f5f5;
+}
+
+.bold_head {
+    text-align: left;
+    font-weight: 900;
+    font-size: 0.22rem;
+}
+
+.r_table {
+    border: 0.01rem solid #e9e9e9;
+}
+
+.r_table th, .r_table td{
+    margin: 0;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 0.01rem solid #e9e9e9;
+    width: 20%;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+
+.r_table th {
+    background: #f2f2f2;
+}
+
+.r_table tr:last-child td{
+    border: 0rem;
 }
 </style>
 
