@@ -1,6 +1,6 @@
 <template>
     <div id="content3">
-        <div class="content3_head">Content3</div>
+        <div class="content3_head">{{ $t('messages.title') }}</div>
         <!-- <div class="content3_content" v-if="locale=='ch'">chinese</div>
                     <div class="content3_content" v-else>english</div> -->
         <div class="content3_content">{{ $t('messages.msg') }}</div>
@@ -19,11 +19,13 @@ var i18n = new VueI18n({
         ch: {
             messages: {
                 msg: '内容三',
+                title: '标题三'
             }
         },
         en: {
             messages: {
                 msg: 'content3',
+                title: 'Title3'
             }
         }
     }
@@ -36,9 +38,10 @@ export default {
         }
     },
     mounted: function () {
-        this.$i18n.locale = localStorage.locale;
+        this.$i18n.locale = localStorage.locale; // 默认语言设置
         this.locale = localStorage.locale;
         sessionStorage.index = '13';
+        sessionStorage.navIndex = 'menu1';
     },
     props: ['locale'],
     i18n: i18n,

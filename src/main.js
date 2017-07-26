@@ -1,12 +1,19 @@
 import Vue from 'vue'
 import App from './App.vue'
-import VueRouter from "vue-router"
+import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
-import index from './components/index.vue'
-import content3 from './components/content3.vue'
 import './common/css/reset.css'
 import './common/css/animate.css'
 // import './common/css/lyicon.css'
+
+// components
+import content2 from './components/content2.vue'
+import content3 from './components/content3.vue'
+import content4 from './components/content4.vue'
+import content5 from './components/content5.vue'
+import content6 from './components/content6.vue'
+import content7 from './components/content7.vue'
+
 
 // Vue.config.debug = true;
 
@@ -17,19 +24,34 @@ Vue.use(VueResource);
 const RouterConfig = {
   mode: 'history',
   base: __dirname,
-  routes: [{
+  routes: [
+    {
       path: '/',
       // redirect: '/index'
     },
     {
-      path: '/index',
-      component: index,
-      name: 'index'
+      path: '/content2',
+      component: content2
     },
     {
       path: '/content3',
-      component: content3,
-      name: 'content3'
+      component: content3
+    },
+    {
+      path: '/content4',
+      component: content4
+    },
+    {
+      path: '/content5',
+      component: content5
+    },
+    {
+      path: '/content6',
+      component: content6
+    },
+    {
+      path: '/content7',
+      component: content7
     }
   ]
 };
@@ -38,6 +60,7 @@ const router = new VueRouter(RouterConfig);
 
 router.afterEach(route => { //全局路由钩子
   sessionStorage.index = 11; //跳转至一级菜单首栏
+  sessionStorage.navIndex = 'menu1';
 })
 
 /* eslint-disable no-new */
