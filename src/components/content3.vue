@@ -38,8 +38,7 @@ export default {
         }
     },
     mounted: function () {
-        this.$i18n.locale = localStorage.locale; // 默认语言设置
-        this.locale = localStorage.locale;
+        this.$i18n.locale = localStorage.locale;
         sessionStorage.index = '13';
         sessionStorage.navIndex = 'menu1';
     },

@@ -6,73 +6,72 @@
       <div class="content">
         <div class="left_nav">
           <ul>
- 
             <li class="level1" @click="navActive.menu1=!navActive.menu1">
               <a href="javascript:">
+                <span class="sub" v-if="navActive.menu1">^</span>
+                <span class="plus" v-else>^</span>
                 {{ $t('messages.menu1') }}
-                <span class="sub" v-if="this.navActive.menu1">-</span>
-                <span class="plus" v-else>+</span>
               </a>
             </li>
-            <ul class="level1-ul-1" v-if="this.navActive.menu1">
-              <li :class="{level2:true, li_active:liIndex==this.liActive['menu1_1']}" @click="liIndex=liActive['menu1_1']">
-                <router-link :to="{ path: '/' }">{{ $t('messages.menu1_1') }}</router-link>
+            <ul :class="{level_ul:true, open3:navActive.menu1}"> <!-- 控制菜单方式由v-if更改为css样式实现动画效果 -->
+              <li :class="{level2:true, li_active:liIndex==liActive['menu1_1']}" @click="liIndex=liActive['menu1_1']">
+                <router-link :title="$t('messages.menu1_1')" :to="{ path: '/' }">{{ $t('messages.menu1_1') }}</router-link>
               </li>
-              <li :class="{level2:true, li_active:liIndex==this.liActive['menu1_2']}" @click="liIndex=liActive['menu1_2']">
-                <router-link :to="{ path: '/content2' }">{{ $t('messages.menu1_2') }}</router-link>
+              <li :class="{level2:true, li_active:liIndex==liActive['menu1_2']}" @click="liIndex=liActive['menu1_2']">
+                <router-link :title="$t('messages.menu1_2')" :to="{ path: '/content2' }">{{ $t('messages.menu1_2') }}</router-link>
               </li>
-              <li :class="{level2:true, li_active:liIndex==this.liActive['menu1_3']}" @click="liIndex=liActive['menu1_3']">
-                <router-link :to="{ path: `/content3` }">{{ $t('messages.menu1_3') }}</router-link>
+              <li :class="{level2:true, li_active:liIndex==liActive['menu1_3']}" @click="liIndex=liActive['menu1_3']">
+                <router-link :title="$t('messages.menu1_3')" :to="{ path: `/content3` }">{{ $t('messages.menu1_3') }}</router-link>
               </li>
             </ul>
             <li class="level1" @click="navActive.menu2=!navActive.menu2">
               <a href="javascript:">
+                <span class="sub" v-if="navActive.menu2">^</span>
+                <span class="plus" v-else>^</span>
                 {{ $t('messages.menu2') }}
-                <span class="sub" v-if="this.navActive.menu2">-</span>
-                <span class="plus" v-else>+</span>
               </a>
             </li>
-            <ul class="level1-ul-2" v-if="this.navActive.menu2">
-              <li :class="{level2:true, li_active:liIndex==this.liActive['menu2_1']}" @click="liIndex=liActive['menu2_1']">
-                <router-link :to="{ path: `/content4` }">{{ $t('messages.menu2_1') }}</router-link>
+            <ul :class="{level_ul:true, open1:navActive.menu2}">
+              <li :class="{level2:true, li_active:liIndex==liActive['menu2_1']}" @click="liIndex=liActive['menu2_1']">
+                <router-link :title="$t('messages.menu2_1')" :to="{ path: `/content4` }">{{ $t('messages.menu2_1') }}</router-link>
               </li>
             </ul>
             <li class="level1" @click="navActive.menu3=!navActive.menu3">
               <a href="javascript:">
+                <span class="sub" v-if="navActive.menu3">^</span>
+                <span class="plus" v-else>^</span>
                 {{ $t('messages.menu3') }}
-                <span class="sub" v-if="this.navActive.menu3">-</span>
-                <span class="plus" v-else>+</span>
               </a>
             </li>
-            <ul class="level1-ul-3" v-if="this.navActive.menu3">
-              <li :class="{level2:true, li_active:liIndex==this.liActive['menu3_1']}" @click="liIndex=liActive['menu3_1']">
-                <router-link :to="{ path: `/content5` }">{{ $t('messages.menu3_1') }}</router-link>
+            <ul :class="{level_ul:true, open1:navActive.menu3}">
+              <li :class="{level2:true, li_active:liIndex==liActive['menu3_1']}" @click="liIndex=liActive['menu3_1']">
+                <router-link :title="$t('messages.menu3_1')" :to="{ path: `/content5` }">{{ $t('messages.menu3_1') }}</router-link>
               </li>
             </ul>
             <li class="level1" @click="navActive.menu4=!navActive.menu4">
               <a href="javascript:">
+                <span class="sub" v-if="navActive.menu4">^</span>
+                <span class="plus" v-else>^</span>
                 {{ $t('messages.menu4') }}
-                <span class="sub" v-if="this.navActive.menu4">-</span>
-                <span class="plus" v-else>+</span>
               </a>
             </li>
-            <ul class="level1-ul-4" v-if="this.navActive.menu4">
-              <li :class="{level2:true, li_active:liIndex==this.liActive['menu4_1']}" @click="liIndex=liActive['menu4_1']">
-                <router-link :to="{ path: `/content6` }">{{ $t('messages.menu4_1') }}</router-link>
+            <ul :class="{level_ul:true, open1:navActive.menu4}">
+              <li :class="{level2:true, li_active:liIndex==liActive['menu4_1']}" @click="liIndex=liActive['menu4_1']">
+                <router-link :title="$t('messages.menu4_1')" :to="{ path: `/content6` }">{{ $t('messages.menu4_1') }}</router-link>
               </li>
             </ul>
             <li class="level1" @click="navActive.menu5=!navActive.menu5">
               <a href="javascript:">
+                <span class="sub" v-if="navActive.menu5">^</span>
+                <span class="plus" v-else>^</span>
                 {{ $t('messages.menu5') }}
-                <span class="sub" v-if="this.navActive.menu5">-</span>
-                <span class="plus" v-else>+</span>
               </a>
             </li>
-            <ul class="level1-ul-5" v-if="this.navActive.menu5">
-              <li :class="{level2:true, li_active:liIndex==this.liActive['menu5_1']}" @click="liIndex=liActive['menu5_1']">
-                <router-link :to="{ path: `/content7` }">{{ $t('messages.menu5_1') }}</router-link>
+            <ul :class="{level_ul:true, open1:navActive.menu5}">
+              <li :class="{level2:true, li_active:liIndex==liActive['menu5_1']}" @click="liIndex=liActive['menu5_1']">
+                <router-link :title="$t('messages.menu5_1')" :to="{ path: `/content7` }">{{ $t('messages.menu5_1') }}</router-link>
               </li>
-            </ul> 
+            </ul>
           </ul>
         </div>
         <div class="right_rev">
@@ -89,16 +88,6 @@
     <FooterLine v-if="locale=='ch'"></FooterLine>
     <FooterLine2 v-else></FooterLine2>
   </div>
-  
-  <!-- <div id="app">
-    <p>{{ msg }}</p>
-    <firstcomponent ref="p"></firstcomponent>
-    <a href="/first">1.First Page </a>
-    <a href="/second">2.Second Page</a>
-    <transition name="fade" mode="out-in">
-    <router-view></router-view>
-    </transition>
-    </div> -->
 </template>
 
 <script>
@@ -106,7 +95,9 @@ import Vue from 'vue';
 import HeaderLine from './components/header.vue';
 import FooterLine from './components/footer.vue';
 import FooterLine2 from './components/footer2.vue';
-import content3 from './components/content3.vue'
+import index from './components/index.vue'
+import './common/css/reset.css'
+import './common/css/animate.css'
 import VueI18n from 'vue-i18n';
 
 var i18n = new VueI18n({
@@ -132,8 +123,8 @@ var i18n = new VueI18n({
       messages: {
         menu1: 'Start',
         menu1_1: 'Introduction',
-        menu1_2: 'Content2',
-        menu1_3: 'Content3',
+        menu1_2: 'Public address interface',
+        menu1_3: 'Getting Started Guide',
         menu2: 'Header2',
         menu2_1: 'Content4',
         menu3: 'MainBody',
@@ -153,7 +144,7 @@ export default {
     return {
       url: "",
       isEmputy: false,
-      locale: "ch",
+      locale: localStorage.locale,
       /* 模板结构化，v-for有问题。
       navInit: {
         menu1: {
@@ -252,6 +243,7 @@ export default {
 
       this.$i18n.locale = initLanguage;
       this.locale = initLanguage;
+      localStorage.locale = initLanguage;
     }
 
 
@@ -299,7 +291,7 @@ export default {
       var t = document.documentElement.scrollTop || document.body.scrollTop;
       var clientWidth = docEl.clientWidth;
       // var left_nav = document.getElementsByClassName('left_nav')[0];
-      console.log((t / clientWidth));
+      // console.log((t / clientWidth));
       if ((t / clientWidth) > 0.20876) {
         oTop.style.display = 'block';
       } else {
@@ -308,15 +300,15 @@ export default {
     }
 
     this.liIndex = sessionStorage.index; // 从路由传正确的li index
-    for(var i in this.navActive) {
-      if( i == sessionStorage.navIndex ) {
+    for (var i in this.navActive) {
+      if (i == sessionStorage.navIndex) {
         this.navActive[i] = true;
       }
     }
 
     // 通过导入来搜索内容
-    // var s = content3.data();
-    // console.log(s.msg);
+    var s = index;
+    console.log(s.i18n.messages.ch);
   },
 
   components: {
@@ -343,7 +335,7 @@ export default {
       }
   
     },
-    */  
+    */
     // 该功能已被:class代替
     // activeIndex: function (val) {
     //   console.log(val);
@@ -383,23 +375,39 @@ export default {
 
 
 
+
+
 /* -----左侧导航栏------*/
+
+@-moz-document url-prefix() {
+  
+}
 
 .plus {
   float: right;
-  font-size: 0.3rem;
-  margin-right: 0.2rem;
+  font-size: 0.2rem;
+  margin-right: 0.05rem;
+  transform: scale(1.35, 1) rotate(180deg);
+  -ms-transform: scale(1.35, 1) rotate(180deg);
+  -moz-transform: scale(1.35, 1) rotate(180deg);
+  -webkit-transform: scale(1.35, 1) rotate(180deg);
+  -o-transform: scale(1.35, 1) rotate(180deg);
 }
 
 .sub {
   float: right;
-  font-size: 0.3rem;
-  margin-right: 0.26rem;
+  font-size: 0.2rem;
+  margin-top: 0.04rem;
+  margin-right: 0.05rem;
+  transform: scale(1.35, 1);
+  -ms-transform: scale(1.35, 1);
+  -webkit-transform: scale(1.35, 1);
+  -o-transform: scale(1.35, 1);
+  -moz-transform: scale(1.35, 1);
 }
 
 .left_nav {
   width: 17%;
-  border-right: 0.01rem solid #e9e9e9;
 }
 
 .left_nav ul {
@@ -428,6 +436,10 @@ export default {
   text-align: left;
   line-height: 0.6rem;
   padding-left: 0.4rem;
+  padding-right: 0.2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   transform: translate(0, 0);
   transition: background .2s ease-in 0s;
 }
@@ -443,9 +455,13 @@ export default {
   -webkit-animation: fade-in .35s;
 }
 
+.left_nav .li_active{
+  border-right: 0.03rem solid #369fe8;
+}
+
 .left_nav .li_active a {
-  border-right: 2px solid #369fe8;
   color: #369fe8;
+  /* border-right: 0.03rem solid #369fe8; */
 }
 
 .left_nav .level2 a {
@@ -459,6 +475,26 @@ export default {
 .left_nav .level4 a {
   padding-left: 0.75rem;
 }
+
+.left_nav .level_ul {
+  height: 0rem; 
+  overflow: hidden;
+  transform: translate(0, 0); 
+  transition: height .2s ease-in-out 0s;
+}
+
+.left_nav .open1 {
+  height: 0.6rem;
+}
+
+.left_nav .open2 {
+  height: 1.2rem;
+}
+
+.left_nav .open3 {
+  height: 1.8rem;
+}
+
 
 @keyframes fade-in {
   0% {
@@ -486,6 +522,8 @@ export default {
 
 
 
+
+
 /*---------------------*/
 
 .oTop {
@@ -507,7 +545,8 @@ export default {
 
 .oTop div {
   margin-left: -0.012rem;
-  font-size: 0.6rem;
+  margin-top: 0.05rem;
+  font-size: 0.5rem;
   transform: scale(1.25, 1);
   -ms-transform: scale(1.25, 1);
   /* IE 9 */
@@ -524,10 +563,13 @@ export default {
 }
 
 
+
+
 /* -----右侧显示栏------*/
 
 .right_rev {
   width: 83%;
+  border-left: 0.01rem solid #e9e9e9;
 }
 
 .right_rev .search {
@@ -541,6 +583,8 @@ export default {
   width: 0.4rem;
   cursor: pointer;
 }
+
+
 
 /*--------------------*/
 
@@ -637,49 +681,4 @@ export default {
 .content_mask {
   margin: 0 2rem;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  background: #eee;
-}
-
-h1,
-h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-} */
 </style>
