@@ -1,7 +1,8 @@
 <template>
     <div id="index">
         <div class="r_main_content">
-            <div class="r_head" id="head1">{{ $t('content.title') }}
+            <div class="r_head" id="head1">
+                {{ $t('content.title') }}
                 <a href="#head1">#</a>
             </div>
             <p>{{ $t('content.msg') }}</p>
