@@ -39,8 +39,8 @@ export default {
     },
     mounted: function () {
         this.$i18n.locale = localStorage.locale;
-        sessionStorage.index = '13';
-        sessionStorage.navIndex = 'menu1';
+        sessionStorage.index = '131';
+        sessionStorage.navIndex = 'menu1 menu1_3';
     },
     props: ['locale'],
     i18n: i18n,

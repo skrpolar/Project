@@ -6,47 +6,68 @@
       <div class="content">
         <div class="left_nav">
           <ul>
-            <div v-for="(value, key, index) in navInit">
-              <div v-if="value.hasNext">
-                <li :class="{ level1: true, level_plus:value.hasNext }" @click="value.navActive=!value.navActive">
+            <template v-for="(value, key, index) in navInit">
+              <template v-if="value.hasNext">
+                <li :title="$t(`messages.${key}`)" :class="[ 'level1', {level_plus: value.hasNext} ]" @click="value.navActive=!value.navActive">
                   <div>
                     <span :class="[ value.navActive ? 'sub' : 'plus' ]">^</span>
-                    {{ $t(`messages.${key}`) }}
+                    <a class="nav_title">{{ $t(`messages.${key}`) }}</a>
                   </div>
                 </li>
-                <ul :class="ulClass(value)">
+                <ul :class="[ 'level_ul', {open: value.navActive} ]">
                   <!-- 控制菜单方式由v-if更改为css样式实现动画效果 -->
-                  <li v-for="(value2, key2, index2) in value.next" :class="{ level2:true, li_active:liIndex==value2.liActive }" @click="liIndex=value2.liActive">
-                    <div v-if="value2.hasNext">
-                      <li :class="{ level2: true, level_plus:value2.hasNext }" @click="value2.navActive=!value2.navActive">
+                  <template v-for="(value2, key2, index2) in value.next">
+                    <template v-if="value2.hasNext">
+                      <li :title="$t(`messages.${key2}`)" :class="[ 'level2', {level_plus:value2.hasNext} ]" @click="value2.navActive=!value2.navActive">
                         <div>
                           <span :class="[ value2.navActive ? 'sub' : 'plus' ]">^</span>
-                          <span>{{ $t(`messages.${key2}`) }}</span>
+                          <a class="nav_title">{{ $t(`messages.${key2}`) }}</a>
                         </div>
                       </li>
-                      <ul :class="ulClass(value2)">
-                        <li v-for="(value3, key3, index3) in value2.next" :class="{ level3:true, li_active:liIndex==value3.liActive }" @click="liIndex=value3.liActive">
-                          <router-link :title="$t(`messages.${key3}`)" :to="{ path: value3.path }">{{ $t(`messages.${key3}`) }}</router-link>
-                        </li>
+                      <ul :class="[ 'level_ul', {open: value2.navActive} ]">
+                        <!-- 控制菜单方式由v-if更改为css样式实现动画效果 -->
+                        <template v-for="(value3, key3, index3) in value2.next">
+                          <template v-if="value3.hasNext">
+                            <li :title="$t(`messages.${key3}`)" :class="[ 'level3', {level_plus:value3.hasNext} ]" @click="value3.navActive=!value3.navActive">
+                              <div>
+                                <span :class="[ value3.navActive ? 'sub' : 'plus' ]">^</span>
+                                <a class="nav_title">{{ $t(`messages.${key3}`) }}</a>
+                              </div>
+                            </li>
+                            <ul :class="[ 'level_ul', {open: value3.navActive} ]">
+                              <!-- 控制菜单方式由v-if更改为css样式实现动画效果 -->
+  
+                            </ul>
+                          </template>
+                          <template v-else>
+                            <li :class="[ 'level3', {li_active:liIndex==value3.liActive} ]" @click="liIndex=value3.liActive">
+                              <router-link :title="$t(`messages.${key3}`)" :to="{ path: value3.path }">{{ $t(`messages.${key3}`) }}</router-link>
+                            </li>
+                          </template>
+                        </template>
                       </ul>
-                    </div>
-                    <div v-else>
-                      <router-link :title="$t(`messages.${key2}`)" :to="{ path: value2.path }">{{ $t(`messages.${key2}`) }}</router-link>
-                    </div>
-                  </li>
+                    </template>
+                    <template v-else>
+                      <li :class="[ 'level2', {li_active:liIndex==value2.liActive} ]" @click="liIndex=value2.liActive">
+                        <router-link :title="$t(`messages.${key2}`)" :to="{ path: value2.path }">{{ $t(`messages.${key2}`) }}</router-link>
+                      </li>
+                    </template>
+                  </template>
                 </ul>
-              </div>
-              <div v-else>
-                <router-link :title="$t(`messages.${key}`)" :to="{ path: value.path }">{{ $t(`messages.${key}`) }}</router-link>
-              </div>
-            </div>
+              </template>
+              <template v-else>
+                <li :class="[ 'level1', {li_active:liIndex==value.liActive} ]" @click="liIndex=value.liActive">
+                        <router-link :title="$t(`messages.${key}`)" :to="{ path: value.path }">{{ $t(`messages.${key}`) }}</router-link>
+                      </li>
+              </template>
+            </template>
           </ul>
         </div>
   
         <div class="right_rev">
           <div class="search">
-            <input type="text" id="search_input" @keyup.enter="searchFunc()" :class="{ ser_input:!searchPng, ser_input_active:searchPng }" :placeholder="$t('search.msg')">
-            <img :class="{ ser_png:!searchPng, ser_png_active:searchPng }" @click="searchPng=!searchPng" src="./assets/search.png">
+            <input type="text" id="search_input" @keyup.enter="searchFunc()" :class="[ searchPng ? 'ser_input_active' : 'ser_input' ]" :placeholder="$t('search.msg')">
+            <img :class="[ searchPng ? 'ser_png_active' : 'ser_png' ]" @click="searchPng=!searchPng" src="./assets/search.png">
           </div>
           <router-view :locale="locale"></router-view>
         </div>
@@ -95,10 +116,10 @@ var i18n = new VueI18n({
     },
     en: {
       messages: {
-        menu1: 'Start',
+        menu1: 'Starrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrt',
         menu1_1: 'Introduction',
         menu1_2: 'Public address interface',
-        menu1_3: 'Getting Started Guide',
+        menu1_3: 'Getting Started Guideeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
         menu2: 'Header2',
         menu2_1: 'Content4',
         menu3: 'MainBody',
@@ -132,7 +153,7 @@ export default {
           },
           navActive: false,
           hasNext: true,
-          nextLength: 4,
+          nextLength: 3,
           next: {
             menu1_1: {
               text: {
@@ -166,8 +187,8 @@ export default {
               next: {
                 menu1_3_1: {
                   text: {
-                    ch: '',
-                    en: ''
+                    ch: '内容',
+                    en: 'Content'
                   },
                   hasNext: false,
                   liActive: 131,
@@ -381,14 +402,10 @@ export default {
       }
     }
 
-    // this.liIndex = sessionStorage.index; // 从路由传正确的li index
-    for (var i in this.navInit) {
-      if (i == sessionStorage.navIndex) {
-        this.navActive[i] = true;
-      }
-    }
+    // this.liIndex = sessionStorage.index; // 从路由传正确的li index 
+    this.iterator(this.navInit);
 
-
+    // console.log(JSON.stringify(this.navInit));
   },
 
   beforeUpdate() {
@@ -433,20 +450,24 @@ export default {
     searchFunc: function () {
       this.$router.push({ path: '/content2' })
     },
-    ulClass: function (val) {
-      var o = { level_ul: true };
-      // o[`open${val.nextLength}`] = val.navActive;
-      o['open'] = val.navActive;
-      return o;
+    // ulClass: function (val) { // 被自定义样式取代
+    //   // var o = { level_ul: true, open: val.navActive };
+    //   // o[`open${val.nextLength}`] = val.navActive; //open(num)动画效果，由于DOM结构没设计好导致无法使用。
+    //   // o['open'] = val.navActive;
+    //   return { level_ul: true, open: val.navActive };
+    // },
+    iterator: function (obj) {
+      for (var i in obj) {
+        if (obj[i].hasOwnProperty('navActive')) {
+          if (sessionStorage.navIndex.indexOf(i) > -1) {
+            obj[i].navActive = true;
+          }
+          this.iterator(obj[i].next);
+        }
+      }
     }
   }
 }
-
-
-
-
-
-
 
 
 // export default {
@@ -464,85 +485,6 @@ export default {
 //   }
 // }
 
-/*
-<div>
-              <li class="level1 level_plus" @click="navActive.menu1=!navActive.menu1">
-                <div>
-                  <span :class="{ plus:!navActive.menu1, sub: navActive.menu1 }">^</span>
-                  {{ $t('messages.menu1') }}
-                </div>
-              </li>
-              <ul :class="{ level_ul:true, open3:navActive.menu1 }"> <!-- 控制菜单方式由v-if更改为css样式实现动画效果 -->
-                <li :class="{ level2:true, li_active:liIndex==liActive['menu1_1'] }" @click="liIndex=liActive['menu1_1']">
-                  <router-link :title="$t('messages.menu1_1')" :to="{ path: '/' }">{{ $t('messages.menu1_1') }}</router-link>
-                </li>
-                <li :class="{ level2:true, li_active:liIndex==liActive['menu1_2'] }" @click="liIndex=liActive['menu1_2']">
-                  <router-link :title="$t('messages.menu1_2')" :to="{ path: '/content2' }">{{ $t('messages.menu1_2') }}</router-link>
-                </li>
-                <li :class="{ level2:true, li_active:liIndex==liActive['menu1_3']} " @click="liIndex=liActive['menu1_3']">
-                  <router-link :title="$t('messages.menu1_3')" :to="{ path: `/content3` }">{{ $t('messages.menu1_3') }}</router-link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <li class="level1 level_plus" @click="navActive.menu2=!navActive.menu2">
-              <div>
-                <span :class="{ plus:!navActive.menu2, sub: navActive.menu2 }">^</span>
-                {{ $t('messages.menu2') }}
-              </div>
-            </li>
-            <ul :class="{ level_ul:true, open1:navActive.menu2 }">
-              <li :class="{ level2:true, li_active:liIndex==liActive['menu2_1'] }" @click="liIndex=liActive['menu2_1']">
-                <router-link :title="$t('messages.menu2_1')" :to="{ path: `/content4` }">{{ $t('messages.menu2_1') }}</router-link>
-              </li>
-            </ul>
-            </div>
-
-            <div>
-              <li class="level1 level_plus" @click="navActive.menu3=!navActive.menu3">
-              <div>
-                <span :class="{ plus:!navActive.menu3, sub: navActive.menu3 }">^</span>
-                {{ $t('messages.menu3') }}
-              </div>
-            </li>
-            <ul :class="{ level_ul:true, open1:navActive.menu3 }">
-              <li :class="{ level2:true, li_active:liIndex==liActive['menu3_1'] }" @click="liIndex=liActive['menu3_1']">
-                <router-link :title="$t('messages.menu3_1')" :to="{ path: `/content5` }">{{ $t('messages.menu3_1') }}</router-link>
-              </li>
-            </ul>
-            </div>
-
-            <div>
-              <li class="level1 level_plus" @click="navActive.menu4=!navActive.menu4">
-              <div>
-                <span :class="{ plus:!navActive.menu4, sub: navActive.menu4 }">^</span>
-                {{ $t('messages.menu4') }}
-              </div>
-            </li>
-            <ul :class="{ level_ul:true, open1:navActive.menu4 }">
-              <li :class="{ level2:true, li_active:liIndex==liActive['menu4_1'] }" @click="liIndex=liActive['menu4_1']">
-                <router-link :title="$t('messages.menu4_1')" :to="{ path: `/content6` }">{{ $t('messages.menu4_1') }}</router-link>
-              </li>
-            </ul>
-            </div>
-            
-            <div>
-              <li class="level1 level_plus" @click="navActive.menu5=!navActive.menu5">
-              <div>
-                <span :class="{ plus:!navActive.menu5, sub: navActive.menu5 }">^</span>
-                {{ $t('messages.menu5') }}
-              </div>
-            </li>
-            <ul :class="{ level_ul:true, open1:navActive.menu5 }">
-              <li :class="{ level2:true, li_active:liIndex==liActive['menu5_1'] }" @click="liIndex=liActive['menu5_1']">
-                <router-link :title="$t('messages.menu5_1')" :to="{ path: `/content7` }">{{ $t('messages.menu5_1') }}</router-link>
-              </li>
-            </ul>
-            </div>
-          </ul>
-        </div>
-*/
 </script>
 
 <style>
@@ -551,11 +493,6 @@ export default {
   background-size: 100% 15.18rem;
   margin-top: 0.5rem;
 }
-
-
-
-
-
 
 /* -----左侧导航栏------*/
 
@@ -586,6 +523,7 @@ export default {
 
 .left_nav {
   width: 17%;
+  
 }
 
 .left_nav ul {
@@ -615,28 +553,33 @@ export default {
   line-height: 0.6rem;
   padding-left: 0.4rem;
   padding-right: 0.2rem;
-  overflow: hidden;
+  overflow: hidden; 
+  cursor: pointer;
   white-space: nowrap;
   text-overflow: ellipsis;
   transform: translate(0, 0);
-  transition: background .2s ease-in 0s;
+  transition: background .1s ease-in 0s;
 }
 
-.left_nav .level_plus div {
+.left_nav .level_plus {
   color: #333F5C;
   display: block;
-  cursor: pointer;
   height: 0.6rem;
   font-size: 0.21rem;
   text-align: left;
   line-height: 0.6rem;
-  padding-left: 0.4rem;
-  padding-right: 0.2rem;
+  /* padding-left: 0.4rem; */
+  padding-right: 0.2rem;  
+  cursor: pointer;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   transform: translate(0, 0);
-  transition: background .2s ease-in 0s;
+  transition: background .1s ease-in 0s;
+}
+
+.nav_title {
+
 }
 
 .left_nav a:visited {
@@ -649,20 +592,10 @@ export default {
 
 .left_nav a:hover {
   background: #efefef;
-  animation: fade-in;
-  animation-duration: .35s;
-  -webkit-animation: fade-in .35s;
 }
 
 .left_nav .level_plus:hover {
   background: #efefef;
-  animation: fade-in;
-  animation-duration: .35s;
-  -webkit-animation: fade-in .35s;
-}
-
-.left_nav .li_active {
-  /* border-right: 0.03rem solid #369fe8; */
 }
 
 .left_nav .li_active a {
@@ -674,11 +607,6 @@ export default {
   padding-left: 0.55rem;
 }
 
-.left_nav .level2 div {
-  /* padding-left: 0.2rem; */
-} 
-
-
 .left_nav .level3 a {
   padding-left: 0.65rem;
 }
@@ -688,124 +616,20 @@ export default {
 }
 
 .left_nav .level_ul {
-  height: 0;
+  height: 0rem;
+  opacity: 0;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   transform: translate(0, 0);
-  transition: height .2s ease-in-out 0s;
+  transition: all .18s ease-in-out 0s;
 }
 
 .left_nav .open {
+  opacity: 1;
   height: 100%;
+  /* transform: scale(1,1); */
 }
-
-.left_nav .open1 {
-  height: 0.6rem;
-}
-
-.left_nav .open2 {
-  height: 1.2rem;
-}
-
-.left_nav .open3 {
-  height: 1.8rem;
-}
-
-.left_nav .open4 {
-  height: 2.4rem;
-}
-
-.left_nav .open5 {
-  height: 3.0rem;
-}
-
-.left_nav .open6 {
-  height: 3.6rem;
-}
-
-.left_nav .open7 {
-  height: 4.2rem;
-}
-
-.left_nav .open8 {
-  height: 4.8rem;
-}
-
-.left_nav .open9 {
-  height: 5.4rem;
-}
-
-.left_nav .open10 {
-  height: 6.0rem;
-}
-
-.left_nav .open11 {
-  height: 6.6rem;
-}
-
-.left_nav .open12 {
-  height: 7.2rem;
-}
-
-.left_nav .open13 {
-  height: 7.8rem;
-}
-
-.left_nav .open14 {
-  height: 8.4rem;
-}
-
-.left_nav .open15 {
-  height: 9.0rem;
-}
-
-.left_nav .open16 {
-  height: 9.6rem;
-}
-
-.left_nav .open17 {
-  height: 10.2rem;
-}
-
-.left_nav .open18 {
-  height: 10.8rem;
-}
-
-.left_nav .open19 {
-  height: 11.4rem;
-}
-
-.left_nav .open20 {
-  height: 12.0rem;
-}
-
-@keyframes fade-in {
-  0% {
-    background: #fff;
-  }
-  50% {
-    backgroung: #f2f2f2;
-  }
-  100% {
-    background: #efefef;
-  }
-}
-
-@-webkit-keyframes fade-in {
-  0% {
-    background: #fff;
-  }
-  50% {
-    backgroung: #f2f2f2;
-  }
-  100% {
-    background: #efefef;
-  }
-}
-
-
-
-
-
 
 /*---------------------*/
 
@@ -841,6 +665,11 @@ export default {
 .oTop div:hover {
   color: white;
 }
+
+
+
+
+
 
 
 
@@ -917,6 +746,11 @@ export default {
   margin-right: .6rem;
   opacity: .8
 }
+
+
+
+
+
 
 
 
