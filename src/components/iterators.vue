@@ -10,7 +10,7 @@
                 </li>
                 <ul :class="[ 'level_ul', {open: value.navActive} ]">
                     <!-- 控制菜单方式由v-if更改为css样式实现动画效果 -->
-                     <Iterators :locale="locale" :navInit="value.next" :liActive="liActive"></Iterators> 
+                     <Iterator :locale="locale" :navInit="value.next"c:liActive="liActive"></Iterator> 
                 </ul>
             </template>
             <template v-else>
@@ -24,7 +24,7 @@
 
 <script>
 import Vue from 'vue';
-import Iterators from './iterators.vue';
+import Iterator from './iterator.vue';
 import VueI18n from 'vue-i18n';
 
 Vue.use(VueI18n);
@@ -93,7 +93,7 @@ export default {
         }
     },
     components: {
-        Iterators
+        Iterator
     }
 }
 </script>

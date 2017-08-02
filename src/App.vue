@@ -36,7 +36,25 @@
                             </li>
                             <ul :class="[ 'level_ul', {open: value3.navActive} ]">
                               <!-- 控制菜单方式由v-if更改为css样式实现动画效果 -->
+                              <template v-for="(value4, key4, index4) in value3.next">
+                                <template v-if="value4.hasNext">
+                                  <li :title="$t(`messages.${key4}`)" :class="[ 'level4', {level_plus:value4.hasNext} ]" @click="value4.navActive=!value4.navActive">
+                                    <div>
+                                      <span :class="[ value4.navActive ? 'sub' : 'plus' ]">^</span>
+                                      <a class="nav_title">{{ $t(`messages.${key4}`) }}</a>
+                                    </div>
+                                  </li>
+                                  <ul :class="[ 'level_ul', {open: value4.navActive} ]">
+                                    <!-- 控制菜单方式由v-if更改为css样式实现动画效果 -->
   
+                                  </ul>
+                                </template>
+                                <template v-else>
+                                  <li :class="[ 'level4', {li_active:liIndex==value4.liActive} ]" @click="liIndex=value4.liActive">
+                                    <router-link :title="$t(`messages.${key4}`)" :to="{ path: value4.path }">{{ $t(`messages.${key4}`) }}</router-link>
+                                  </li>
+                                </template>
+                              </template>
                             </ul>
                           </template>
                           <template v-else>
@@ -57,8 +75,8 @@
               </template>
               <template v-else>
                 <li :class="[ 'level1', {li_active:liIndex==value.liActive} ]" @click="liIndex=value.liActive">
-                        <router-link :title="$t(`messages.${key}`)" :to="{ path: value.path }">{{ $t(`messages.${key}`) }}</router-link>
-                      </li>
+                  <router-link :title="$t(`messages.${key}`)" :to="{ path: value.path }">{{ $t(`messages.${key}`) }}</router-link>
+                </li>
               </template>
             </template>
           </ul>
@@ -84,7 +102,10 @@
 
 <script>
 import Vue from 'vue';
+import VueResource from 'vue-resource';
 import HeaderLine from './components/header.vue';
+import Iterator from './components/iterator.vue';
+// import IteratorX from './components/iteratorX.vue';
 import FooterLine from './components/footer.vue';
 import FooterLine2 from './components/footer2.vue';
 import index from './components/index.vue'
@@ -96,39 +117,11 @@ var i18n = new VueI18n({
   locale: 'ch',
   messages: {
     ch: {
-      messages: {
-        menu1: '开始前必读',
-        menu1_1: '介绍',
-        menu1_2: '公众号接口权限说明',
-        menu1_3: '入门指引',
-        menu2: '开始开发',
-        menu2_1: '接入指南',
-        menu3: '自定义菜单',
-        menu3_1: '内容五',
-        menu4: '素材管理',
-        menu4_1: '内容六',
-        menu5: '用户管理',
-        menu5_1: '内容七'
-      },
       search: {
         msg: '搜索点什么...',
       }
     },
     en: {
-      messages: {
-        menu1: 'Starrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrt',
-        menu1_1: 'Introduction',
-        menu1_2: 'Public address interface',
-        menu1_3: 'Getting Started Guideeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-        menu2: 'Header2',
-        menu2_1: 'Content4',
-        menu3: 'MainBody',
-        menu3_1: 'Content5',
-        menu4: 'Footer',
-        menu4_1: 'Content6',
-        menu5: 'Footer2',
-        menu5_1: 'Content7'
-      },
       search: {
         msg: 'Search something...'
       }
@@ -138,169 +131,15 @@ var i18n = new VueI18n({
 
 export default {
   name: 'app',
+  i18n: i18n,
   data: function () {
     return {
       url: "",
       isEmputy: false,
-      locale: localStorage.locale,
+      locale: 'ch',
       searchPng: false,
-      // 模板结构化
-      navInit: {
-        menu1: {
-          text: {
-            ch: '开始前必读',
-            en: 'Start'
-          },
-          navActive: false,
-          hasNext: true,
-          nextLength: 3,
-          next: {
-            menu1_1: {
-              text: {
-                ch: '介绍',
-                en: 'Introduction'
-              },
-              hasNext: false,
-              path: '/',
-              liActive: 11
-            },
-
-            menu1_2: {
-              text: {
-                ch: '公众号接口权限说明',
-                en: 'Public address interface'
-              },
-              hasNext: false,
-              path: '/content2',
-              liActive: 12
-            },
-
-            menu1_3: {
-              text: {
-                ch: '入门指引',
-                en: 'Getting Started Guide'
-              },
-              hasNext: true,
-              navActive: false,
-              nextLength: 1,
-              // path: '/content3',
-              next: {
-                menu1_3_1: {
-                  text: {
-                    ch: '内容',
-                    en: 'Content'
-                  },
-                  hasNext: false,
-                  liActive: 131,
-                  path: '/content3'
-                }
-              }
-            }
-          }
-        },
-
-        menu2: {
-          text: {
-            ch: '开始开发',
-            en: 'head2'
-          },
-          navActive: false,
-          hasNext: true, // 只有hasNext为false时，有liActive属性，没有navActive属性
-          nextLength: 1,
-          next: {
-            menu2_1: {
-              text: {
-                ch: '内容四',
-                en: 'Content4'
-              },
-              hasNext: false,
-              path: '/content4',
-              liActive: 21
-            }
-          }
-        },
-
-        menu3: {
-          text: {
-            ch: '自定义菜单',
-            en: 'MainBody'
-          },
-          navActive: false,
-          hasNext: true,
-          nextLength: 1,
-          next: {
-            menu3_1: {
-              text: {
-                ch: '内容五',
-                en: 'content5'
-              },
-              hasNext: false,
-              path: '/content5',
-              liActive: 31
-            }
-          }
-        },
-
-        menu4: {
-          text: {
-            ch: '素材管理',
-            en: 'Footer'
-          },
-          navActive: false,
-          hasNext: true,
-          nextLength: 1,
-          next: {
-            menu4_1: {
-              text: {
-                ch: '内容六',
-                en: 'content6'
-              },
-              hasNext: false,
-              path: '/content6',
-              liActive: 41
-            }
-          }
-        },
-
-        menu5: {
-          text: {
-            ch: '用户管理',
-            en: 'Footer2'
-          },
-          navActive: false,
-          hasNext: true,
-          nextLength: 1,
-          next: {
-            menu5_1: {
-              text: {
-                ch: '内容七',
-                en: 'content7'
-              },
-              hasNext: false,
-              path: '/content7',
-              liActive: 51
-            }
-          }
-        },
-      },
-
+      navInit: {},
       liIndex: sessionStorage.index,
-      liActive: {
-        menu1_1: 11,
-        menu1_2: 12,
-        menu1_3: 13,
-        menu2_1: 21,
-        menu3_1: 31,
-        menu4_1: 41,
-        menu5_1: 51,
-      },
-      navActive: {
-        menu1: false,
-        menu2: false,
-        menu3: false,
-        menu4: false,
-        menu5: false
-      }
     }
   },
 
@@ -318,8 +157,16 @@ export default {
     }
   },
 
+  beforeCreate() {
+    
+  },
+
   created() {
     // this.$data.liActive['menu1_1'] = 12;
+    
+  },
+
+  beforeMount() {
   },
 
   mounted() {
@@ -401,29 +248,44 @@ export default {
         oTop.style.display = 'none';
       }
     }
+    
+    this.$http.get('http://localhost:90')
+    .then(function (rep) {
+      this.$data.navInit = rep.data;
+      this.navCreator(this.navInit);
+    }).catch(function () {
+      console.log('???');
+    });
+
 
     // this.liIndex = sessionStorage.index; // 从路由传正确的li index 
-    this.iterator(this.navInit);
 
+    // console.log(this.$data.navInit);
+    // setTimeout(()=>{console.log(this.$data.navInit);},1000); 
     // console.log(JSON.stringify(this.navInit));
+
+    // this.$i18n = i18n;
   },
 
   beforeUpdate() {
     // 通过导入来搜索内容
     var s = index;
     var input = document.getElementById('search_input');
+    
   },
 
   updated() {
     this.liIndex = sessionStorage.index;
+
   },
 
   components: {
     HeaderLine,
+    Iterator,
+    // IteratorX,
     FooterLine,
     FooterLine2
   },
-  i18n: i18n,
   methods: {
     onLocaleChange: function (val) {
       this.locale = val;
@@ -456,6 +318,12 @@ export default {
     //   // o['open'] = val.navActive;
     //   return { level_ul: true, open: val.navActive };
     // },
+
+    navCreator: function (obj) {
+      this.iterator(obj);
+      this.languageCreator(obj);
+    },
+
     iterator: function (obj) {
       for (var i in obj) {
         if (obj[i].hasOwnProperty('navActive')) {
@@ -463,6 +331,24 @@ export default {
             obj[i].navActive = true;
           }
           this.iterator(obj[i].next);
+        }
+      }
+    },
+
+    languageCreator: function (obj) {
+      for (var i in obj) {
+        if (obj[i].hasOwnProperty('text')) {
+          for (var j in obj[i].text) {
+            if (!this.$i18n.messages[j].hasOwnProperty('messages')) {
+              this.$i18n.messages[j].messages = {};
+            }
+            let str = (obj[i].text[j]).toString();
+            this.$i18n.messages[j].messages[i] = str;
+            // console.log(str);
+          }
+          if (obj[i].hasOwnProperty('navActive')) {
+            this.languageCreator(obj[i].next);
+          }
         }
       }
     }
@@ -494,6 +380,11 @@ export default {
   margin-top: 0.5rem;
 }
 
+
+
+
+
+
 /* -----左侧导航栏------*/
 
 @-moz-document url-prefix() {}
@@ -523,7 +414,6 @@ export default {
 
 .left_nav {
   width: 17%;
-  
 }
 
 .left_nav ul {
@@ -553,7 +443,7 @@ export default {
   line-height: 0.6rem;
   padding-left: 0.4rem;
   padding-right: 0.2rem;
-  overflow: hidden; 
+  overflow: hidden;
   cursor: pointer;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -569,7 +459,7 @@ export default {
   text-align: left;
   line-height: 0.6rem;
   /* padding-left: 0.4rem; */
-  padding-right: 0.2rem;  
+  padding-right: 0.2rem;
   cursor: pointer;
   overflow: hidden;
   white-space: nowrap;
@@ -578,9 +468,7 @@ export default {
   transition: background .1s ease-in 0s;
 }
 
-.nav_title {
-
-}
+.nav_title {}
 
 .left_nav a:visited {
   color: #333F5C;
@@ -631,6 +519,11 @@ export default {
   /* transform: scale(1,1); */
 }
 
+
+
+
+
+
 /*---------------------*/
 
 .oTop {
@@ -665,6 +558,11 @@ export default {
 .oTop div:hover {
   color: white;
 }
+
+
+
+
+
 
 
 
@@ -746,6 +644,11 @@ export default {
   margin-right: .6rem;
   opacity: .8
 }
+
+
+
+
+
 
 
 
