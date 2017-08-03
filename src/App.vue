@@ -102,7 +102,6 @@
 
 <script>
 import Vue from 'vue';
-import VueResource from 'vue-resource';
 import HeaderLine from './components/header.vue';
 import Iterator from './components/iterator.vue';
 // import IteratorX from './components/iteratorX.vue';
@@ -158,12 +157,12 @@ export default {
   },
 
   beforeCreate() {
-    
+
   },
 
   created() {
     // this.$data.liActive['menu1_1'] = 12;
-    
+
   },
 
   beforeMount() {
@@ -248,14 +247,14 @@ export default {
         oTop.style.display = 'none';
       }
     }
-    
-    this.$http.get('http://localhost:90')
-    .then(function (rep) {
-      this.$data.navInit = rep.data;
-      this.navCreator(this.navInit);
-    }).catch(function () {
-      console.log('???');
-    });
+
+    this.$http.jsonp('http://localhost:90/getnavbar')
+      .then(function (rep) {
+        this.$data.navInit = rep.data;
+        this.navCreator(this.navInit);
+      }).catch(function () {
+        console.log('Restart to connect server...');
+      });
 
 
     // this.liIndex = sessionStorage.index; // 从路由传正确的li index 
@@ -271,7 +270,7 @@ export default {
     // 通过导入来搜索内容
     var s = index;
     var input = document.getElementById('search_input');
-    
+
   },
 
   updated() {
@@ -351,6 +350,17 @@ export default {
           }
         }
       }
+    },
+
+    getNavBar: function (url) {
+      this.$http.jsonp(url).then(function (rep) {
+        this.$data.navInit = rep.data;
+        this.navCreator(this.navInit);
+      }).catch(function () {
+        setTimeout(() => {
+          this.getNavBar(url);
+        },1000);
+      });
     }
   }
 }
@@ -379,6 +389,7 @@ export default {
   background-size: 100% 15.18rem;
   margin-top: 0.5rem;
 }
+
 
 
 
@@ -524,6 +535,7 @@ export default {
 
 
 
+
 /*---------------------*/
 
 .oTop {
@@ -558,6 +570,7 @@ export default {
 .oTop div:hover {
   color: white;
 }
+
 
 
 
@@ -644,6 +657,7 @@ export default {
   margin-right: .6rem;
   opacity: .8
 }
+
 
 
 
