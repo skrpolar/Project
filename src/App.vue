@@ -51,7 +51,7 @@
                                 </template>
                                 <template v-else>
                                   <li :class="[ 'level4', {li_active:liIndex==value4.liActive} ]" @click="liIndex=value4.liActive">
-                                    <router-link :title="$t(`messages.${key4}`)" :to="{ path: value4.path }">{{ $t(`messages.${key4}`) }}</router-link>
+                                    <router-link :title="$t(`messages.${key4}`)" :to="{ name: key4 }">{{ $t(`messages.${key4}`) }}</router-link>
                                   </li>
                                 </template>
                               </template>
@@ -59,7 +59,7 @@
                           </template>
                           <template v-else>
                             <li :class="[ 'level3', {li_active:liIndex==value3.liActive} ]" @click="liIndex=value3.liActive">
-                              <router-link :title="$t(`messages.${key3}`)" :to="{ path: value3.path }">{{ $t(`messages.${key3}`) }}</router-link>
+                              <router-link :title="$t(`messages.${key3}`)" :to="{ name: key3, params: {paramsActive: `${key} ${key2}`} }">{{ $t(`messages.${key3}`) }}</router-link>
                             </li>
                           </template>
                         </template>
@@ -67,7 +67,7 @@
                     </template>
                     <template v-else>
                       <li :class="[ 'level2', {li_active:liIndex==value2.liActive} ]" @click="liIndex=value2.liActive">
-                        <router-link :title="$t(`messages.${key2}`)" :to="{ path: value2.path }">{{ $t(`messages.${key2}`) }}</router-link>
+                        <router-link :title="$t(`messages.${key2}`)" :to="{ name: key2, params: {paramsActive: `${key}`} }">{{ $t(`messages.${key2}`) }}</router-link>
                       </li>
                     </template>
                   </template>
@@ -75,7 +75,7 @@
               </template>
               <template v-else>
                 <li :class="[ 'level1', {li_active:liIndex==value.liActive} ]" @click="liIndex=value.liActive">
-                  <router-link :title="$t(`messages.${key}`)" :to="{ path: value.path }">{{ $t(`messages.${key}`) }}</router-link>
+                  <router-link :title="$t(`messages.${key}`)" :to="{ name: key }">{{ $t(`messages.${key}`) }}</router-link>
                 </li>
               </template>
             </template>
@@ -102,6 +102,7 @@
 
 <script>
 import Vue from 'vue';
+import VueResource from 'vue-resource';
 import HeaderLine from './components/header.vue';
 import Iterator from './components/iterator.vue';
 // import IteratorX from './components/iteratorX.vue';
@@ -249,11 +250,12 @@ export default {
     }
 
     this.$http.jsonp('http://localhost:90/getnavbar')
-      .then(function (rep) {
-        this.$data.navInit = rep.data;
+      .then(function (req) {
+        this.$data.navInit = req.data;
         this.navCreator(this.navInit);
       }).catch(function () {
         console.log('Restart to connect server...');
+        this.getNavBar('http://localhost:90/getnavbar');
       });
 
 
@@ -353,13 +355,14 @@ export default {
     },
 
     getNavBar: function (url) {
-      this.$http.jsonp(url).then(function (rep) {
-        this.$data.navInit = rep.data;
+      this.$http.jsonp(url).then(function (req) {
+        this.$data.navInit = req.data;
         this.navCreator(this.navInit);
       }).catch(function () {
+        console.log('Restart to connect server...');
         setTimeout(() => {
           this.getNavBar(url);
-        },1000);
+        }, 1000);
       });
     }
   }
@@ -389,6 +392,7 @@ export default {
   background-size: 100% 15.18rem;
   margin-top: 0.5rem;
 }
+
 
 
 
@@ -459,7 +463,7 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   transform: translate(0, 0);
-  transition: background .1s ease-in 0s;
+  transition: background .1s ease-in-out 0s;
 }
 
 .left_nav .level_plus {
@@ -476,7 +480,7 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   transform: translate(0, 0);
-  transition: background .1s ease-in 0s;
+  transition: background .1s ease-in-out 0s;
 }
 
 .nav_title {}
@@ -515,13 +519,13 @@ export default {
 }
 
 .left_nav .level_ul {
-  height: 0rem;
+  height: 0;
   opacity: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   transform: translate(0, 0);
-  transition: all .18s ease-in-out 0s;
+  transition: height .18s ease-in-out 0s,opacity .18s ease-in-out 0s;
 }
 
 .left_nav .open {
@@ -529,6 +533,7 @@ export default {
   height: 100%;
   /* transform: scale(1,1); */
 }
+
 
 
 
@@ -570,6 +575,7 @@ export default {
 .oTop div:hover {
   color: white;
 }
+
 
 
 
@@ -657,6 +663,7 @@ export default {
   margin-right: .6rem;
   opacity: .8
 }
+
 
 
 
