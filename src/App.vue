@@ -85,7 +85,7 @@
         <div class="right_rev">
           <div class="search">
             <input type="text" id="search_input" @keyup.enter="searchFunc()" :class="[ searchPng ? 'ser_input_active' : 'ser_input' ]" :placeholder="$t('search.msg')">
-            <img :class="[ searchPng ? 'ser_png_active' : 'ser_png' ]" @click="searchPng=!searchPng" src="./assets/search.png">
+            <img id="ser" :class="[ searchPng ? 'ser_png_active' : 'ser_png' ]" @click="searchPng=!searchPng" src="./assets/search.png">
           </div>
           <router-view :locale="locale"></router-view>
         </div>
@@ -101,16 +101,12 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import VueResource from 'vue-resource';
-import HeaderLine from './components/header.vue';
-import Iterator from './components/iterator.vue';
-// import IteratorX from './components/iteratorX.vue';
-import FooterLine from './components/footer.vue';
-import FooterLine2 from './components/footer2.vue';
-import index from './components/index.vue'
-import './common/css/reset.css'
-import './common/css/animate.css'
+import HeaderLine from '@/components/header.vue';
+import FooterLine from '@/components/footer.vue';
+import FooterLine2 from '@/components/footer2.vue';
+import index from '@/components/index.vue'
+import '@/common/css/reset.css'
+import '@/common/css/animate.css'
 import VueI18n from 'vue-i18n';
 
 var i18n = new VueI18n({
@@ -152,9 +148,9 @@ export default {
         document.title = "技术文档丨威尔直播 VRVIU";
       }
     },
-    sessionStorage: function (val) {
-      console.log(1);
-    }
+    // sessionStorage: function (val) {
+    //   console.log(1);
+    // }
   },
 
   beforeCreate() {
@@ -277,13 +273,10 @@ export default {
 
   updated() {
     this.liIndex = sessionStorage.index;
-
   },
 
   components: {
     HeaderLine,
-    Iterator,
-    // IteratorX,
     FooterLine,
     FooterLine2
   },
@@ -388,8 +381,8 @@ export default {
 
 <style>
 .main_body {
-  background: url(https://img.vrviu.com/images/about_bg.png) center bottom no-repeat;
-  background-size: 100% 15.18rem;
+  background: url(https://img.vrviu.com/images/about_bg.png) bottom  no-repeat;
+  background-size: 100% 12.18rem;
   margin-top: 0.5rem;
 }
 
@@ -604,7 +597,7 @@ export default {
   height: 0.5rem;
 }
 
-.right_rev img {
+.right_rev #ser {
   /* margin-bottom: 0.2rem; */
   /* margin-left: 12.8rem; */
   padding-top: .1rem;
@@ -621,7 +614,7 @@ export default {
   z-index: 999;
 }
 
-.right_rev img:hover {
+.right_rev #ser:hover {
   opacity: 1;
 }
 
