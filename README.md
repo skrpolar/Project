@@ -1,6 +1,7 @@
 # v2
 
 > A Vue.js project
+> Use With Project-server
 
 ## Build Setup
 

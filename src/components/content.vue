@@ -8,11 +8,9 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import marked from 'marked'
 import hljs from 'highlight.js'
-import '@/common/css/default.css'
+import '@/common/css/atom-one-dark.css'
 
 Vue.use(VueI18n)
-
-
 
 var i18n = new VueI18n({
     locale: this.locale,
@@ -47,7 +45,7 @@ export default {
             } while (i != -1);
             sessionStorage.navIndex = routename;
         }
-        this.$http.get('http://localhost:90/getmarkdown').then(function (req) {
+        this.$http.get('http://localhost:8089/getmarkdown').then(function (req) {
             document.getElementById('content').innerHTML = marked(req.data, { sanitize: true });
             hljs.initHighlightingOnLoad();
         }).catch(function () {

@@ -245,13 +245,13 @@ export default {
       }
     }
 
-    this.$http.jsonp('http://localhost:90/getnavbar')
+    this.$http.jsonp('http://localhost:8089/getnavbar')
       .then(function (req) {
         this.$data.navInit = req.data;
         this.navCreator(this.navInit);
       }).catch(function () {
         console.log('Restart to connect server...');
-        this.getNavBar('http://localhost:90/getnavbar');
+        this.getNavBar('http://localhost:8089/getnavbar');
       });
 
 
