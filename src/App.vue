@@ -571,23 +571,6 @@ export default {
   color: white;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* -----右侧显示栏------*/
 
 .right_rev {
