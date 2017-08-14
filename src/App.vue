@@ -105,6 +105,8 @@ import HeaderLine from '@/components/header.vue';
 import FooterLine from '@/components/footer.vue';
 import FooterLine2 from '@/components/footer2.vue';
 import index from '@/components/index.vue'
+import marked from 'marked'
+import hljs from 'highlight.js'
 import '@/common/css/reset.css'
 import '@/common/css/animate.css'
 import VueI18n from 'vue-i18n';
@@ -381,10 +383,11 @@ export default {
 
 <style>
 .main_body {
-  background: url(https://img.vrviu.com/images/about_bg.png) bottom  no-repeat;
+  background: url(https://img.vrviu.com/images/about_bg.png) bottom no-repeat;
   background-size: 100% 12.18rem;
   margin-top: 0.5rem;
 }
+
 
 
 
@@ -476,8 +479,6 @@ export default {
   transition: background .1s ease-in-out 0s;
 }
 
-.nav_title {}
-
 .left_nav a:visited {
   color: #333F5C;
 }
@@ -518,7 +519,7 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   transform: translate(0, 0);
-  transition: height .18s ease-in-out 0s,opacity .18s ease-in-out 0s;
+  transition: height .18s ease-in-out 0s, opacity .18s ease-in-out 0s;
 }
 
 .left_nav .open {
@@ -526,6 +527,7 @@ export default {
   height: 100%;
   /* transform: scale(1,1); */
 }
+
 
 
 
@@ -568,6 +570,7 @@ export default {
 .oTop div:hover {
   color: white;
 }
+
 
 
 
@@ -673,6 +676,7 @@ export default {
 
 
 
+
 /*--------------------*/
 
 .english32 {
@@ -689,8 +693,6 @@ export default {
 .english2 {
   margin-top: 0.3rem;
 }
-
-.english3 {}
 
 .content {
   width: 16rem;

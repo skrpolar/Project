@@ -33,24 +33,28 @@ export default {
         // sessionStorage.index = '41';
         // sessionStorage.navIndex = 'menu4';
         // console.log(this.$route);  
-        sessionStorage.index = this.$route.name.replace(/[^0-9]/ig,"");
-        if(this.$route.name.length > 5){
+        sessionStorage.index = this.$route.name.replace(/[^0-9]/ig, "");
+        if (this.$route.name.length > 5) {
             var i = -1;
             var routename = '';
             do {
                 i = this.$route.name.indexOf('_', i + 1);
-                if(i != -1) {
+                if (i != -1) {
                     routename += ' ' + this.$route.name.substr(0, i);
                 }
             } while (i != -1);
             sessionStorage.navIndex = routename;
         }
-        this.$http.get('http://localhost:8089/getmarkdown').then(function (req) {
-            document.getElementById('content').innerHTML = marked(req.data, { sanitize: true });
-            hljs.initHighlightingOnLoad();
-        }).catch(function () {
-            console.log('error');
-        })
+
+        this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}`)
+            .then(function (req) {
+                document.getElementById('content').innerHTML = marked(req.data.a);
+                hljs.initHighlightingOnLoad();
+            }).catch(function () {
+                console.log('error');
+            })
+
+
     },
     props: ['locale'],
     i18n: i18n,
@@ -62,19 +66,18 @@ export default {
             // console.log(to.path);
             // this.msg = to.path;
             // console.log(this.$route);
-            sessionStorage.index = this.$route.name.replace(/[^0-9]/ig,"");
+            sessionStorage.index = this.$route.name.replace(/[^0-9]/ig, "");
+            this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}`)
+            .then(function (req) {
+                document.getElementById('content').innerHTML = marked(req.data.a);
+                hljs.initHighlightingOnLoad();
+            }).catch(function () {
+                console.log('error');
+            })
         }
     },
     updated: function () {
         // console.log(this.$store.state.localpath);
-    },
-    computed: {
-        localpath: {
-            get: function () {
-                // console.log(this.$store.state.localpath);
-                return this.$store.state.localpath;
-            }
-        }
     }
 }
 </script>
@@ -94,6 +97,8 @@ export default {
     line-height: 0.36rem;
     text-align: left;
 }
+
+
 /* pre {
     padding: .2rem .3rem;
     background: #f2f2f2;
