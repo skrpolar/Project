@@ -219,6 +219,7 @@ export default {
     }
 
     window.moveScroll = function () {
+      /*
       var t = document.documentElement.scrollTop || document.body.scrollTop;
       var clientWidth = docEl.clientWidth;
       if ((t / clientWidth) > 0.05) {
@@ -232,6 +233,9 @@ export default {
       if ((document.documentElement.scrollTop > 0) || (document.body.scrollTop > 0)) {
         setTimeout(moveScroll, 10);
       }
+      */
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
     }
 
     /* 滚动栏 */

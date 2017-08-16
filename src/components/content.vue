@@ -95,12 +95,6 @@ export default {
 </script>
 
 <style>
-/* .content3_head {
-    font-size: 0.4rem;
-    color: #333F5C;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-} */
 
 #content {
     margin: .5rem 1rem 0 1rem;
@@ -121,18 +115,43 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: .01rem #e9e9e9 solid;
 }
 
-#content ul{
+h1:before, h2:before, h3:before, h4:before, h5:before, h6:before {
+    content: "#";
+    color: #0366d6;
+    position: absolute;
+    left: 4.9rem;
+    opacity: 0;
+    cursor: pointer;
+    transition: .2s opacity ease-in-out 0s;
+}
+
+h1:hover:before, h2:hover:before, h3:hover:before, h4:hover:before, h5:hover:before, h6:hover:before {
+    opacity: 1;
+}
+
+#content ul {
     list-style-type: disc;
     margin-left: .2rem;
+}
+
+#content a:link,#content a:visited {
+    color: #0366d6;
+}
+
+#content a:hover {
+    text-decoration: underline;
 }
 
  pre {
     display: block;
     overflow-x: auto;
     padding: .2rem .3rem;
-    color: #abb2bf;
-    background: #282c34;
+    /* color: #abb2bf; */
+    color: #1b2127;
+    /* background: #282c34; */
+    background: #f5f7f8;
 }
+
 </style>
 
 
