@@ -5,10 +5,12 @@
 
 <script>
 import Vue from 'vue'
+import Router from 'vue-router'
 import VueI18n from 'vue-i18n'
 import marked from 'marked'
 import hljs from 'highlight.js'
 import '@/common/css/atom-one-light.css'
+import content from '@/components/content.vue'
 
 Vue.use(VueI18n)
 
@@ -63,6 +65,29 @@ export default {
         this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}`)
             .then(function (req) {
                 document.getElementById('content').innerHTML = marked(req.data.a);
+                for (var i = 1; i < 7; i++) { // Max h element num is 6
+                    var h = document.getElementsByTagName(`h${i}`);
+                    for (var j = 0; j < h.length; j++) {
+                        var hyper = document.createElement('a');
+                        hyper.href = `#${h[j].id}`;
+                        hyper.innerHTML = '#';
+                        hyper.style.float = 'left';
+                        hyper.style.marginLeft = '-.3rem';
+                        hyper.style.textDecoration = 'none';
+                        hyper.style.opacity = 0;
+                        hyper.style.transition = '.2s opacity ease-in-out 0s';
+                        (function (hypers) {
+                            h[j].addEventListener('mouseover', function () {
+                                hypers.style.opacity = 1;
+                            });
+                            h[j].addEventListener('mouseout', function () {
+                                hypers.style.opacity = 0;
+                            });
+                        })(hyper);
+
+                        h[j].insertBefore(hyper, h[j].firstChild);
+                    }
+                }
             }).catch(function () {
                 console.log('error');
             })
@@ -83,6 +108,28 @@ export default {
             this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}`)
                 .then(function (req) {
                     document.getElementById('content').innerHTML = marked(req.data.a);
+                    for (var i = 1; i < 7; i++) { // Max h element num is 6
+                        var h = document.getElementsByTagName(`h${i}`);
+                        for (var j = 0; j < h.length; j++) {
+                            var hyper = document.createElement('a');
+                            hyper.href = `#${h[j].id}`;
+                            hyper.innerHTML = '#';
+                            hyper.style.float = 'left';
+                            hyper.style.marginLeft = '-.3rem';
+                            hyper.style.textDecoration = 'none';
+                            hyper.style.opacity = 0;
+                            hyper.style.transition = '.2s opacity ease-in-out 0s';
+                            (function (hypers) {
+                                h[j].addEventListener('mouseover', function () {
+                                    hypers.style.opacity = 1;
+                                });
+                                h[j].addEventListener('mouseout', function () {
+                                    hypers.style.opacity = 0;
+                                });
+                            })(hyper);
+                            h[j].insertBefore(hyper, h[j].firstChild);
+                        }
+                    }
                 }).catch(function () {
                     console.log('error');
                 })
@@ -95,7 +142,6 @@ export default {
 </script>
 
 <style>
-
 #content {
     margin: .5rem 1rem 0 1rem;
     font-size: 0.20rem;
@@ -110,23 +156,14 @@ export default {
     max-width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     padding-bottom: .25rem;
     border-bottom: .01rem #e9e9e9 solid;
-}
-
-h1:before, h2:before, h3:before, h4:before, h5:before, h6:before {
-    content: "#";
-    color: #0366d6;
-    position: absolute;
-    left: 4.9rem;
-    opacity: 0;
-    cursor: pointer;
-    transition: .2s opacity ease-in-out 0s;
-}
-
-h1:hover:before, h2:hover:before, h3:hover:before, h4:hover:before, h5:hover:before, h6:hover:before {
-    opacity: 1;
 }
 
 #content ul {
@@ -134,15 +171,16 @@ h1:hover:before, h2:hover:before, h3:hover:before, h4:hover:before, h5:hover:bef
     margin-left: .2rem;
 }
 
-#content a:link,#content a:visited {
-    color: #0366d6;
+#content a:link,
+#content a:visited {
+    color: #369fe8;
 }
 
 #content a:hover {
     text-decoration: underline;
 }
 
- pre {
+pre {
     display: block;
     overflow-x: auto;
     padding: .2rem .3rem;
@@ -151,7 +189,6 @@ h1:hover:before, h2:hover:before, h3:hover:before, h4:hover:before, h5:hover:bef
     /* background: #282c34; */
     background: #f5f7f8;
 }
-
 </style>
 
 

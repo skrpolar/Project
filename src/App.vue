@@ -101,15 +101,15 @@
 </template>
 
 <script>
-import HeaderLine from '@/components/header.vue';
-import FooterLine from '@/components/footer.vue';
-import FooterLine2 from '@/components/footer2.vue';
+import HeaderLine from '@/components/header.vue'
+import FooterLine from '@/components/footer.vue'
+import FooterLine2 from '@/components/footer2.vue'
 import index from '@/components/index.vue'
 import marked from 'marked'
 import hljs from 'highlight.js'
 import '@/common/css/reset.css'
 import '@/common/css/animate.css'
-import VueI18n from 'vue-i18n';
+import VueI18n from 'vue-i18n'
 
 var i18n = new VueI18n({
   locale: 'ch',
@@ -219,7 +219,7 @@ export default {
     }
 
     window.moveScroll = function () {
-      /*
+      /* speed too slow
       var t = document.documentElement.scrollTop || document.body.scrollTop;
       var clientWidth = docEl.clientWidth;
       if ((t / clientWidth) > 0.05) {
