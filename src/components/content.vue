@@ -28,7 +28,6 @@ var i18n = new VueI18n({
 export default {
     data() {
         return {
-            msg: ''
         }
     },
     beforeMount: function () {
@@ -63,52 +62,7 @@ export default {
             sessionStorage.navIndex = routename;
         }
 
-        this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}&locale=${this.locale}`)
-            .then(function (req) {
-                var otherLocale = '';
-                if (this.locale == 'en') {
-                    otherLocale = 'ch';
-                } else {
-                    otherLocale = 'en'
-                    this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}&locale=${otherLocale}`)
-                        .then(function (req) {
-                            this.$i18n.messages[otherLocale].content = req.data.a;
-                        }).catch(function (err) {
-                            console.log(err);
-                        });
-                }
-                this.$i18n.messages[this.locale].content = req.data.a;
-                document.getElementById('content').innerHTML = marked(this.$i18n.messages[this.locale].content);
-                for (var i = 1; i < 7; i++) { // Max h element num is 6
-                    var h = document.getElementsByTagName(`h${i}`);
-                    for (var j = 0; j < h.length; j++) {
-                        var hyper = document.createElement('a');
-                        if (this.locale == 'ch') {
-                            h[j].id = h[j].innerHTML;
-                            hyper.href = `#${h[j].innerHTML}`;
-                        } else { hyper.href = `#${h[j].id}`; }
-                        hyper.innerHTML = '#';
-                        hyper.style.float = 'left';
-                        hyper.style.marginLeft = '-.3rem';
-                        hyper.style.textDecoration = 'none';
-                        hyper.style.opacity = 0;
-                        hyper.style.transition = '.2s opacity ease-in-out 0s';
-                        (function (hypers) {
-                            h[j].addEventListener('mouseover', function () {
-                                hypers.style.opacity = 1;
-                            });
-                            h[j].addEventListener('mouseout', function () {
-                                hypers.style.opacity = 0;
-                            });
-                        })(hyper);
-
-                        h[j].insertBefore(hyper, h[j].firstChild);
-                    }
-                }
-            }).catch(function () {
-                console.log('error');
-            })
-
+        this.contentCreator();
 
     },
     props: ['locale'],
@@ -117,6 +71,21 @@ export default {
         locale: function (val) {
             this.$i18n.locale = val;
             document.getElementById('content').innerHTML = marked(this.$i18n.messages[val].content);
+            this.contentCreator();
+        },
+        '$route': function (to, from) { // watch中进行页面切换后的初始化
+            // console.log(to.path);
+            // this.msg = to.path;
+            // console.log(this.$route);
+            sessionStorage.index = this.$route.name.replace(/[^0-9]/ig, "");
+            this.contentCreator();
+        }
+    },
+    updated: function () {
+        // console.log(this.$store.state.localpath);
+    },
+    methods: {
+        headerCreator: function() {
             for (var i = 1; i < 7; i++) { // Max h element num is 6
                 var h = document.getElementsByTagName(`h${i}`);
                 for (var j = 0; j < h.length; j++) {
@@ -143,11 +112,7 @@ export default {
                 }
             }
         },
-        '$route': function (to, from) { // watch中进行页面切换后的初始化
-            // console.log(to.path);
-            // this.msg = to.path;
-            // console.log(this.$route);
-            sessionStorage.index = this.$route.name.replace(/[^0-9]/ig, "");
+        contentCreator: function () {
             this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}&locale=${this.locale}`)
                 .then(function (req) {
                     var otherLocale = '';
@@ -164,38 +129,11 @@ export default {
                     }
                     this.$i18n.messages[this.locale].content = req.data.a;
                     document.getElementById('content').innerHTML = marked(this.$i18n.messages[this.locale].content);
-                    for (var i = 1; i < 7; i++) { // Max h element num is 6
-                        var h = document.getElementsByTagName(`h${i}`);
-                        for (var j = 0; j < h.length; j++) {
-                            var hyper = document.createElement('a');
-                            if (this.locale == 'ch') {
-                                h[j].id = h[j].innerHTML;
-                                hyper.href = `#${h[j].innerHTML}`;
-                            } else { hyper.href = `#${h[j].id}`; }
-                            hyper.innerHTML = '#';
-                            hyper.style.float = 'left';
-                            hyper.style.marginLeft = '-.3rem';
-                            hyper.style.textDecoration = 'none';
-                            hyper.style.opacity = 0;
-                            hyper.style.transition = '.2s opacity ease-in-out 0s';
-                            (function (hypers) {
-                                h[j].addEventListener('mouseover', function () {
-                                    hypers.style.opacity = 1;
-                                });
-                                h[j].addEventListener('mouseout', function () {
-                                    hypers.style.opacity = 0;
-                                });
-                            })(hyper);
-                            h[j].insertBefore(hyper, h[j].firstChild);
-                        }
-                    }
+                    this.headerCreator();
                 }).catch(function () {
                     console.log('error');
                 })
         }
-    },
-    updated: function () {
-        // console.log(this.$store.state.localpath);
     }
 }
 </script>
@@ -234,6 +172,39 @@ h2 {
 #content a:hover {
     text-decoration: underline;
 }
+
+#content table {
+    border: .01rem #e9e9e9 solid;
+    border-collapse: collapse;
+}
+
+#content th, #content td {
+    margin: 0;
+    padding: .4rem 0 .4rem .2rem;
+    border-bottom: 0.01rem solid #e9e9e9;
+    width: 20%;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+
+#content th {
+    background: #f2f2f2;
+}
+
+#content tr:hover td {
+    background: #f9f9f9;
+}
+
+#content blockquote {
+    background: #f9f9f9;
+    padding: .2rem .3rem;
+}
+
+#content table {
+    width: 100%;
+}
+
+
 
 pre {
     display: block;
