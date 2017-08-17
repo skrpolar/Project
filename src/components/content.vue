@@ -1,16 +1,15 @@
 <template>
     <div id="content">
+        {{$t('content')}}
     </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import Router from 'vue-router'
 import VueI18n from 'vue-i18n'
 import marked from 'marked'
 import hljs from 'highlight.js'
 import '@/common/css/atom-one-light.css'
-import content from '@/components/content.vue'
 
 Vue.use(VueI18n)
 
@@ -18,8 +17,10 @@ var i18n = new VueI18n({
     locale: this.locale,
     messages: {
         ch: {
+            content: ''
         },
         en: {
+            content: ''
         }
     }
 });
@@ -62,14 +63,30 @@ export default {
             sessionStorage.navIndex = routename;
         }
 
-        this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}`)
+        this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}&locale=${this.locale}`)
             .then(function (req) {
-                document.getElementById('content').innerHTML = marked(req.data.a);
+                var otherLocale = '';
+                if (this.locale == 'en') {
+                    otherLocale = 'ch';
+                } else {
+                    otherLocale = 'en'
+                    this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}&locale=${otherLocale}`)
+                        .then(function (req) {
+                            this.$i18n.messages[otherLocale].content = req.data.a;
+                        }).catch(function (err) {
+                            console.log(err);
+                        });
+                }
+                this.$i18n.messages[this.locale].content = req.data.a;
+                document.getElementById('content').innerHTML = marked(this.$i18n.messages[this.locale].content);
                 for (var i = 1; i < 7; i++) { // Max h element num is 6
                     var h = document.getElementsByTagName(`h${i}`);
                     for (var j = 0; j < h.length; j++) {
                         var hyper = document.createElement('a');
-                        hyper.href = `#${h[j].id}`;
+                        if (this.locale == 'ch') {
+                            h[j].id = h[j].innerHTML;
+                            hyper.href = `#${h[j].innerHTML}`;
+                        } else { hyper.href = `#${h[j].id}`; }
                         hyper.innerHTML = '#';
                         hyper.style.float = 'left';
                         hyper.style.marginLeft = '-.3rem';
@@ -99,20 +116,62 @@ export default {
     watch: {
         locale: function (val) {
             this.$i18n.locale = val;
+            document.getElementById('content').innerHTML = marked(this.$i18n.messages[val].content);
+            for (var i = 1; i < 7; i++) { // Max h element num is 6
+                var h = document.getElementsByTagName(`h${i}`);
+                for (var j = 0; j < h.length; j++) {
+                    var hyper = document.createElement('a');
+                    if (this.locale == 'ch') {
+                        h[j].id = h[j].innerHTML;
+                        hyper.href = `#${h[j].innerHTML}`;
+                    } else { hyper.href = `#${h[j].id}`; }
+                    hyper.innerHTML = '#';
+                    hyper.style.float = 'left';
+                    hyper.style.marginLeft = '-.3rem';
+                    hyper.style.textDecoration = 'none';
+                    hyper.style.opacity = 0;
+                    hyper.style.transition = '.2s opacity ease-in-out 0s';
+                    (function (hypers) {
+                        h[j].addEventListener('mouseover', function () {
+                            hypers.style.opacity = 1;
+                        });
+                        h[j].addEventListener('mouseout', function () {
+                            hypers.style.opacity = 0;
+                        });
+                    })(hyper);
+                    h[j].insertBefore(hyper, h[j].firstChild);
+                }
+            }
         },
         '$route': function (to, from) { // watch中进行页面切换后的初始化
             // console.log(to.path);
             // this.msg = to.path;
             // console.log(this.$route);
             sessionStorage.index = this.$route.name.replace(/[^0-9]/ig, "");
-            this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}`)
+            this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}&locale=${this.locale}`)
                 .then(function (req) {
-                    document.getElementById('content').innerHTML = marked(req.data.a);
+                    var otherLocale = '';
+                    if (this.locale == 'en') {
+                        otherLocale = 'ch';
+                    } else {
+                        otherLocale = 'en'
+                        this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}&locale=${otherLocale}`)
+                            .then(function (req) {
+                                this.$i18n.messages[otherLocale].content = req.data.a;
+                            }).catch(function (err) {
+                                console.log(err);
+                            });
+                    }
+                    this.$i18n.messages[this.locale].content = req.data.a;
+                    document.getElementById('content').innerHTML = marked(this.$i18n.messages[this.locale].content);
                     for (var i = 1; i < 7; i++) { // Max h element num is 6
                         var h = document.getElementsByTagName(`h${i}`);
                         for (var j = 0; j < h.length; j++) {
                             var hyper = document.createElement('a');
-                            hyper.href = `#${h[j].id}`;
+                            if (this.locale == 'ch') {
+                                h[j].id = h[j].innerHTML;
+                                hyper.href = `#${h[j].innerHTML}`;
+                            } else { hyper.href = `#${h[j].id}`; }
                             hyper.innerHTML = '#';
                             hyper.style.float = 'left';
                             hyper.style.marginLeft = '-.3rem';
@@ -157,11 +216,7 @@ export default {
 }
 
 h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h2 {
     padding-bottom: .25rem;
     border-bottom: .01rem #e9e9e9 solid;
 }

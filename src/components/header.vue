@@ -22,8 +22,6 @@
 </template>
 <script>
 import Vue from 'vue';
-// import '../common/css/reset.css';
-// import '../common/css/animate.css';
 import VueI18n from 'vue-i18n';
 Vue.use(VueI18n);
 var i18n = new VueI18n({})
