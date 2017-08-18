@@ -84,7 +84,7 @@
   
         <div class="right_rev">
           <div class="search">
-            <input type="text" id="search_input" @keyup.enter="searchFunc()" :class="[ searchPng ? 'ser_input_active' : 'ser_input' ]" :placeholder="$t('search.msg')">
+            <input type="text" id="search_input" @keyup.enter="searchFunc()" :class="[ searchPng ? 'ser_input_active' : 'ser_input' ]" :placeholder="$t('search.msg')" v-model="searchContent">
             <img id="ser" :class="[ searchPng ? 'ser_png_active' : 'ser_png' ]" @click="searchPng=!searchPng" src="./assets/search.png">
           </div>
           <router-view :locale="locale"></router-view>
@@ -136,6 +136,7 @@ export default {
       isEmputy: false,
       locale: 'ch',
       searchPng: false,
+      searchContent: '',
       navInit: {},
       liIndex: sessionStorage.index,
     }
@@ -310,7 +311,7 @@ export default {
     //   console.log(val);
     // }
     searchFunc: function () {
-      this.$router.push({ path: '/content2' })
+      this.$router.push({ path: `/search?wd=${this.searchContent}` })
     },
     // ulClass: function (val) { // 被自定义样式取代
     //   // var o = { level_ul: true, open: val.navActive };
@@ -450,10 +451,10 @@ export default {
 }
 
 .left_nav a {
-  color: #333F5C;
+  color: #404040;
   display: block;
   height: 0.6rem;
-  font-size: 0.21rem;
+  font-size: 0.2rem;
   text-align: left;
   line-height: 0.6rem;
   padding-left: 0.4rem;
@@ -467,7 +468,7 @@ export default {
 }
 
 .left_nav .level_plus {
-  color: #333F5C;
+  color: #404040;
   display: block;
   height: 0.6rem;
   font-size: 0.21rem;
@@ -484,11 +485,11 @@ export default {
 }
 
 .left_nav a:visited {
-  color: #333F5C;
+  color: #404040;
 }
 
 .left_nav .level_ul {
-  color: #333F5C;
+  color: #404040;
 }
 
 .left_nav a:hover {
@@ -531,14 +532,6 @@ export default {
   height: 100%;
   /* transform: scale(1,1); */
 }
-
-
-
-
-
-
-
-
 
 /*---------------------*/
 

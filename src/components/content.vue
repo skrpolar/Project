@@ -46,24 +46,18 @@ export default {
     },
     mounted: function () { // mounted进行页面初始化
         this.$i18n.locale = localStorage.locale;
-        // sessionStorage.index = '41';
-        // sessionStorage.navIndex = 'menu4';
-        // console.log(this.$route);  
-        sessionStorage.index = this.$route.name.replace(/[^0-9]/ig, "");
-        if (this.$route.name.length > 5) {
-            var i = -1;
-            var routename = '';
-            do {
-                i = this.$route.name.indexOf('_', i + 1);
-                if (i != -1) {
-                    routename += ' ' + this.$route.name.substr(0, i);
-                }
-            } while (i != -1);
-            sessionStorage.navIndex = routename;
-        }
-
+        var i = -1;
+        var routename = '';
+        do {
+            i = this.$route.name.indexOf('_', i + 1);
+            if (i != -1) {
+                routename += ' ' + this.$route.name.substr(0, i);
+            }
+        } while (i != -1);
+        sessionStorage.navIndex = routename;
+        document.getElementById('content').style.opacity = 0;
         this.contentCreator();
-
+        document.getElementById('content').style.opacity = 1;
     },
     props: ['locale'],
     i18n: i18n,
@@ -85,7 +79,7 @@ export default {
         // console.log(this.$store.state.localpath);
     },
     methods: {
-        headerCreator: function() {
+        headerCreator: function () {
             for (var i = 1; i < 7; i++) { // Max h element num is 6
                 var h = document.getElementsByTagName(`h${i}`);
                 for (var j = 0; j < h.length; j++) {
@@ -127,9 +121,14 @@ export default {
                                 console.log(err);
                             });
                     }
-                    this.$i18n.messages[this.locale].content = req.data.a;
+                    
+                    this.$i18n.messages[this.locale].content = req.data.a;     
                     document.getElementById('content').innerHTML = marked(this.$i18n.messages[this.locale].content);
                     this.headerCreator();
+                    /*
+                    var reg = /[\n]/g;
+                    var arr = html.split(reg);
+                    */
                 }).catch(function () {
                     console.log('error');
                 })
@@ -139,6 +138,40 @@ export default {
 </script>
 
 <style>
+#content .line_number {
+    text-align: right;
+    display: block;
+    position: absolute;
+    pointer-events: none;
+    font-size: 100%;
+    width: .4rem;
+    letter-spacing: .01rem;
+    border-right: 1px solid #999;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#content code {
+    color: #000;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    direction: ltr;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+
 #content {
     margin: .5rem 1rem 0 1rem;
     font-size: 0.20rem;
@@ -178,7 +211,8 @@ h2 {
     border-collapse: collapse;
 }
 
-#content th, #content td {
+#content th,
+#content td {
     margin: 0;
     padding: .4rem 0 .4rem .2rem;
     border-bottom: 0.01rem solid #e9e9e9;
@@ -197,23 +231,31 @@ h2 {
 
 #content blockquote {
     background: #f9f9f9;
+    width: 100%;
+    margin: 0;
+}
+
+#content blockquote p {
     padding: .2rem .3rem;
+    border-left: .05rem solid #ff5e29;
 }
 
 #content table {
     width: 100%;
 }
 
-
-
-pre {
+#content pre {
+    white-space: wrap;
+    line-height: .3rem;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    counter-reset: linenumber;
     display: block;
     overflow-x: auto;
     padding: .2rem .3rem;
-    /* color: #abb2bf; */
     color: #1b2127;
-    /* background: #282c34; */
     background: #f5f7f8;
+    text-shadow: none;
+    border-left: .05rem solid #369fe8;
 }
 </style>
 

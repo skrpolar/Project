@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import router from './router'
 import App from './App'
+import search from '@/components/search.vue'
 import Resource from 'vue-resource'
 import content from '@/components/content.vue'
 
@@ -10,7 +11,11 @@ Vue.use(Resource)
 
 Vue.config.productionTip = false
 
-var routers = []; 
+var routers = [{
+  path: '/search',
+  name: search,
+  component: search
+}]; 
 
 var g = document.createElement('script');
 g.src = 'http://localhost:8089/getnavbar?type=router';
@@ -33,10 +38,10 @@ window.change = function (d) {
   }
 }
 
-router.afterEach(route => { //全局路由钩子
-  sessionStorage.index = 11; //跳转至一级菜单首栏
-  sessionStorage.navIndex = 'menu1';
-})
+// router.afterEach(route => { //全局路由钩子
+//   sessionStorage.index = 11; //跳转至一级菜单首栏
+//   sessionStorage.navIndex = 'menu1';
+// })
 
 /* eslint-disable no-new */
 
