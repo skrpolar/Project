@@ -227,6 +227,10 @@ h2 {
     background: #f2f2f2;
 }
 
+#content tr {
+    transition: .2s background ease-in-out 0s, .2s box-shadow ease-in-out 0s,
+}
+
 #content tr:hover {
     background: #f9f9f9;
     -webkit-box-shadow: 0px 2px 11px -2px rgba(0, 0, 0, 0.39);
