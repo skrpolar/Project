@@ -87,7 +87,7 @@
             <input type="text" id="search_input" @keyup.enter="searchFunc()" :class="[ searchPng ? 'ser_input_active' : 'ser_input' ]" :placeholder="$t('search.msg')" v-model="searchContent">
             <img id="ser" :class="[ searchPng ? 'ser_png_active' : 'ser_png' ]" @click="searchPng=!searchPng" src="./assets/search.png">
           </div>
-          <router-view :locale="locale"></router-view>
+          <router-view :locale="locale" :searchContent="searchContent"></router-view>
         </div>
   
         <div class="oTop">
@@ -104,7 +104,6 @@
 import HeaderLine from '@/components/header.vue'
 import FooterLine from '@/components/footer.vue'
 import FooterLine2 from '@/components/footer2.vue'
-import index from '@/components/index.vue'
 import marked from 'marked'
 import hljs from 'highlight.js'
 import '@/common/css/reset.css'
@@ -235,6 +234,8 @@ export default {
         setTimeout(moveScroll, 10);
       }
       */
+
+      // fast speed
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
     }
@@ -273,8 +274,8 @@ export default {
 
   beforeUpdate() {
     // 通过导入来搜索内容
-    var s = index;
-    var input = document.getElementById('search_input');
+    // var s = index;
+    // var input = document.getElementById('search_input');
 
   },
 
@@ -311,7 +312,7 @@ export default {
     //   console.log(val);
     // }
     searchFunc: function () {
-      this.$router.push({ path: `/search?wd=${this.searchContent}` })
+      this.$router.push({ path: `/search?lang=${this.locale}&s=${this.searchContent}` });
     },
     // ulClass: function (val) { // 被自定义样式取代
     //   // var o = { level_ul: true, open: val.navActive };
@@ -394,13 +395,6 @@ export default {
 }
 
 
-
-
-
-
-
-
-
 /* -----左侧导航栏------*/
 
 @-moz-document url-prefix() {}
@@ -414,6 +408,7 @@ export default {
   -moz-transform: scale(1.35, 1) rotate(180deg);
   -webkit-transform: scale(1.35, 1) rotate(180deg);
   -o-transform: scale(1.35, 1) rotate(180deg);
+  user-select: none;
 }
 
 .sub {
@@ -426,6 +421,7 @@ export default {
   -webkit-transform: scale(1.35, 1);
   -o-transform: scale(1.35, 1);
   -moz-transform: scale(1.35, 1);
+  user-select: none;
 }
 
 .left_nav {

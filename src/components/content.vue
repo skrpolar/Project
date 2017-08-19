@@ -1,6 +1,5 @@
 <template>
     <div id="content">
-        {{$t('content')}}
     </div>
 </template>
 
@@ -17,10 +16,10 @@ var i18n = new VueI18n({
     locale: this.locale,
     messages: {
         ch: {
-            content: ''
+            content: ' '
         },
         en: {
-            content: ''
+            content: ' '
         }
     }
 });
@@ -55,9 +54,10 @@ export default {
             }
         } while (i != -1);
         sessionStorage.navIndex = routename;
+        sessionStorage.index = this.$route.name.replace(/[^0-9]/ig, "");
         document.getElementById('content').style.opacity = 0;
         this.contentCreator();
-        document.getElementById('content').style.opacity = 1;
+
     },
     props: ['locale'],
     i18n: i18n,
@@ -84,7 +84,7 @@ export default {
                 var h = document.getElementsByTagName(`h${i}`);
                 for (var j = 0; j < h.length; j++) {
                     var hyper = document.createElement('a');
-                    if (this.locale == 'ch') {
+                    if (this.locale !== 'en') {
                         h[j].id = h[j].innerHTML;
                         hyper.href = `#${h[j].innerHTML}`;
                     } else { hyper.href = `#${h[j].id}`; }
@@ -121,14 +121,15 @@ export default {
                                 console.log(err);
                             });
                     }
-                    
-                    this.$i18n.messages[this.locale].content = req.data.a;     
+
+                    this.$i18n.messages[this.locale].content = req.data.a;
                     document.getElementById('content').innerHTML = marked(this.$i18n.messages[this.locale].content);
                     this.headerCreator();
                     /*
                     var reg = /[\n]/g;
                     var arr = html.split(reg);
                     */
+                    document.getElementById('content').style.opacity = 1;
                 }).catch(function () {
                     console.log('error');
                 })
@@ -207,14 +208,15 @@ h2 {
 }
 
 #content table {
-    border: .01rem #e9e9e9 solid;
+    border-top: .01rem #e9e9e9 solid;
+    border-buttom: .01rem #e9e9e9 solid;
     border-collapse: collapse;
 }
 
 #content th,
 #content td {
     margin: 0;
-    padding: .4rem 0 .4rem .2rem;
+    padding: .2rem 0 .2rem .2rem;
     border-bottom: 0.01rem solid #e9e9e9;
     width: 20%;
     text-overflow: ellipsis;
@@ -225,8 +227,11 @@ h2 {
     background: #f2f2f2;
 }
 
-#content tr:hover td {
+#content tr:hover {
     background: #f9f9f9;
+    -webkit-box-shadow: 0px 2px 11px -2px rgba(0, 0, 0, 0.39);
+    -moz-box-shadow: 0px 2px 11px -2px rgba(0, 0, 0, 0.39);
+    box-shadow: 0px 2px 11px -2px rgba(0, 0, 0, 0.39);
 }
 
 #content blockquote {
