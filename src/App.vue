@@ -390,7 +390,7 @@ export default {
 <style>
 .main_body {
   background: url(https://img.vrviu.com/images/about_bg.png) bottom no-repeat;
-  background-size: 100% 12.18rem;
+  background-size: 120% 5.18rem;
   margin-top: 0.5rem;
 }
 

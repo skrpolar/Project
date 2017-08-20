@@ -4,7 +4,6 @@
             <span class="arrow">^</span>
             <span class="re_content">{{$t('backC')}}</span>
         </div>
-        {{ msg }}
     </div>
 </template>
 
@@ -36,7 +35,12 @@ export default {
     i18n: i18n,
     mounted() { // 初始化查询
         this.$i18n.locale = localStorage.locale;
-        this.msg = this.$route.query.s;
+        this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${this.$route.query.s}`)
+            .then(function (req) {
+                console.log(req.data);
+            }).catch(function () {
+                console.log('error');
+            })
     },
     watch: {
         locale: function (val) {
@@ -44,11 +48,16 @@ export default {
             this.$router.push({ path: `/search?lang=${this.locale}&s=${this.searchContent}` });
         },
         '$route': function (to, from) { // 参数切换查询
-            this.msg = this.$route.query.s;
+            this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${this.searchContent}`)
+                .then(function (req) {
+                    console.log(req.data);
+                }).catch(function () {
+                    console.log('error');
+                })
         }
     },
     methods: {
-        backRoute: function() {
+        backRoute: function () {
             this.$router.back();
         }
     }
