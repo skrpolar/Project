@@ -87,7 +87,7 @@
             <input type="text" id="search_input" @keyup.enter="searchFunc()" :class="[ searchPng ? 'ser_input_active' : 'ser_input' ]" :placeholder="$t('search.msg')" v-model="searchContent">
             <img id="ser" :class="[ searchPng ? 'ser_png_active' : 'ser_png' ]" @click="searchPng=!searchPng" src="./assets/search.png">
           </div>
-          <router-view :locale="locale" :searchContent="searchContent"></router-view>
+          <router-view :locale="locale" :searchContent="searchContent" :navInit="navInit"></router-view>
         </div>
   
         <div class="oTop">
@@ -106,8 +106,6 @@ import FooterLine from '@/components/footer.vue'
 import FooterLine2 from '@/components/footer2.vue'
 import marked from 'marked'
 import hljs from 'highlight.js'
-import '@/common/css/reset.css'
-import '@/common/css/animate.css'
 import VueI18n from 'vue-i18n'
 
 var i18n = new VueI18n({

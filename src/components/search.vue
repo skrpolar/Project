@@ -2,7 +2,40 @@
     <div id="search_content">
         <div class="return" @click="backRoute()">
             <span class="arrow">^</span>
-            <span class="re_content">{{$t('backC')}}</span>
+            <span class="re_content">{{msg}}</span>
+        </div>
+        <template v-for="(value, key, index) in searchList">
+            <div class="rev_list">
+                <p class="rev_head">
+                    <a href="#">{{value.name}}</a>
+                </p>
+                <p class="rev_content" v-html="value.content"></p>
+                <p class="bread"></p>
+            </div>
+        </template>
+    
+        <div class="rev_list">
+            <p class="rev_head">
+                <a href="#">Electron</a>
+            </p>
+            <p class="rev_content">The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS. It is based on,The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS. It is based on</p>
+            <p class="bread">
+                <span>开始 > 公众号接口权限说明 > 入门指引 > 内容</span>
+            </p>
+        </div>
+        <div class="rev_list">
+            <p class="rev_head">
+                <a href="#">结果</a>
+            </p>
+            <p class="rev_content">内容：...</p>
+            <p class="bread">开始 > 公众号接口权限说明 > 入门指引</p>
+        </div>
+        <div class="rev_list">
+            <p class="rev_head">
+                <a href="#">结果</a>
+            </p>
+            <p class="rev_content">内容：...</p>
+            <p class="bread">开始 > 公众号接口权限说明 > 入门指引</p>
         </div>
     </div>
 </template>
@@ -16,49 +49,78 @@ Vue.use(VueI18n)
 var i18n = new VueI18n({
     locale: this.locale,
     messages: {
-        ch: {
-            backC: '返回'
-        },
-        en: {
-            backC: 'back'
-        }
+        ch: {},
+        en: {}
     }
 });
 
 export default {
     data() {
         return {
-            msg: ''
+            msg: '',
+            searchList: {}
         }
     },
-    props: ['locale', 'searchContent'],
     i18n: i18n,
+    props: ['locale', 'searchContent', 'navInit'],
     mounted() { // 初始化查询
-        this.$i18n.locale = localStorage.locale;
+        this.$i18n.locale = this.locale;
+        if (this.locale == 'en') {
+            this.msg = 'back';
+        } else if (this.locale == 'ch') {
+            this.msg = '返回';
+        }
         this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${this.$route.query.s}`)
             .then(function (req) {
-                console.log(req.data);
+                this.searchList = req.data;
+                getDot(180);
             }).catch(function () {
-                console.log('error');
+                // console.log('error');
             })
+
+
     },
     watch: {
         locale: function (val) {
             this.$i18n.locale = val;
             this.$router.push({ path: `/search?lang=${this.locale}&s=${this.searchContent}` });
+            if (this.locale == 'en') {
+                this.msg = 'back';
+            } else if (this.locale == 'ch') {
+                this.msg = '返回';
+            }
         },
         '$route': function (to, from) { // 参数切换查询
             this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${this.searchContent}`)
                 .then(function (req) {
-                    console.log(req.data);
+                    this.searchList = req.data;
+                    getDot(180);
                 }).catch(function () {
-                    console.log('error');
+                    // console.log('error');
                 })
         }
     },
     methods: {
         backRoute: function () {
             this.$router.back();
+        },
+        dotCreator: function (str, index, obj) {
+            if (str.substr(index, 1).search(/[A-Za-z]/) !== -1) {
+                this.dotCreator(str, index + 1, obj);
+            } else {
+                obj.innerHTML = str.substr(0, index) + '...';
+            }
+        },
+        getDot: function (length) {
+            var h = document.getElementsByClassName('rev_content');
+            var len = h.length;
+            for (var i = 0; i < len; i++) {
+                var r = h[i].innerHTML;
+                var l = r.length;
+                if (l > length) {
+                    this.dotCreator(r, length, h[i]);
+                }
+            }
         }
     }
 }
@@ -82,6 +144,55 @@ export default {
     font-size: .2rem;
     color: #333F5C;
     cursor: pointer;
+}
+
+#search_content .rev_list {
+    margin-bottom: .5rem;
+    width: 91%;
+    margin-left: -.5rem;
+    padding: .2rem 1rem .2rem 1rem;
+    transition: .1s background ease-in-out 0s, .1s box-shadow ease-in-out 0s;
+}
+
+#search_content .rev_list:hover {
+    background: #f9f9f9;
+    -webkit-box-shadow: 0px 2px 11px -2px rgba(0, 0, 0, 0.39);
+    -moz-box-shadow: 0px 2px 11px -2px rgba(0, 0, 0, 0.39);
+    box-shadow: 0px 2px 11px -2px rgba(0, 0, 0, 0.39);
+}
+
+#search_content .rev_head {
+    font-size: .25rem;
+    margin-bottom: -.15rem;
+}
+
+#search_content .rev_content {
+    margin-bottom: -.15rem;
+}
+
+#search_content .rev_content:hover {
+    /* text-overflow: inherit;
+    overflow: visible;
+    white-space: normal; */
+}
+
+#search_content a {
+    color: #369fe8;
+}
+
+#search_content a:link,
+#search_content a:visited {
+    color: #369fe8;
+}
+
+#search_content a:hover {
+    text-decoration: underline;
+}
+
+#search_content .bread span {
+    color: #369fe8;
+    user-select: none;
+    cursor: default;
 }
 
 .return .arrow {

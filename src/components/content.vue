@@ -15,12 +15,8 @@ Vue.use(VueI18n)
 var i18n = new VueI18n({
     locale: this.locale,
     messages: {
-        ch: {
-            content: ' '
-        },
-        en: {
-            content: ' '
-        }
+        ch: {},
+        en: {}
     }
 });
 
@@ -139,23 +135,8 @@ export default {
 </script>
 
 <style>
-#content .line_number {
-    text-align: right;
-    display: block;
-    position: absolute;
-    pointer-events: none;
-    font-size: 100%;
-    width: .4rem;
-    letter-spacing: .01rem;
-    border-right: 1px solid #999;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
 #content code {
-    color: #000;
+    /* color: #000; */
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     direction: ltr;
     text-align: left;

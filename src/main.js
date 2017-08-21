@@ -6,6 +6,7 @@ import App from './App'
 import search from '@/components/search.vue'
 import Resource from 'vue-resource'
 import content from '@/components/content.vue'
+import '@/common/css/reset.css'
 
 Vue.use(Resource)
 
