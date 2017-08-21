@@ -13,7 +13,7 @@
                 <p class="bread"></p>
             </div>
         </template>
-    
+
         <div class="rev_list">
             <p class="rev_head">
                 <a href="#">Electron</a>
@@ -22,20 +22,6 @@
             <p class="bread">
                 <span>开始 > 公众号接口权限说明 > 入门指引 > 内容</span>
             </p>
-        </div>
-        <div class="rev_list">
-            <p class="rev_head">
-                <a href="#">结果</a>
-            </p>
-            <p class="rev_content">内容：...</p>
-            <p class="bread">开始 > 公众号接口权限说明 > 入门指引</p>
-        </div>
-        <div class="rev_list">
-            <p class="rev_head">
-                <a href="#">结果</a>
-            </p>
-            <p class="rev_content">内容：...</p>
-            <p class="bread">开始 > 公众号接口权限说明 > 入门指引</p>
         </div>
     </div>
 </template>
@@ -73,12 +59,14 @@ export default {
         this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${this.$route.query.s}`)
             .then(function (req) {
                 this.searchList = req.data;
-                getDot(180);
             }).catch(function () {
-                // console.log('error');
+                console.log('error');
             })
 
 
+    },
+    updated() {
+        this.getDot(180);
     },
     watch: {
         locale: function (val) {
@@ -94,9 +82,8 @@ export default {
             this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${this.searchContent}`)
                 .then(function (req) {
                     this.searchList = req.data;
-                    getDot(180);
                 }).catch(function () {
-                    // console.log('error');
+                    console.log('error');
                 })
         }
     },
@@ -111,14 +98,14 @@ export default {
                 obj.innerHTML = str.substr(0, index) + '...';
             }
         },
-        getDot: function (length) {
+        getDot: function (le) {
             var h = document.getElementsByClassName('rev_content');
             var len = h.length;
             for (var i = 0; i < len; i++) {
-                var r = h[i].innerHTML;
-                var l = r.length;
-                if (l > length) {
-                    this.dotCreator(r, length, h[i]);
+                let r = h[i].innerHTML;
+                let l = r.length;
+                if (l > le) {
+                    this.dotCreator(r, le, h[i]);
                 }
             }
         }
