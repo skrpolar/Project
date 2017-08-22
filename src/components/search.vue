@@ -4,25 +4,18 @@
             <span class="arrow">^</span>
             <span class="re_content">{{msg}}</span>
         </div>
+        <p class="search_num" :v-model="this.searchContent">共10条与"{{this.searchContent}}"相关的结果</p>
         <template v-for="(value, key, index) in searchList">
-            <div class="rev_list">
+            <div class="rev_list" :key="key">
                 <p class="rev_head">
-                    <a href="#">{{value.name}}</a>
+                    <router-link :to="{ name: value.name }" :id="value.name"></router-link>
                 </p>
                 <p class="rev_content" v-html="value.content"></p>
-                <p class="bread"></p>
+                <p class="bread">
+                    <span>开始 > 公众号接口权限说明 > 入门指引 > 内容</span>
+                </p>
             </div>
         </template>
-
-        <div class="rev_list">
-            <p class="rev_head">
-                <a href="#">Electron</a>
-            </p>
-            <p class="rev_content">The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS. It is based on,The Electron framework lets you write cross-platform desktop applications using JavaScript, HTML and CSS. It is based on</p>
-            <p class="bread">
-                <span>开始 > 公众号接口权限说明 > 入门指引 > 内容</span>
-            </p>
-        </div>
     </div>
 </template>
 
@@ -62,11 +55,10 @@ export default {
             }).catch(function () {
                 console.log('error');
             })
-
-
     },
     updated() {
         this.getDot(180);
+        this.getTitle();
     },
     watch: {
         locale: function (val) {
@@ -77,6 +69,7 @@ export default {
             } else if (this.locale == 'ch') {
                 this.msg = '返回';
             }
+            document.getElementById('search_content').style.opacity = 0;
         },
         '$route': function (to, from) { // 参数切换查询
             this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${this.searchContent}`)
@@ -108,6 +101,23 @@ export default {
                     this.dotCreator(r, le, h[i]);
                 }
             }
+        },
+        getTitle: function () {
+            var h = document.getElementsByClassName('rev_head');
+            var len = h.length;
+            for (var i = 0; i < len; i++) {
+                this.iterator(this.navInit, h[i], this.locale);
+            }
+            document.getElementById('search_content').style.opacity = 1;
+        },
+        iterator: function (obj, n, lang) {
+            for (var i in obj) {
+                if(i == n.firstChild.id) {
+                    n.firstChild.innerText = obj[i].text[lang];
+                }else if (obj[i].hasOwnProperty('navActive')) {
+                    this.iterator(obj[i].next, n, lang);
+                }
+            }
         }
     }
 }
@@ -135,7 +145,7 @@ export default {
 
 #search_content .rev_list {
     margin-bottom: .5rem;
-    width: 91%;
+    width: 91.05%;
     margin-left: -.5rem;
     padding: .2rem 1rem .2rem 1rem;
     transition: .1s background ease-in-out 0s, .1s box-shadow ease-in-out 0s;
@@ -161,6 +171,10 @@ export default {
     /* text-overflow: inherit;
     overflow: visible;
     white-space: normal; */
+}
+
+#search_content .search_num {
+    margin: 0 0 .5rem;;
 }
 
 #search_content a {

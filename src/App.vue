@@ -279,6 +279,7 @@ export default {
 
   updated() {
     this.liIndex = sessionStorage.index;
+    this.navCreator(this.navInit);
   },
 
   components: {
