@@ -46,7 +46,7 @@
                                   </li>
                                   <ul :class="[ 'level_ul', {open: value4.navActive} ]">
                                     <!-- 控制菜单方式由v-if更改为css样式实现动画效果 -->
-  
+
                                   </ul>
                                 </template>
                                 <template v-else>
@@ -81,7 +81,7 @@
             </template>
           </ul>
         </div>
-  
+
         <div class="right_rev">
           <div class="search">
             <input type="text" id="search_input" @keyup.enter="searchFunc()" :class="[ searchPng ? 'ser_input_active' : 'ser_input' ]" :placeholder="$t('search.msg')" v-model="searchContent">
@@ -89,7 +89,7 @@
           </div>
           <router-view :locale="locale" :searchContent="searchContent" :navInit="navInit"></router-view>
         </div>
-  
+
         <div class="oTop">
           <div>^</div>
         </div>
@@ -311,7 +311,14 @@ export default {
     //   console.log(val);
     // }
     searchFunc: function () {
-      this.$router.push({ path: `/search?lang=${this.locale}&s=${this.searchContent}` });
+      // var p = /[`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]\s·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘’，。、]/gi;
+      // if ((this.searchContent).search(p) == -1) {
+      //   if (this.searchContent !== '') {
+          this.$router.push({ path: `/search?lang=${this.locale}&s=${this.searchContent}` });
+      //   }
+      // } else {
+      //   console.log('n');
+      // }
     },
     // ulClass: function (val) { // 被自定义样式取代
     //   // var o = { level_ul: true, open: val.navActive };
@@ -392,6 +399,8 @@ export default {
   background-size: 120% 5.18rem;
   margin-top: 0.5rem;
 }
+
+
 
 
 /* -----左侧导航栏------*/
@@ -528,6 +537,8 @@ export default {
   /* transform: scale(1,1); */
 }
 
+
+
 /*---------------------*/
 
 .oTop {
@@ -563,6 +574,8 @@ export default {
   color: white;
 }
 
+
+
 /* -----右侧显示栏------*/
 
 .right_rev {
@@ -577,9 +590,9 @@ export default {
 
 .right_rev #ser {
   /* margin-bottom: 0.2rem; */
-  /* margin-left: 12.8rem; */
+  /* margin-left: 12.5rem;  */
   padding-top: .1rem;
-  margin-top: .2rem;
+  margin-top: .3rem;
   width: 0.4rem;
   cursor: pointer;
   transition: margin .2s ease-in-out 0s;
@@ -597,11 +610,11 @@ export default {
 }
 
 .ser_png {
-  margin-left: 12.65rem;
+  margin-left: 12.5rem;
 }
 
 .ser_png_active {
-  margin-left: 12.25rem;
+  margin-left: 12.2rem;
 }
 
 .right_rev input {
@@ -615,7 +628,7 @@ export default {
   -webkit-transition: margin .2s ease-in-out 0s, opacity .2s ease-out 0s;
   -o-transition: margin .2s ease-in-out 0s, opacity .2s ease-out 0s;
   -moz-transition: margin .2s ease-in-out 0s, opacity .2s ease-out 0s;
-  margin-top: .2rem;
+  margin-top: .3rem;
   /* border: 0;  */
   float: right;
 }
@@ -625,7 +638,7 @@ export default {
 }
 
 .ser_input {
-  margin-right: .2rem;
+  margin-right: .3rem;
   opacity: 0;
   visibility: hidden;
 }
@@ -634,21 +647,6 @@ export default {
   margin-right: .6rem;
   opacity: .8
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

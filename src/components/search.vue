@@ -4,18 +4,25 @@
             <span class="arrow">^</span>
             <span class="re_content">{{msg}}</span>
         </div>
-        <p class="search_num" :v-model="this.searchContent">共10条与"{{this.searchContent}}"相关的结果</p>
+        <div v-show="this.search">
+            <p v-if="this.locale=='ch'" class="search_num">共{{searchNum}}条与“{{searchResult}}”相关的结果</p>
+            <p v-else class="search_num">About {{searchNum}} results found for '{{searchResult}}'</p>
+        </div>
         <template v-for="(value, key, index) in searchList">
             <div class="rev_list" :key="key">
                 <p class="rev_head">
                     <router-link :to="{ name: value.name }" :id="value.name"></router-link>
                 </p>
                 <p class="rev_content" v-html="value.content"></p>
-                <p class="bread">
+                <p class="bread" :id="value.name">
                     <span>开始 > 公众号接口权限说明 > 入门指引 > 内容</span>
                 </p>
             </div>
         </template>
+        <div v-show="!this.search">
+            <p v-if="this.locale=='ch'" class="not_search ch">没有与“{{searchResult}}”相关的结果。</p>
+            <p v-else class="not_search en">Your search - {{searchResult}} - did not match any documents.</p>
+        </div>
     </div>
 </template>
 
@@ -37,7 +44,10 @@ export default {
     data() {
         return {
             msg: '',
-            searchList: {}
+            searchList: {},
+            searchNum: 0,
+            searchResult: '',
+            search: true
         }
     },
     i18n: i18n,
@@ -49,15 +59,11 @@ export default {
         } else if (this.locale == 'ch') {
             this.msg = '返回';
         }
-        this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${this.$route.query.s}`)
-            .then(function (req) {
-                this.searchList = req.data;
-            }).catch(function () {
-                console.log('error');
-            })
+        this.searchCreator();
     },
     updated() {
-        this.getDot(180);
+        this.getDot(190);
+        this.getBread();
         this.getTitle();
     },
     watch: {
@@ -72,12 +78,7 @@ export default {
             document.getElementById('search_content').style.opacity = 0;
         },
         '$route': function (to, from) { // 参数切换查询
-            this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${this.searchContent}`)
-                .then(function (req) {
-                    this.searchList = req.data;
-                }).catch(function () {
-                    console.log('error');
-                })
+            this.searchCreator();
         }
     },
     methods: {
@@ -112,11 +113,59 @@ export default {
         },
         iterator: function (obj, n, lang) {
             for (var i in obj) {
-                if(i == n.firstChild.id) {
+                if (i == n.firstChild.id) {
                     n.firstChild.innerText = obj[i].text[lang];
-                }else if (obj[i].hasOwnProperty('navActive')) {
+                } else if (obj[i].hasOwnProperty('navActive')) {
                     this.iterator(obj[i].next, n, lang);
                 }
+            }
+        },
+        getBread: function () {
+            var h = document.getElementsByClassName('bread');
+            var len = h.length;
+            for (var i = 0; i < len; i++) {
+                this.iteratorb(this.navInit, h[i], this.locale, '');
+            }
+        },
+        iteratorb: function (obj, n, lang, str) {
+            for (var i in obj) {
+                if (i == n.id) {
+                    n.firstChild.innerText = `${str} > ${obj[i].text[lang]}`;
+                } else if (obj[i].hasOwnProperty('navActive')) {
+                    if (str == '') {
+                        this.iteratorb(obj[i].next, n, lang, `${obj[i].text[lang]}`);
+                    } else {
+                        this.iteratorb(obj[i].next, n, lang, `${str} > ${obj[i].text[lang]}`);
+                    }
+                }
+            }
+        },
+        searchCreator: function () {
+            var p = /[`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘’，。、]/gi;
+            if (this.$route.query.s !== '') {
+                if ((this.$route.query.s).search(p) == -1) {
+                    this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${this.$route.query.s}`)
+                        .then(function (req) {
+                            this.searchList = req.data;
+                            this.searchNum = this.searchList.length;
+                            this.searchResult = this.$route.query.s;
+                            if (this.searchNum != 0) {
+                                this.search = true;
+                            } else {
+                                this.search = false;
+                            }
+                        }).catch(function () {
+                            console.log('error');
+                        })
+                } else {
+                    this.search = false;
+                    this.searchResult = this.$route.query.s;
+                    this.searchList = [];
+                }
+            } else {
+                this.search = false;
+                this.searchResult = this.$route.query.s;
+                this.searchList = [];
             }
         }
     }
@@ -124,6 +173,11 @@ export default {
 </script>
 
 <style>
+#search_content em {
+    color: red;
+    font-style: normal;
+}
+
 #search_content {
     margin: .5rem 1rem 0 1rem;
     font-size: 0.20rem;
@@ -135,7 +189,7 @@ export default {
 #search_content .return {
     position: relative;
     width: .65rem;
-    top: -.7rem;
+    top: -.58rem;
     left: -.5rem;
     height: rem;
     font-size: .2rem;
@@ -174,7 +228,23 @@ export default {
 }
 
 #search_content .search_num {
-    margin: 0 0 .5rem;;
+    margin: 0 0 .5rem;
+}
+
+#search_content .not_search {
+    margin-top: 1.5rem;
+    text-align: center;
+    line-height: .8rem;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.ch {
+    font-size: .5rem;
+}
+
+.en {
+    font-size: .3rem;
 }
 
 #search_content a {

@@ -50,7 +50,6 @@ export default {
             }
         } while (i != -1);
         sessionStorage.navIndex = routename;
-        console.log(sessionStorage.navIndex);
         sessionStorage.index = this.$route.name.replace(/[^0-9]/ig, "");
         document.getElementById('content').style.opacity = 0;
         this.contentCreator();
@@ -68,6 +67,7 @@ export default {
             // console.log(to.path);
             // this.msg = to.path;            
             sessionStorage.index = this.$route.name.replace(/[^0-9]/ig, "");
+            document.getElementById('content').style.opacity = 0;
             this.contentCreator();
         }
     },
