@@ -11,10 +11,10 @@
         <template v-for="(value, key, index) in searchList">
             <div class="rev_list" :key="key">
                 <p class="rev_head">
-                    <router-link :to="{ name: value.name }" :id="value.name"></router-link>
+                    <router-link :to="{ name: value.router }" v-html="value.name"></router-link>
                 </p>
                 <p class="rev_content" v-html="value.content"></p>
-                <p class="bread" :id="value.name">
+                <p class="bread" :id="value.router">
                     <span></span>
                 </p>
             </div>
@@ -65,7 +65,7 @@ export default {
     updated() {
         this.getDot(190);
         this.getBread();
-        this.getTitle();
+        // this.getTitle();
     },
     watch: {
         locale: function (val) {
