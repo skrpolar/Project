@@ -279,7 +279,7 @@ export default {
 
   updated() {
     this.liIndex = sessionStorage.index;
-    this.navCreator(this.navInit);
+    // this.iterator(this.navInit);
   },
 
   components: {
@@ -395,8 +395,8 @@ export default {
 
 <style>
 .main_body {
-  background: url(https://img.vrviu.com/images/about_bg.png) bottom no-repeat;
-  background-size: 120% 5.18rem;
+  /* background: url(https://img.vrviu.com/images/about_bg.png) bottom no-repeat;
+  background-size: 120% 5.18rem; */
   margin-top: 0.5rem;
 }
 
@@ -458,7 +458,7 @@ export default {
   color: #404040;
   display: block;
   height: 0.6rem;
-  font-size: 0.2rem;
+  font-size: 0.18rem;
   text-align: left;
   line-height: 0.6rem;
   padding-left: 0.4rem;
@@ -475,7 +475,7 @@ export default {
   color: #404040;
   display: block;
   height: 0.6rem;
-  font-size: 0.21rem;
+  font-size: 0.18rem;
   text-align: left;
   line-height: 0.6rem;
   /* padding-left: 0.4rem; */
@@ -620,7 +620,7 @@ export default {
 .right_rev input {
   height: .3rem;
   width: 3rem;
-  font-size: .2rem;
+  font-size: .18rem;
   padding: .1rem;
   color: #333F5C;
   border: 0.01rem solid rgba(0, 0, 0, .1);

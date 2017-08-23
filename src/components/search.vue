@@ -15,7 +15,7 @@
                 </p>
                 <p class="rev_content" v-html="value.content"></p>
                 <p class="bread" :id="value.name">
-                    <span>开始 > 公众号接口权限说明 > 入门指引 > 内容</span>
+                    <span></span>
                 </p>
             </div>
         </template>
@@ -23,6 +23,7 @@
             <p v-if="this.locale=='ch'" class="not_search ch">没有与“{{searchResult}}”相关的结果。</p>
             <p v-else class="not_search en">Your search - {{searchResult}} - did not match any documents.</p>
         </div>
+        <div class="page">1</div>
     </div>
 </template>
 
@@ -130,7 +131,11 @@ export default {
         iteratorb: function (obj, n, lang, str) {
             for (var i in obj) {
                 if (i == n.id) {
-                    n.firstChild.innerText = `${str} > ${obj[i].text[lang]}`;
+                    if (str == '') {
+                        n.firstChild.innerText = `${obj[i].text[lang]}`;
+                    } else {
+                        n.firstChild.innerText = `${str} > ${obj[i].text[lang]}`;
+                    }
                 } else if (obj[i].hasOwnProperty('navActive')) {
                     if (str == '') {
                         this.iteratorb(obj[i].next, n, lang, `${obj[i].text[lang]}`);
@@ -142,13 +147,14 @@ export default {
         },
         searchCreator: function () {
             var p = /[`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘’，。、]/gi;
-            if (this.$route.query.s !== '') {
-                if ((this.$route.query.s).search(p) == -1) {
-                    this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${this.$route.query.s}`)
+            var s = this.$route.query.s;
+            if (s !== '') {
+                if ((s).search(p) == -1) {
+                    this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${s}`)
                         .then(function (req) {
                             this.searchList = req.data;
                             this.searchNum = this.searchList.length;
-                            this.searchResult = this.$route.query.s;
+                            this.searchResult = s;
                             if (this.searchNum != 0) {
                                 this.search = true;
                             } else {
@@ -159,12 +165,12 @@ export default {
                         })
                 } else {
                     this.search = false;
-                    this.searchResult = this.$route.query.s;
+                    this.searchResult = s;
                     this.searchList = [];
                 }
             } else {
                 this.search = false;
-                this.searchResult = this.$route.query.s;
+                this.searchResult = s;
                 this.searchList = [];
             }
         }
@@ -180,7 +186,7 @@ export default {
 
 #search_content {
     margin: .5rem 1rem 0 1rem;
-    font-size: 0.20rem;
+    font-size: 0.18rem;
     color: #333F5C;
     line-height: 0.36rem;
     text-align: left;
@@ -192,7 +198,7 @@ export default {
     top: -.58rem;
     left: -.5rem;
     height: rem;
-    font-size: .2rem;
+    font-size: .18rem;
     color: #333F5C;
     cursor: pointer;
 }
@@ -221,10 +227,11 @@ export default {
     margin-bottom: -.15rem;
 }
 
-#search_content .rev_content:hover {
-    /* text-overflow: inherit;
-    overflow: visible;
-    white-space: normal; */
+#search_content .page {
+    width: .35rem;
+    background: #e9e9e9;
+    text-align: center;
+    color: #525252;
 }
 
 #search_content .search_num {
