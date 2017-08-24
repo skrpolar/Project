@@ -274,12 +274,10 @@ export default {
     // 通过导入来搜索内容
     // var s = index;
     // var input = document.getElementById('search_input');
-
   },
 
   updated() {
     this.liIndex = sessionStorage.index;
-    // this.iterator(this.navInit);
   },
 
   components: {

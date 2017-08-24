@@ -16,7 +16,7 @@ var routers = [{
   path: '/search',
   name: search,
   component: search
-}]; 
+}];
 
 var g = document.createElement('script');
 g.src = 'http://localhost:8089/getnavbar?type=router';
@@ -24,10 +24,10 @@ var s = document.getElementsByTagName('script')[0];
 s.parentNode.insertBefore(g, s);
 
 window.change = function (d) {
-  for ( var i in d ) {
-    if( d[i].hasOwnProperty('next') ){
+  for (var i in d) {
+    if (d[i].hasOwnProperty('next')) {
       window.change(d[i].next);
-    }else {
+    } else {
       routers.push({
         path: d[i].path,
         name: i,
@@ -50,5 +50,7 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: {
+    App
+  }
 })

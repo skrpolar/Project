@@ -83,8 +83,7 @@ export default {
     },
     methods: {
         backRoute: function () {
-            console.log(this.$router.history);
-            this.$router.back();
+            this.$router.push({ name:`menu${sessionStorage.index}` });
         },
         dotCreator: function (str, index, obj) {
             if (str.substr(index, 1).search(/[A-Za-z]/) !== -1) {
@@ -222,6 +221,7 @@ export default {
     background: #e9e9e9;
     text-align: center;
     color: #525252;
+    cursor: pointer;
 }
 
 #search_content .search_num {

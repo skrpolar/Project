@@ -40,20 +40,11 @@ export default {
         });
     },
     mounted: function () { // mounted进行页面初始化
-        this.$i18n.locale = localStorage.locale;
-        var i = -1;
-        var routename = '';
-        do {
-            i = this.$route.name.indexOf('_', i + 1);
-            if (i != -1) {
-                routename += ' ' + this.$route.name.substr(0, i);
-            }
-        } while (i != -1);
-        sessionStorage.navIndex = routename;
-        sessionStorage.index = this.$route.name.replace(/[^0-9]/ig, "");
         document.getElementById('content').style.opacity = 0;
+        this.$i18n.locale = localStorage.locale;
+        this.navIndexCreator();
+        this.indexCreator();
         this.contentCreator();
-
     },
     props: ['locale'],
     i18n: i18n,
@@ -63,18 +54,34 @@ export default {
             document.getElementById('content').innerHTML = marked(this.$i18n.messages[val].content);
             this.contentCreator();
         },
-        '$route': function (to, from) { // watch中进行页面切换后的初始化
-            // console.log(to.path);
-            // this.msg = to.path;            
-            sessionStorage.index = this.$route.name.replace(/[^0-9]/ig, "");
+        '$route': function (to, from) { // watch中进行页面切换后的初始化      
+            this.indexCreator();
             document.getElementById('content').style.opacity = 0;
             this.contentCreator();
         }
     },
-    updated: function () {
-        // console.log(this.$store.state.localpath);
-    },
     methods: {
+        indexCreator: function () {
+            var indexNum = this.$route.name.replace(/[^0-9]/ig, "");
+            var index = '';
+            for (var j = 0; j < indexNum.length; j++) {
+                if (j == 0) {
+                    index = `${indexNum[j]}`;
+                } else index = `${index}_${indexNum[j]}`;
+            }
+            sessionStorage.index = index;
+        },
+        navIndexCreator: function () {
+            var i = -1;
+            var routename = '';
+            do {
+                i = this.$route.name.indexOf('_', i + 1);
+                if (i != -1) {
+                    routename += ' ' + this.$route.name.substr(0, i);
+                }
+            } while (i != -1);
+            sessionStorage.navIndex = routename;
+        },
         headerCreator: function () {
             for (var i = 1; i < 7; i++) { // Max h element num is 6
                 var h = document.getElementsByTagName(`h${i}`);
@@ -117,14 +124,9 @@ export default {
                                 console.log(err);
                             });
                     }
-
                     this.$i18n.messages[this.locale].content = req.data.a;
                     document.getElementById('content').innerHTML = marked(this.$i18n.messages[this.locale].content);
                     this.headerCreator();
-                    /*
-                    var reg = /[\n]/g;
-                    var arr = html.split(reg);
-                    */
                     document.getElementById('content').style.opacity = 1;
                 }).catch(function () {
                     console.log('error');
