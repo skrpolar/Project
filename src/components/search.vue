@@ -75,7 +75,6 @@ export default {
             } else if (this.locale == 'ch') {
                 this.msg = '返回';
             }
-            document.getElementById('search_content').style.opacity = 0;
         },
         '$route': function (to, from) { // 参数切换查询
             this.searchCreator();
@@ -114,7 +113,6 @@ export default {
             for (var i = 0; i < len; i++) {
                 this.iteratorb(this.navInit, h[i], this.locale, '');
             }
-            document.getElementById('search_content').style.opacity = 1;
         },
         iteratorb: function (obj, n, lang, str) {
             for (var i in obj) {
