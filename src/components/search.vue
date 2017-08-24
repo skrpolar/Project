@@ -32,7 +32,7 @@
 ><</span></div>
                 <div class="page_single">{{`${searchListActive} / ${searchPageList.length}`}}</div>
                 <div v-show="searchListActive<searchPageList.length" class="page rotate_right" @click="searchListActive++"><span>></span></div>
-                <div><input type="text" id="page_input" v-model="goNum"></div>
+                <div><input type="text" id="page_input" v-model="goNum" @keydown.enter="goPage()"></div>
                 <div class="page" @click="goPage()">{{go}}</div>
             </div>
         </div>
@@ -104,6 +104,7 @@ export default {
         },
         '$route': function (to, from) { // 参数切换查询
             this.searchCreator();
+            this.goNum = 1;
             this.searchListActive = 1;
         }
     },

@@ -84,7 +84,7 @@
 
         <div class="right_rev">
           <div class="search">
-            <input type="text" id="search_input" @keyup.enter="searchFunc()" :class="[ searchPng ? 'ser_input_active' : 'ser_input' ]" :placeholder="$t('search.msg')" v-model="searchContent">
+            <input type="text" id="search_input" @keydown.enter="searchFunc()" :class="[ searchPng ? 'ser_input_active' : 'ser_input' ]" :placeholder="$t('search.msg')" v-model="searchContent">
             <img id="ser" :class="[ searchPng ? 'ser_png_active' : 'ser_png' ]" @click="searchPng=!searchPng" src="./assets/search.png">
           </div>
           <router-view :locale="locale" :searchContent="searchContent" :navInit="navInit"></router-view>
@@ -216,6 +216,9 @@ export default {
       setTimeout(moveScroll, 10);
     }
 
+    var left_nav = document.getElementsByClassName('left_nav')[0];
+    var right_nav = document.getElementsByClassName('right_rev')[0];
+
     window.moveScroll = function () {
       /* speed too slow
       var t = document.documentElement.scrollTop || document.body.scrollTop;
@@ -242,6 +245,7 @@ export default {
     window.onscroll = function () {
       var t = document.documentElement.scrollTop || document.body.scrollTop;
       var clientWidth = docEl.clientWidth;
+      var clientHeight = docEl.clientHeight;
       // var left_nav = document.getElementsByClassName('left_nav')[0];
       // console.log((t / clientWidth));
       if ((t / clientWidth) > 0.20876) {
@@ -249,6 +253,18 @@ export default {
       } else {
         oTop.style.display = 'none';
       }
+
+      if((t / clientWidth) > 0.0787615426398696) {
+        left_nav.style.position = 'fixed';
+        left_nav.style.top = '0';
+        left_nav.style.width = '2.720761969519731rem';
+        right_nav.style.marginLeft = '2.720761969519731rem';
+      }else {
+        left_nav.style.position = 'relative';
+        left_nav.style.width = '17.01%';
+        right_nav.style.marginLeft = '0rem';
+      }
+      console.log(left_nav.offsetWidth);
     }
 
     this.$http.jsonp('http://localhost:8089/getnavbar')
@@ -434,6 +450,7 @@ export default {
 
 .left_nav {
   width: 17%;
+  /* position: fixed; */
 }
 
 .left_nav ul {
