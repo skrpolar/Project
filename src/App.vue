@@ -84,7 +84,7 @@
 
         <div class="right_rev">
           <div class="search">
-            <input type="text" id="search_input" @keydown.enter="searchFunc()" :class="[ searchPng ? 'ser_input_active' : 'ser_input' ]" :placeholder="$t('search.msg')" v-model="searchContent">
+            <input type="text" id="search_input" @keyup="searchFunc()" :class="[ searchPng ? 'ser_input_active' : 'ser_input' ]" :placeholder="$t('search.msg')" v-model="searchContent">
             <img id="ser" :class="[ searchPng ? 'ser_png_active' : 'ser_png' ]" @click="searchPng=!searchPng" src="./assets/search.png">
           </div>
           <router-view :locale="locale" :searchContent="searchContent" :navInit="navInit"></router-view>
@@ -264,7 +264,6 @@ export default {
         left_nav.style.width = '17.01%';
         right_nav.style.marginLeft = '0rem';
       }
-      console.log(left_nav.offsetWidth);
     }
 
     this.$http.jsonp('http://localhost:8089/getnavbar')

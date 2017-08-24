@@ -13,10 +13,10 @@ Vue.use(Resource)
 Vue.config.productionTip = false
 
 var routers = [{
-  path: '/search',
-  name: search,
-  component: search
-}];
+    path: '/search',
+    name: search,
+    component: search
+  }];
 
 var g = document.createElement('script');
 g.src = 'http://localhost:8089/getnavbar?type=router';

@@ -342,7 +342,7 @@ export default {
 #search_content #page_input {
     color: #525252;
     width: .4rem;
-    height: .467rem;
+    height: .48rem;
     background: #f9f9f9;
     border: .01rem #e1e1e1 solid;
     padding: 0 .1rem;
