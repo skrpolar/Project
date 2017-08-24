@@ -65,7 +65,6 @@ export default {
     updated() {
         this.getDot(190);
         this.getBread();
-        // this.getTitle();
     },
     watch: {
         locale: function (val) {
@@ -104,29 +103,13 @@ export default {
                 }
             }
         },
-        getTitle: function () {
-            var h = document.getElementsByClassName('rev_head');
-            var len = h.length;
-            for (var i = 0; i < len; i++) {
-                this.iterator(this.navInit, h[i], this.locale);
-            }
-            document.getElementById('search_content').style.opacity = 1;
-        },
-        iterator: function (obj, n, lang) {
-            for (var i in obj) {
-                if (i == n.firstChild.id) {
-                    n.firstChild.innerText = obj[i].text[lang];
-                } else if (obj[i].hasOwnProperty('navActive')) {
-                    this.iterator(obj[i].next, n, lang);
-                }
-            }
-        },
         getBread: function () {
             var h = document.getElementsByClassName('bread');
             var len = h.length;
             for (var i = 0; i < len; i++) {
                 this.iteratorb(this.navInit, h[i], this.locale, '');
             }
+            document.getElementById('search_content').style.opacity = 1;
         },
         iteratorb: function (obj, n, lang, str) {
             for (var i in obj) {
