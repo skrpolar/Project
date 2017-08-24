@@ -25,7 +25,7 @@ export default {
         return {
         }
     },
-    beforeMount: function () {
+    beforeMount: function() {
         marked.setOptions({
             renderer: new marked.Renderer(),
             gfm: true,
@@ -34,12 +34,12 @@ export default {
             pedantic: false,
             sanitize: false,
             smartLists: true,
-            highlight: function (code) {
+            highlight: function(code) {
                 return hljs.highlightAuto(code).value;
             }
         });
     },
-    mounted: function () { // mounted进行页面初始化
+    mounted: function() { // mounted进行页面初始化
         document.getElementById('content').style.opacity = 0;
         this.$i18n.locale = localStorage.locale;
         this.navIndexCreator();
@@ -49,19 +49,19 @@ export default {
     props: ['locale'],
     i18n: i18n,
     watch: {
-        locale: function (val) {
+        locale: function(val) {
             this.$i18n.locale = val;
             document.getElementById('content').innerHTML = marked(this.$i18n.messages[val].content);
             this.contentCreator();
         },
-        '$route': function (to, from) { // watch中进行页面切换后的初始化      
+        '$route': function(to, from) { // watch中进行页面切换后的初始化      
             this.indexCreator();
             document.getElementById('content').style.opacity = 0;
             this.contentCreator();
         }
     },
     methods: {
-        indexCreator: function () {
+        indexCreator: function() {
             var indexNum = this.$route.name.replace(/[^0-9]/ig, "");
             var index = '';
             for (var j = 0; j < indexNum.length; j++) {
@@ -71,7 +71,7 @@ export default {
             }
             sessionStorage.index = index;
         },
-        navIndexCreator: function () {
+        navIndexCreator: function() {
             var i = -1;
             var routename = '';
             do {
@@ -82,7 +82,7 @@ export default {
             } while (i != -1);
             sessionStorage.navIndex = routename;
         },
-        headerCreator: function () {
+        headerCreator: function() {
             for (var i = 1; i < 7; i++) { // Max h element num is 6
                 var h = document.getElementsByTagName(`h${i}`);
                 for (var j = 0; j < h.length; j++) {
@@ -97,11 +97,11 @@ export default {
                     hyper.style.textDecoration = 'none';
                     hyper.style.opacity = 0;
                     hyper.style.transition = '.2s opacity ease-in-out 0s';
-                    (function (hypers) {
-                        h[j].addEventListener('mouseover', function () {
+                    (function(hypers) {
+                        h[j].addEventListener('mouseover', function() {
                             hypers.style.opacity = 1;
                         });
-                        h[j].addEventListener('mouseout', function () {
+                        h[j].addEventListener('mouseout', function() {
                             hypers.style.opacity = 0;
                         });
                     })(hyper);
@@ -109,18 +109,18 @@ export default {
                 }
             }
         },
-        contentCreator: function () {
+        contentCreator: function() {
             this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}&locale=${this.locale}`)
-                .then(function (req) {
+                .then(function(req) {
                     var otherLocale = '';
                     if (this.locale == 'en') {
                         otherLocale = 'ch';
                     } else {
                         otherLocale = 'en'
                         this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}&locale=${otherLocale}`)
-                            .then(function (req) {
+                            .then(function(req) {
                                 this.$i18n.messages[otherLocale].content = req.data.a;
-                            }).catch(function (err) {
+                            }).catch(function(err) {
                                 console.log(err);
                             });
                     }
@@ -128,9 +128,12 @@ export default {
                     document.getElementById('content').innerHTML = marked(this.$i18n.messages[this.locale].content);
                     this.headerCreator();
                     document.getElementById('content').style.opacity = 1;
-                }).catch(function () {
+                }).catch(function() {
                     console.log('error');
                 })
+
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
         }
     }
 }
