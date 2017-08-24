@@ -83,6 +83,7 @@ export default {
     },
     methods: {
         backRoute: function () {
+            console.log(this.$router.history);
             this.$router.back();
         },
         dotCreator: function (str, index, obj) {
@@ -91,6 +92,11 @@ export default {
             } else {
                 obj.innerHTML = str.substr(0, index) + '...';
             }
+        },
+        resultDotCreator: function (str, len) {
+            if (str.length > len) {
+                return str.substr(0, len) + '...';
+            } else return str;
         },
         getDot: function (le) {
             var h = document.getElementsByClassName('rev_content');
@@ -128,6 +134,11 @@ export default {
                 }
             }
         },
+        notSearch: function (s, len) {
+            this.search = false;
+            this.searchResult = this.resultDotCreator(s, len);
+            this.searchList = [];
+        },
         searchCreator: function () {
             var p = /[`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘’，。、]/gi;
             var s = this.$route.query.s;
@@ -141,20 +152,16 @@ export default {
                             if (this.searchNum != 0) {
                                 this.search = true;
                             } else {
-                                this.search = false;
+                                this.notSearch(s, 80);
                             }
                         }).catch(function () {
                             console.log('error');
                         })
                 } else {
-                    this.search = false;
-                    this.searchResult = s;
-                    this.searchList = [];
+                    this.notSearch(s, 80);
                 }
             } else {
-                this.search = false;
-                this.searchResult = s;
-                this.searchList = [];
+                this.notSearch(s, 80);
             }
         }
     }
