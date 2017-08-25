@@ -544,7 +544,7 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   transform: translate(0, 0);
-  transition: height .18s ease-in-out 0s, opacity .18s ease-in-out 0s;
+  /* transition: height .18s ease-in-out 0s, opacity .18s ease-in-out 0s;  */
 }
 
 .left_nav .open {
