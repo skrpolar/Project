@@ -5,20 +5,9 @@
 
 <script>
 import Vue from 'vue'
-import VueI18n from 'vue-i18n'
 import marked from 'marked'
 import hljs from 'highlight.js'
 import '@/common/css/atom-one-light.css'
-
-Vue.use(VueI18n)
-
-var i18n = new VueI18n({
-    locale: this.locale,
-    messages: {
-        ch: {},
-        en: {}
-    }
-});
 
 export default {
     data() {
@@ -41,16 +30,13 @@ export default {
     },
     mounted: function() { // mounted进行页面初始化
         document.getElementById('content').style.opacity = 0;
-        this.$i18n.locale = localStorage.locale;
         this.navIndexCreator();
         this.indexCreator();
         this.contentCreator();
     },
     props: ['locale'],
-    i18n: i18n,
     watch: {
         locale: function(val) {
-            this.$i18n.locale = val;
             this.contentCreator();
         },
         '$route': function(to, from) { // watch中进行页面切换后的初始化      
@@ -111,20 +97,7 @@ export default {
         contentCreator: function() {
             this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}&locale=${this.locale}`)
                 .then(function(req) {
-                    var otherLocale = '';
-                    if (this.locale == 'en') {
-                        otherLocale = 'ch';
-                    } else {
-                        otherLocale = 'en'
-                        this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}&locale=${otherLocale}`)
-                            .then(function(req) {
-                                this.$i18n.messages[otherLocale].content = req.data.a;
-                            }).catch(function(err) {
-                                console.log(err);
-                            });
-                    }
-                    this.$i18n.messages[this.locale].content = req.data.a;
-                    document.getElementById('content').innerHTML = marked(this.$i18n.messages[this.locale].content);
+                    document.getElementById('content').innerHTML = marked(req.data.a);
                     this.headerCreator();
                     document.getElementById('content').style.opacity = 1;
                 }).catch(function() {
