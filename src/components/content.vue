@@ -51,7 +51,6 @@ export default {
     watch: {
         locale: function(val) {
             this.$i18n.locale = val;
-            document.getElementById('content').innerHTML = marked(this.$i18n.messages[val].content);
             this.contentCreator();
         },
         '$route': function(to, from) { // watch中进行页面切换后的初始化      

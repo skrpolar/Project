@@ -257,8 +257,8 @@ export default {
       if((t / clientWidth) > 0.0787615426398696) {
         left_nav.style.position = 'fixed';
         left_nav.style.top = '0';
-        left_nav.style.width = '2.720761969519731rem';
-        right_nav.style.marginLeft = '2.720761969519731rem';
+        left_nav.style.width = '2.721761969519731rem';
+        right_nav.style.marginLeft = '2.721761969519731rem';
       }else {
         left_nav.style.position = 'relative';
         left_nav.style.width = '17.01%';
