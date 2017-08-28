@@ -27,7 +27,7 @@ export default {
     data() {
         return {}
     },
-    props: ['locale', 'nav', 'liIndex', 'lev'],
+    props: ['locale', 'nav', 'liIndex'],
     components: {},
     mounted() {
     }
@@ -35,11 +35,9 @@ export default {
 </script>
 
 <style>
-
 #ul_loop {
     font-size: 0;
 }
-
 </style>
 
 

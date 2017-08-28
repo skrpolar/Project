@@ -301,9 +301,6 @@ export default {
         if (obj[i].hasOwnProperty('navActive')) {
           this.languageCreator(obj[i].next);
         }
-        if (obj[i].level > sessionStorage.maxLevel) {
-          sessionStorage.maxLevel = obj[i].level;
-        }
       }
     },
 
