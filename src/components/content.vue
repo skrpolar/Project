@@ -186,7 +186,9 @@ h2 {
 }
 
 #content tr {
-    transition: .1s background ease-in-out 0s, .2s box-shadow ease-in-out 0s,
+    transition: .1s background ease-in-out 0s, .2s box-shadow ease-in-out 0s;
+    -webkit-transition: .1s background ease-in-out 0s, .2s box-shadow ease-in-out 0s;
+    -moz-transition: .1s background ease-in-out 0s, .2s box-shadow ease-in-out 0s;
 }
 
 #content tr:hover {

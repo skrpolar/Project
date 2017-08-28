@@ -5,81 +5,7 @@
     <div v-show="isEmputy" class="main_body">
       <div class="content">
         <div class="left_nav">
-          <ul>
-            <template v-for="(value, key, index) in navInit">
-              <template v-if="value.hasNext">
-                <li :title="$t(`messages.${key}`)" :class="[ 'level1', {level_plus: value.hasNext} ]" @click="value.navActive=!value.navActive">
-                  <div>
-                    <span :class="[ value.navActive ? 'sub' : 'plus' ]">^</span>
-                    <a class="nav_title">{{ $t(`messages.${key}`) }}</a>
-                  </div>
-                </li>
-                <ul :class="[ 'level_ul', {open: value.navActive} ]">
-                  <!-- 控制菜单方式由v-if更改为css样式实现动画效果 -->
-                  <template v-for="(value2, key2, index2) in value.next">
-                    <template v-if="value2.hasNext">
-                      <li :title="$t(`messages.${key2}`)" :class="[ 'level2', {level_plus:value2.hasNext} ]" @click="value2.navActive=!value2.navActive">
-                        <div>
-                          <span :class="[ value2.navActive ? 'sub' : 'plus' ]">^</span>
-                          <a class="nav_title">{{ $t(`messages.${key2}`) }}</a>
-                        </div>
-                      </li>
-                      <ul :class="[ 'level_ul', {open: value2.navActive} ]">
-                        <!-- 控制菜单方式由v-if更改为css样式实现动画效果 -->
-                        <template v-for="(value3, key3, index3) in value2.next">
-                          <template v-if="value3.hasNext">
-                            <li :title="$t(`messages.${key3}`)" :class="[ 'level3', {level_plus:value3.hasNext} ]" @click="value3.navActive=!value3.navActive">
-                              <div>
-                                <span :class="[ value3.navActive ? 'sub' : 'plus' ]">^</span>
-                                <a class="nav_title">{{ $t(`messages.${key3}`) }}</a>
-                              </div>
-                            </li>
-                            <ul :class="[ 'level_ul', {open: value3.navActive} ]">
-                              <!-- 控制菜单方式由v-if更改为css样式实现动画效果 -->
-                              <template v-for="(value4, key4, index4) in value3.next">
-                                <template v-if="value4.hasNext">
-                                  <li :title="$t(`messages.${key4}`)" :class="[ 'level4', {level_plus:value4.hasNext} ]" @click="value4.navActive=!value4.navActive">
-                                    <div>
-                                      <span :class="[ value4.navActive ? 'sub' : 'plus' ]">^</span>
-                                      <a class="nav_title">{{ $t(`messages.${key4}`) }}</a>
-                                    </div>
-                                  </li>
-                                  <ul :class="[ 'level_ul', {open: value4.navActive} ]">
-                                    <!-- 控制菜单方式由v-if更改为css样式实现动画效果 -->
-
-                                  </ul>
-                                </template>
-                                <template v-else>
-                                  <li :class="[ 'level4', {li_active:liIndex==value4.liActive} ]" @click="liIndex=value4.liActive">
-                                    <router-link :title="$t(`messages.${key4}`)" :to="{ name: key4 }">{{ $t(`messages.${key4}`) }}</router-link>
-                                  </li>
-                                </template>
-                              </template>
-                            </ul>
-                          </template>
-                          <template v-else>
-                            <li :class="[ 'level3', {li_active:liIndex==value3.liActive} ]" @click="liIndex=value3.liActive">
-                              <router-link :title="$t(`messages.${key3}`)" :to="{ name: key3, params: {paramsActive: `${key} ${key2}`} }">{{ $t(`messages.${key3}`) }}</router-link>
-                            </li>
-                          </template>
-                        </template>
-                      </ul>
-                    </template>
-                    <template v-else>
-                      <li :class="[ 'level2', {li_active:liIndex==value2.liActive} ]" @click="liIndex=value2.liActive">
-                        <router-link :title="$t(`messages.${key2}`)" :to="{ name: key2, params: {paramsActive: `${key}`} }">{{ $t(`messages.${key2}`) }}</router-link>
-                      </li>
-                    </template>
-                  </template>
-                </ul>
-              </template>
-              <template v-else>
-                <li :class="[ 'level1', {li_active:liIndex==value.liActive} ]" @click="liIndex=value.liActive">
-                  <router-link :title="$t(`messages.${key}`)" :to="{ name: key }">{{ $t(`messages.${key}`) }}</router-link>
-                </li>
-              </template>
-            </template>
-          </ul>
+          <LeftNav :nav="navInit" :locale="locale" :liIndex="liIndex"></LeftNav>
         </div>
 
         <div class="right_rev">
@@ -104,6 +30,7 @@
 import HeaderLine from '@/components/header.vue'
 import FooterLine from '@/components/footer.vue'
 import FooterLine2 from '@/components/footer2.vue'
+import LeftNav from '@/components/leftnav.vue'
 import marked from 'marked'
 import hljs from 'highlight.js'
 import VueI18n from 'vue-i18n'
@@ -127,7 +54,7 @@ var i18n = new VueI18n({
 export default {
   name: 'app',
   i18n: i18n,
-  data: function () {
+  data: function() {
     return {
       url: "",
       isEmputy: false,
@@ -140,7 +67,7 @@ export default {
   },
 
   watch: {
-    locale: function (val) {
+    locale: function(val) {
       this.$i18n.locale = val;
       if (val == 'en') {
         document.title = "Documentation 丨 VRVIU";
@@ -198,7 +125,7 @@ export default {
     var self = this;
     var docEl = document.documentElement,
       resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
-      recalc = function () {
+      recalc = function() {
         var clientWidth = docEl.clientWidth;
         if (!clientWidth) return;
         docEl.style.fontSize = 100 * (clientWidth / 1920) + 'px';
@@ -212,14 +139,14 @@ export default {
 
     var oTop = document.getElementsByClassName('oTop')[0];
     oTop.style.display = 'none';
-    oTop.onclick = function () {
+    oTop.onclick = function() {
       setTimeout(moveScroll, 10);
     }
 
     var left_nav = document.getElementsByClassName('left_nav')[0];
     var right_nav = document.getElementsByClassName('right_rev')[0];
 
-    window.moveScroll = function () {
+    window.moveScroll = function() {
       /* speed too slow
       var t = document.documentElement.scrollTop || document.body.scrollTop;
       var clientWidth = docEl.clientWidth;
@@ -242,7 +169,7 @@ export default {
     }
 
     /* 滚动栏 */
-    window.onscroll = function () {
+    window.onscroll = function() {
       var t = document.documentElement.scrollTop || document.body.scrollTop;
       var clientWidth = docEl.clientWidth;
       var clientHeight = docEl.clientHeight;
@@ -254,26 +181,30 @@ export default {
         oTop.style.display = 'none';
       }
 
-      if((t / clientWidth) > 0.0787615426398696) {
+
+      if ((t / clientWidth) > 0.0787615426398696) {
         left_nav.style.position = 'fixed';
         left_nav.style.top = '0';
         left_nav.style.width = '2.721761969519731rem';
         right_nav.style.marginLeft = '2.721761969519731rem';
-      }else {
+      } else {
         left_nav.style.position = 'relative';
         left_nav.style.width = '17.01%';
         right_nav.style.marginLeft = '0rem';
       }
     }
 
+    sessionStorage.maxLevel = 0;
+
     this.$http.jsonp('http://localhost:8089/getnavbar')
-      .then(function (req) {
+      .then(function(req) {
         this.$data.navInit = req.data;
         this.navCreator(this.navInit);
-      }).catch(function () {
+      }).catch(function() {
         console.log('Restart to connect server...');
         this.getNavBar('http://localhost:8089/getnavbar');
       });
+
 
 
     // this.liIndex = sessionStorage.index; // 从路由传正确的li index 
@@ -298,10 +229,11 @@ export default {
   components: {
     HeaderLine,
     FooterLine,
-    FooterLine2
+    FooterLine2,
+    LeftNav
   },
   methods: {
-    onLocaleChange: function (val) {
+    onLocaleChange: function(val) {
       this.locale = val;
     },
     /* 该功能已被@click取代
@@ -323,7 +255,7 @@ export default {
     // activeIndex: function (val) {
     //   console.log(val);
     // }
-    searchFunc: function () {
+    searchFunc: function() {
       // var p = /[`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]\s·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘’，。、]/gi;
       // if ((this.searchContent).search(p) == -1) {
       //   if (this.searchContent !== '') {
@@ -340,12 +272,12 @@ export default {
     //   return { level_ul: true, open: val.navActive };
     // },
 
-    navCreator: function (obj) {
+    navCreator: function(obj) {
       this.iterator(obj);
       this.languageCreator(obj);
     },
 
-    iterator: function (obj) {
+    iterator: function(obj) {
       for (var i in obj) {
         if (obj[i].hasOwnProperty('navActive')) {
           if (sessionStorage.navIndex.indexOf(i) > -1) {
@@ -356,35 +288,38 @@ export default {
       }
     },
 
-    languageCreator: function (obj) {
+    languageCreator: function(obj) {
       for (var i in obj) {
-        if (obj[i].hasOwnProperty('text')) {
-          for (var j in obj[i].text) {
-            if (!this.$i18n.messages[j].hasOwnProperty('messages')) {
-              this.$i18n.messages[j].messages = {};
-            }
-            let str = (obj[i].text[j]).toString();
-            this.$i18n.messages[j].messages[i] = str;
-            // console.log(str);
+        for (var j in obj[i].text) {
+          if (!this.$i18n.messages[j].hasOwnProperty('messages')) {
+            this.$i18n.messages[j].messages = {};
           }
-          if (obj[i].hasOwnProperty('navActive')) {
-            this.languageCreator(obj[i].next);
-          }
+          let str = (obj[i].text[j]).toString();
+          this.$i18n.messages[j].messages[i] = str;
+          // console.log(str);
+        }
+        if (obj[i].hasOwnProperty('navActive')) {
+          this.languageCreator(obj[i].next);
+        }
+        if (obj[i].level > sessionStorage.maxLevel) {
+          sessionStorage.maxLevel = obj[i].level;
         }
       }
     },
 
-    getNavBar: function (url) {
-      this.$http.jsonp(url).then(function (req) {
+    getNavBar: function(url) {
+      this.$http.jsonp(url).then(function(req) {
         this.$data.navInit = req.data;
         this.navCreator(this.navInit);
-      }).catch(function () {
+      }).catch(function() {
         console.log('Restart to connect server...');
         setTimeout(() => {
           this.getNavBar(url);
         }, 1000);
       });
-    }
+    },
+
+
   }
 }
 
@@ -412,6 +347,11 @@ export default {
   background-size: 120% 5.18rem; */
   margin-top: 0.5rem;
 }
+
+
+
+
+
 
 
 
@@ -457,11 +397,11 @@ export default {
   width: 100%;
 }
 
-.left_nav>ul:first-of-type {
+.left_nav>div:first-of-type {
   margin-top: 0.25rem;
 }
 
-.left_nav>ul:last-of-type {
+.left_nav>div:last-of-type {
   margin-bottom: 0.25rem;
 }
 
@@ -525,18 +465,6 @@ export default {
   border-right: .04rem solid #368fe8;
 }
 
-.left_nav .level2 a {
-  padding-left: 0.55rem;
-}
-
-.left_nav .level3 a {
-  padding-left: 0.65rem;
-}
-
-.left_nav .level4 a {
-  padding-left: 0.75rem;
-}
-
 .left_nav .level_ul {
   height: 0;
   opacity: 0;
@@ -552,6 +480,11 @@ export default {
   height: 100%;
   /* transform: scale(1,1); */
 }
+
+
+
+
+
 
 
 
@@ -591,6 +524,11 @@ export default {
 .oTop div:hover {
   color: white;
 }
+
+
+
+
+
 
 
 
@@ -652,7 +590,11 @@ export default {
 }
 
 .right_rev #search_input:hover {
-  border: 0.01rem solid rgba(92, 173, 255, 1);
+  border: .01rem #5cadff solid;
+}
+
+.right_rev #search_input:focus {
+  border: .01rem #5cadff solid;
 }
 
 .ser_input {
@@ -665,6 +607,11 @@ export default {
   margin-right: .6rem;
   opacity: .8
 }
+
+
+
+
+
 
 
 
