@@ -202,11 +202,13 @@ h2 {
     background: #f9f9f9;
     width: 100%;
     margin: 0;
+    padding: .2rem 0;
 }
 
 #content blockquote p {
-    padding: .2rem .3rem;
-    border-left: .05rem solid #ff5e29;
+    padding: .2rem .5rem;
+    line-height: .45rem;
+    /* border-left: .05rem solid #ff5e29; */
 }
 
 #content table {
