@@ -211,7 +211,9 @@ export default {
 
       left_nav.style.maxHeight = docEl.clientHeight + 'px';
 
-
+      if (left_nav.offsetHeight > right_rev.offsetHeight) {
+        right_rev.style.height = left_nav.offsetHeight + 'px';
+      }
 
       if (content.getBoundingClientRect().top <= 0) {
         // console.log(content.getBoundingClientRect().top);
@@ -220,9 +222,7 @@ export default {
         left_nav.style.width = '2.721761969519731rem';
         right_rev.style.marginLeft = '2.721761969519731rem';
         left_nav.style.top = 0;
-        if (left_nav.offsetHeight > right_rev.offsetHeight) {
-          right_rev.style.height = left_nav.offsetHeight + 'px';
-        }
+
 
         if (left_nav.offsetHeight >= docEl.clientHeight) {
           if (content.getBoundingClientRect().bottom <= docEl.clientHeight) {
@@ -307,17 +307,20 @@ export default {
             if (left_nav.offsetHeight > content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize)) {
               left_nav.style.overflowY = "scroll";
               left_nav.style.maxHeight = content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize) + 'px';
-            } else left_nav.style.overflowY = "visible";
+            } else {
+              left_nav.style.overflowY = "visible";
+            }
           } else {
             left_nav.style.overflowY = "scroll";
             left_nav.style.maxHeight = docEl.clientHeight + 'px';
+
           }
         } else {
           if (content.getBoundingClientRect().bottom <= docEl.clientHeight) {
             if (left_nav.offsetHeight > content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize)) {
               left_nav.style.overflowY = "scroll";
               left_nav.style.maxHeight = content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize) + 'px';
-            } else left_nav.style.overflowY = "scroll";
+            } else left_nav.style.overflowY = "visible";
           } else left_nav.style.overflowY = "visible";
         }
       }
@@ -430,6 +433,9 @@ export default {
   background-size: 120% 5.18rem; */
   margin-top: 0.5rem;
 }
+
+
+
 
 
 
@@ -595,6 +601,9 @@ export default {
 
 
 
+
+
+
 /*---------------------*/
 
 .oTop {
@@ -629,6 +638,9 @@ export default {
 .oTop div:hover {
   color: white;
 }
+
+
+
 
 
 
@@ -729,6 +741,9 @@ export default {
   margin-right: .6rem;
   opacity: .8
 }
+
+
+
 
 
 
