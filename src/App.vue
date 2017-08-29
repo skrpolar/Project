@@ -4,7 +4,7 @@
     </HeaderLine>
     <div v-show="isEmputy" class="main_body">
       <div class="content">
-        <div class="left_nav">
+        <div class="left_nav" @click="navClick()">
           <LeftNav :nav="navInit" :locale="locale" :liIndex="liIndex"></LeftNav>
         </div>
 
@@ -144,7 +144,9 @@ export default {
     }
 
     var left_nav = document.getElementsByClassName('left_nav')[0];
-    var right_nav = document.getElementsByClassName('right_rev')[0];
+    var right_rev = document.getElementsByClassName('right_rev')[0];
+    var content = document.getElementsByClassName('content')[0];
+    var footer = document.getElementsByClassName('footer')[0];
 
     window.moveScroll = function() {
       /* speed too slow
@@ -168,29 +170,85 @@ export default {
       document.body.scrollTop = 0;
     }
 
+    right_rev.style.minHeight = 10 + 'rem';
+
+    window.onresize = function() {
+      left_nav.style.maxHeight = docEl.clientHeight + 'px';
+      if (content.getBoundingClientRect().top <= 0) {
+        if (left_nav.offsetHeight >= docEl.clientHeight) {
+          if (content.getBoundingClientRect().bottom <= docEl.clientHeight) {
+            if (left_nav.offsetHeight > content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize)) {
+              left_nav.style.overflowY = "scroll";
+              left_nav.style.maxHeight = content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize) + 'px';
+            } else left_nav.style.overflowY = "visible";
+          } else {
+            left_nav.style.overflowY = "scroll";
+            left_nav.style.maxHeight = docEl.clientHeight + 'px';
+          }
+        } else {
+          if (content.getBoundingClientRect().bottom <= docEl.clientHeight) {
+            if (left_nav.offsetHeight > content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize)) {
+              left_nav.style.overflowY = "scroll";
+              left_nav.style.maxHeight = content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize) + 'px';
+            } else left_nav.style.overflowY = "visible";
+          } else left_nav.style.overflowY = "visible";
+        }
+      }
+    }
+
     /* 滚动栏 */
     window.onscroll = function() {
       var t = document.documentElement.scrollTop || document.body.scrollTop;
       var clientWidth = docEl.clientWidth;
       var clientHeight = docEl.clientHeight;
       // var left_nav = document.getElementsByClassName('left_nav')[0];
-      // console.log((t / clientWidth));
+
       if ((t / clientWidth) > 0.20876) {
         oTop.style.display = 'block';
       } else {
         oTop.style.display = 'none';
       }
 
+      left_nav.style.maxHeight = docEl.clientHeight + 'px';
 
-      if ((t / clientWidth) > 0.0787615426398696) {
+
+
+      if (content.getBoundingClientRect().top <= 0) {
+        // console.log(content.getBoundingClientRect().top);
         left_nav.style.position = 'fixed';
-        left_nav.style.top = '0';
+        // left_nav.style.top = (-left_nav.getBoundingClientRect().top / parseFloat(docEl.style.fontSize)) + 'rem';
         left_nav.style.width = '2.721761969519731rem';
-        right_nav.style.marginLeft = '2.721761969519731rem';
+        right_rev.style.marginLeft = '2.721761969519731rem';
+        left_nav.style.top = 0;
+        if (left_nav.offsetHeight > right_rev.offsetHeight) {
+          right_rev.style.height = left_nav.offsetHeight + 'px';
+        }
+
+        if (left_nav.offsetHeight >= docEl.clientHeight) {
+          if (content.getBoundingClientRect().bottom <= docEl.clientHeight) {
+            if (left_nav.offsetHeight > content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize)) {
+              left_nav.style.overflowY = "scroll";
+              left_nav.style.maxHeight = content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize) + 'px';
+            } else left_nav.style.overflowY = "visible";
+          } else {
+            left_nav.style.overflowY = "scroll";
+            left_nav.style.maxHeight = docEl.clientHeight + 'px';
+          }
+        } else {
+          if (content.getBoundingClientRect().bottom <= docEl.clientHeight) {
+            if (left_nav.offsetHeight > content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize)) {
+              left_nav.style.overflowY = "scroll";
+              left_nav.style.maxHeight = content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize) + 'px';
+            } else left_nav.style.overflowY = "visible";
+          } else left_nav.style.overflowY = "visible";
+        }
+
       } else {
         left_nav.style.position = 'relative';
+        left_nav.style.top = 0;
         left_nav.style.width = '17.01%';
-        right_nav.style.marginLeft = '0rem';
+        right_rev.style.marginLeft = '0rem';
+        left_nav.style.overflowY = "visible";
       }
     }
 
@@ -200,8 +258,8 @@ export default {
       .then(function(req) {
         this.$data.navInit = req.data;
         this.navCreator(this.navInit);
-      }).catch(function() {
-        console.log('Restart to connect server...');
+      }).catch(function(e) {
+        console.log('Getnavbar error:' + e);
         this.getNavBar('http://localhost:8089/getnavbar');
       });
 
@@ -224,6 +282,7 @@ export default {
 
   updated() {
     this.liIndex = sessionStorage.index;
+    document.getElementsByClassName('left_nav')[0].style.overflowY = "visible";
   },
 
   components: {
@@ -236,12 +295,39 @@ export default {
     onLocaleChange: function(val) {
       this.locale = val;
     },
+    navClick: function() {
+      var left_nav = document.getElementsByClassName('left_nav')[0];
+      var right_rev = document.getElementsByClassName('right_rev')[0];
+      var content = document.getElementsByClassName('content')[0];
+      var docEl = document.documentElement;
+
+      if (content.getBoundingClientRect().top <= 0) {
+        if (left_nav.offsetHeight >= docEl.clientHeight) {
+          if (content.getBoundingClientRect().bottom <= docEl.clientHeight) {
+            if (left_nav.offsetHeight > content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize)) {
+              left_nav.style.overflowY = "scroll";
+              left_nav.style.maxHeight = content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize) + 'px';
+            } else left_nav.style.overflowY = "visible";
+          } else {
+            left_nav.style.overflowY = "scroll";
+            left_nav.style.maxHeight = docEl.clientHeight + 'px';
+          }
+        } else {
+          if (content.getBoundingClientRect().bottom <= docEl.clientHeight) {
+            if (left_nav.offsetHeight > content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize)) {
+              left_nav.style.overflowY = "scroll";
+              left_nav.style.maxHeight = content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize) + 'px';
+            } else left_nav.style.overflowY = "scroll";
+          } else left_nav.style.overflowY = "visible";
+        }
+      }
+    },
     /* 该功能已被@click取代
     openUl: function (val) {
       this.navActive['menu' + val] = !this.navActive['menu' + val];
       var ul = document.getElementsByClassName('level1-ul-' + val)[0];
       // console.log(this.navActive['menu' + val]);
-
+ 
       // 菜单显示功能已被v-if代替
       if (this.navActive['menu' + val]) {
         // ul.style.display = 'block'; 
@@ -355,13 +441,19 @@ export default {
 
 
 
+
+
+
+
+
+
 /* -----左侧导航栏------*/
 
 @-moz-document url-prefix() {}
 
 .plus {
   float: right;
-  font-size: 0.2rem;
+  font-size: 0.18rem;
   margin-right: 0.05rem;
   transform: scale(1.35, 1) rotate(180deg);
   -ms-transform: scale(1.35, 1) rotate(180deg);
@@ -373,7 +465,7 @@ export default {
 
 .sub {
   float: right;
-  font-size: 0.2rem;
+  font-size: 0.18rem;
   margin-top: 0.04rem;
   margin-right: 0.05rem;
   transform: scale(1.35, 1);
@@ -386,7 +478,6 @@ export default {
 
 .left_nav {
   width: 17%;
-  /* position: fixed; */
 }
 
 .left_nav ul {
@@ -465,7 +556,7 @@ export default {
 .left_nav .level_ul {
   height: 0;
   opacity: 0;
-  overflow: hidden;
+  overflow: auto;
   white-space: nowrap;
   text-overflow: ellipsis;
   transform: translate(0, 0);
@@ -477,6 +568,23 @@ export default {
   height: 100%;
   /* transform: scale(1,1); */
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -521,6 +629,23 @@ export default {
 .oTop div:hover {
   color: white;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -604,6 +729,23 @@ export default {
   margin-right: .6rem;
   opacity: .8
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

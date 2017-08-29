@@ -91,7 +91,7 @@ export default {
         this.getBread();
     },
     watch: {
-        locale: function (val) {
+        locale: function(val) {
             this.$i18n.locale = val;
             this.$router.push({ path: `/search?lang=${this.locale}&s=${this.searchContent}` });
             if (this.locale == 'en') {
@@ -102,42 +102,42 @@ export default {
                 this.go = '前往';
             }
         },
-        '$route': function (to, from) { // 参数切换查询
+        '$route': function(to, from) { // 参数切换查询
             this.searchCreator();
             this.goNum = 1;
             this.searchListActive = 1;
         }
     },
     methods: {
-        goPage: function () {
+        goPage: function() {
             var re = /^[0-9]*[1-9][0-9]*$/;
-            if(re.test(this.goNum)) {
-                if(0 < this.goNum && this.goNum <= this.searchPageList.length) {
+            if (re.test(this.goNum)) {
+                if (0 < this.goNum && this.goNum <= this.searchPageList.length) {
                     this.searchListActive = this.goNum;
                 }
             }
         },
-        pageListClick: function (key) {
+        pageListClick: function(key) {
             this.searchListActive = key + 1;
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
         },
-        backRoute: function () {
+        backRoute: function() {
             this.$router.push({ name: `menu${sessionStorage.index}` });
         },
-        dotCreator: function (str, index, obj) {
+        dotCreator: function(str, index, obj) {
             if (str.substr(index, 1).search(/[A-Za-z]/) !== -1) {
                 this.dotCreator(str, index + 1, obj);
             } else {
                 obj.innerHTML = str.substr(0, index) + '...';
             }
         },
-        resultDotCreator: function (str, len) {
+        resultDotCreator: function(str, len) {
             if (str.length > len) {
                 return str.substr(0, len) + '...';
             } else return str;
         },
-        getDot: function (le) {
+        getDot: function(le) {
             var h = document.getElementsByClassName('rev_content');
             var len = h.length;
             for (var i = 0; i < len; i++) {
@@ -148,14 +148,14 @@ export default {
                 }
             }
         },
-        getBread: function () {
+        getBread: function() {
             var h = document.getElementsByClassName('bread');
             var len = h.length;
             for (var i = 0; i < len; i++) {
                 this.iteratorb(this.navInit, h[i], this.locale, '');
             }
         },
-        iteratorb: function (obj, n, lang, str) {
+        iteratorb: function(obj, n, lang, str) {
             for (var i in obj) {
                 if (i == n.id) {
                     if (str == '') {
@@ -172,12 +172,12 @@ export default {
                 }
             }
         },
-        notSearch: function (s, len) {
+        notSearch: function(s, len) {
             this.search = false;
             this.searchResult = this.resultDotCreator(s, len);
             this.searchList = [];
         },
-        splitListCreator: function (splitNum) {
+        splitListCreator: function(splitNum) {
             var splitList = [];
             for (var i = 0; i < this.searchNum;) {
                 var arr = [];
@@ -191,13 +191,13 @@ export default {
             }
             this.searchPageList = splitList;
         },
-        searchCreator: function () {
+        searchCreator: function() {
             var p = /[`~!@#$%^&*()_\-+=<>?:"{}|,.\/;'\\[\]·~！@#￥%……&*（）——\-+={}|《》？：“”【】、；‘’，。、]/gi;
             var s = this.$route.query.s;
             if (s !== '') {
                 if ((s).search(p) == -1) {
                     this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${s}`)
-                        .then(function (req) {
+                        .then(function(req) {
                             this.searchList = req.data;
                             this.searchNum = this.searchList.length;
                             this.searchResult = s;
@@ -212,7 +212,7 @@ export default {
                             } else {
                                 this.notSearch(s, 80);
                             }
-                        }).catch(function () {
+                        }).catch(function() {
                             console.log('error');
                         })
                 } else {
@@ -238,6 +238,7 @@ export default {
     color: #333F5C;
     line-height: 0.36rem;
     text-align: left;
+    height: 100%;
 }
 
 #search_content .return {
@@ -324,19 +325,19 @@ export default {
 }
 
 #search_content [class="page rotate"]:hover span {
-    transform: scale(2, 3);
-    -ms-transform: scale(1.6, 3);
-    -moz-transform: scale(1.6, 3);
+    transform: scale(1.7, 2.6) translateY(-.006rem) translateX(-.015rem);
+    -ms-transform: scale(1.7, 2.6) translateY(-.006rem) translateX(-.015rem);
+    -moz-transform: scale(1.7, 2.6) translateY(-.006rem) translateX(-.015rem);
     -webkit-transform: scale(1.7, 2.6) translateY(-.006rem) translateX(-.015rem);
-    -o-transform: scale(1.6, 3);
+    -o-transform: scale(1.7, 2.6) translateY(-.006rem) translateX(-.015rem);
 }
 
 #search_content [class="page rotate_right"]:hover span {
-    transform: scale(2, 3);
-    -ms-transform: scale(1.6, 3);
-    -moz-transform: scale(1.6, 3);
+    transform: scale(1.7, 2.6) translateY(-.006rem) translateX(-.015rem);
+    -ms-transform: scale(1.7, 2.6) translateY(-.006rem) translateX(-.015rem);
+    -moz-transform: scale(1.7, 2.6) translateY(-.006rem) translateX(-.015rem);
     -webkit-transform: scale(1.7, 2.6) translateY(-.006rem) translateX(.01rem);
-    -o-transform: scale(1.6, 3);
+    -o-transform: scale(1.7, 2.6) translateY(-.006rem) translateX(-.015rem);
 }
 
 #search_content #page_input {

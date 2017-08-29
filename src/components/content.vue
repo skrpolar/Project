@@ -202,7 +202,7 @@ h2 {
     background: #f9f9f9;
     width: 100%;
     margin: 0;
-    padding: .2rem 0;
+    /* padding: .2rem 0; */
 }
 
 #content blockquote p {
