@@ -313,14 +313,11 @@ export default {
           } else {
             left_nav.style.overflowY = "scroll";
             left_nav.style.maxHeight = docEl.clientHeight + 'px';
-
           }
         } else {
           if (content.getBoundingClientRect().bottom <= docEl.clientHeight) {
-            if (left_nav.offsetHeight > content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize)) {
-              left_nav.style.overflowY = "scroll";
-              left_nav.style.maxHeight = content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize) + 'px';
-            } else left_nav.style.overflowY = "visible";
+            left_nav.style.overflowY = "scroll";
+            left_nav.style.maxHeight = content.getBoundingClientRect().bottom - parseFloat(docEl.style.fontSize) + 'px';
           } else left_nav.style.overflowY = "visible";
         }
       }
@@ -453,6 +450,10 @@ export default {
 
 
 
+
+
+
+
 /* -----左侧导航栏------*/
 
 @-moz-document url-prefix() {}
@@ -484,6 +485,20 @@ export default {
 
 .left_nav {
   width: 17%;
+}
+
+.left_nav::-webkit-scrollbar {
+  width: .07rem;
+  /* background: #f9f9f9; */
+}
+
+.left_nav::-webkit-scrollbar-track-piece {
+  background-color: #fafafa;
+}
+
+.left_nav::-webkit-scrollbar-thumb {
+  background-color: #d1d1d1;
+  border-radius: .1rem;
 }
 
 .left_nav ul {
@@ -604,6 +619,10 @@ export default {
 
 
 
+
+
+
+
 /*---------------------*/
 
 .oTop {
@@ -638,6 +657,10 @@ export default {
 .oTop div:hover {
   color: white;
 }
+
+
+
+
 
 
 
@@ -741,6 +764,10 @@ export default {
   margin-right: .6rem;
   opacity: .8
 }
+
+
+
+
 
 
 
