@@ -196,7 +196,7 @@ export default {
             var s = this.$route.query.s;
             if (s !== '') {
                 if ((s).search(p) == -1) {
-                    this.$http.jsonp(`http://localhost:8089/search?lang=${this.locale}&s=${s}`)
+                    this.$http.jsonp(`http://66.55.159.227:8089/search?lang=${this.locale}&s=${s}`)
                         .then(function(req) {
                             this.searchList = req.data;
                             this.searchNum = this.searchList.length;

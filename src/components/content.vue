@@ -95,7 +95,7 @@ export default {
             }
         },
         contentCreator: function() {
-            this.$http.jsonp(`http://localhost:8089/getmarkdown?name=${this.$route.name}&locale=${this.locale}`)
+            this.$http.jsonp(`http://66.55.159.227:8089/getmarkdown?name=${this.$route.name}&locale=${this.locale}`)
                 .then(function(req) {
                     document.getElementById('content').innerHTML = marked(req.data.a);
                     this.headerCreator();

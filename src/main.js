@@ -19,7 +19,7 @@ var routers = [{
   }];
 
 var g = document.createElement('script');
-g.src = 'http://localhost:8089/getnavbar?type=router';
+g.src = 'http://66.55.159.227:8089/getnavbar?type=router';
 var s = document.getElementsByTagName('script')[0];
 s.parentNode.insertBefore(g, s);
 
