@@ -254,13 +254,13 @@ export default {
 
     sessionStorage.maxLevel = 0;
 
-    this.$http.jsonp('http://localhost:8089/getnavbar')
+    this.$http.jsonp('http://cryingsoy.top:8089/getnavbar')
       .then(function(req) {
         this.$data.navInit = req.data;
         this.navCreator(this.navInit);
       }).catch(function(e) {
         console.log('Getnavbar error:' + e);
-        this.getNavBar('http://localhost:8089/getnavbar');
+        this.getNavBar('http://cryingsoy.top:8089/getnavbar');
       });
 
 
